@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/07/15 15:01:19 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:06:50 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 int	main(int ac, char **av)
 {
