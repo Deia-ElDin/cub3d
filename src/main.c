@@ -6,14 +6,18 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/07/12 16:44:24 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/07/15 14:32:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/cub3d.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_cub
+	t_cub	cub;
+
+    if (ac != 2)
+        return (0);
+    parsing(&cub, av[1]);
+	return (0);
 }

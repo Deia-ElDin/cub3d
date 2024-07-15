@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/07/12 16:43:41 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/07/15 14:37:20 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,28 @@
 # include "libft/libft.h"
 # include "mlx/mlx.h"
 
-// // Constants
+// Constants
 // # define PX 50
 # define FILE_EXTENSION ".cub"
 # define ALLOWED_CHARS "01PNSEW\n "
 // # define COUNTERS_CHARS "PCE"
 
-
-typedef struct s_cub
+typedef struct s_file
 {
     char    **file;
     char    **map;
-    char    **cpy;    
+    char    **cpy; 
+}	t_file;
+
+typedef struct s_cub
+{
+    void	*mlx;
+	void	*win;
+    t_file  file;
 } t_cub;
 
+
+void    parsing(t_cub *cub, char *input_file);
 
 // // Images
 // # define WALL_IMG "textures/wall.xpm"
