@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 22:37:33 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/15 23:04:55 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ typedef struct s_file
 	// char	*s_path;
 	int		c_color[3];
 	int		f_color[3];
+	int		filename_len;
+	int		stage;
+	int		file_len;
 	int		is_valid_color;
 	int		is_full_element;
+	int		map_len;
 	int		map_width;
 	int		map_height;
-	int		filename_len;
-	int		file_len;
-	int		stage;
 }	t_file;
 
 typedef struct s_cub

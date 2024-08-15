@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 22:37:44 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/15 23:05:44 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ void	init(t_cub *cub, char *input_file)
 	cub->file.so_path = NULL;
 	cub->file.we_path = NULL;
 	cub->file.ea_path = NULL;
-	cub->file.is_valid_color = 0;
-	cub->file.is_full_element = 0;
 	cub->file.filename_len = (int)ft_strlen(input_file);
 	if(!cub->file.filename_len)
 		exit_failure(cub, INVALID_FILE_NAME);
+	cub->file.stage = 1;
+	cub->file.file_len = 0;
+	cub->file.is_valid_color = 0;
+	cub->file.is_full_element = 0;
+	cub->file.map_len = 0;
 	cub->file.map_width = 0;
 	cub->file.map_height = 0;
-	cub->file.file_len = 0;
-	cub->file.stage = 1;
 }
 
 /*

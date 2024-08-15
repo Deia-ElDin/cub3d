@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:36:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 22:52:52 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/15 23:08:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,9 @@ static void	file_validation(t_cub *cub, t_file *file, char **file_arr)
 {
 	int	i;
 	int	st;
-	int	end;
 
 	i = 0;
 	st = 0;
-	end = 0;
 	while (file_arr[i] && file->stage == 1)
 	{
 		if (ft_isempty_str(file_arr[i]))
@@ -126,14 +124,13 @@ static void	file_validation(t_cub *cub, t_file *file, char **file_arr)
 	}
 	while (file_arr[i] && file->stage == 2)
 	{
-		while (file_arr[i] && ft_isempty_str(file_arr[i]))
+		if (ft_isempty_str(file_arr[i]))
 			i++;
-		if (!st && !is_element_line(file_arr[i]))
+		else if (!st && !is_element_line(file_arr[i]))
 			st = i++;
-		else if (st && !is_element_line(file_arr[i]))
-			end = i++;
+		else
+			file->map_len = ++i - st;
 	}
-	// printf("\n\nst = %d, end = %d\n\n", st, end);
 }
 
 void	file(t_cub *cub, char *input_file)
@@ -145,8 +142,7 @@ void	file(t_cub *cub, char *input_file)
 		exit_failure(cub, INVALID_FILE_NAME);
 	file_len(cub, input_file);
 	file_read(cub, &cub->file, input_file);
-	ft_printf(1, "%a", cub->file.file_arr);
-	// printf("*cub->file.file_arr[20] = %d", *cub->file.file_arr[20]);
+	// ft_printf(1, "%a", cub->file.file_arr);
 	file_validation(cub, &cub->file, cub->file.file_arr);
 	// ft_printf(1, "%a", cub->file.map_arr);
 	// 	print_file_paths(cub);
