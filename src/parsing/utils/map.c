@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 14:25:09 by dehamad           #+#    #+#             */
-/*   Updated: 2024/07/15 14:40:07 by dehamad          ###   ########.fr       */
+/*   Created: 2024/07/16 13:10:53 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/15 14:07:53 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
-// static int	map_len(t_map *map, int fd, const char *file)
+// static int	file_len(t_map *map, int fd, const char *file)
 // {
 // 	t_gnl	ret;
 // 	int		len;
 
 // 	len = (int)ft_strlen(file);
-// 	if ((len - 4) <= 0 || ft_strcmp(FILE_EXTENSION, file + (len - 4)))
+// 	if ((len - 4) <= 0 || ft_strcmp(".cub", file + (len - 4)))
 // 		exit_error(map, INVALID_FD_NAME);
 // 	fd = open(file, O_RDONLY);
 // 	if (fd == -1)
@@ -72,17 +72,10 @@
 
 // void	map_parsing(t_map *map)
 // {
-// 	int	height;
-// 	int	width;
-
-// 	height = map->lines;
-// 	width = ft_strlen(map->arr[0]) - 1;
-// 	if (height == width)
+// 	map->height = (map->lines + 1) * PX;
+// 	map->width = (ft_strlen(map->arr[0]) - 1) * PX;
+// 	if (map->height == map->width)
 // 		exit_error(map, SQR_MAP_ERR);
-// 	if (height > 200 || width > 200)
-// 		exit_error(map, LARGE_MAP_ERR);
-// 	map->height = height * PX;
-// 	map->width = width * PX;
 // 	parse_lineslength(map, map->arr, map->lines);
 // 	parse_chars(map, map->arr, map->lines);
 // 	parse_counters(map, map->arr);
@@ -112,4 +105,32 @@
 // 		}
 // 		y++;
 // 	}
+// }
+
+// int	map_updates(t_vars *vars)
+// {
+// 	static int	delay;
+// 	int			x;
+// 	int			y;
+
+// 	y = 1;
+// 	if (delay == 5000)
+// 	{
+// 		update_steps(vars);
+// 		spirit_animation(vars);
+// 		while (vars->map.arr[y])
+// 		{
+// 			x = 1;
+// 			while (vars->map.arr[y][x] && vars->map.arr[y][x] != '\n')
+// 			{
+// 				delete_attack(vars, x, y);
+// 				x = monster_move(vars, x, y);
+// 				x++;
+// 			}
+// 			y++;
+// 		}
+// 		delay = 0;
+// 	}
+// 	delay++;
+// 	return (0);
 // }

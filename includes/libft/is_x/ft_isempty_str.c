@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isempty_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:42:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 15:42:45 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/15 22:37:26 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isempty_str(char *str)
 {
-	if (!str)
+	if (!str || !*str)
 		return (1);
 	while (*str)
 	{

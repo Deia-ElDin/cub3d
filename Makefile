@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/07/15 14:58:07 by dehamad          ###   ########.fr        #
+#    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
+#    Updated: 2024/08/15 20:32:28 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,41 +14,45 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS += -fsanitize=address -g3
 
 LIBFT_DIR = includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
+
 MLX_DIR = includes/mlx
+MLX_LIB = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 MAIN = main.c delete_me.c
+
 PARSING = parsing.c
+PARSING_UTILS_FILE = file.c utils.c
+
 EXECUTION = execution.c 
-UTILS = exit.c map.c 
+
+UTILS = exit.c init.c img.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
+	$(addprefix src/parsing/utils/file/, $(PARSING_UTILS_FILE)) \
 	$(addprefix src/execution/, $(EXECUTION)) \
 	$(addprefix src/utils/, $(UTILS)) \
 
-
 OBJS = $(SRCS:.c=.o)
 
+
+
 all: $(NAME)
+	./$(NAME) maps/m1.cub
 
-sanitize: CFLAGS += -fsanitize=address
-sanitize: all
-
-valgrind: all
-	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" -s ./$(NAME)
-
-libft: 
+# sanitize: CFLAGS += -fsanitize=address -g3
+sanitize:
+	make re
+	
+$(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
-
-$(NAME): $(LIBFT_LIB) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) $(LIBS) -o $(NAME)
-
-$(LIBFT_LIB):
-	make -C $(LIBFT_DIR)
+	make -C $(MLX_DIR)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) $(MLX_LIB) $(LIBS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
@@ -60,6 +64,13 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	make -C $(MLX_DIR) clean
 
-re: fclean all
+re:
+	make fclean
+	make all
 
+
+
+valgrind: all
+	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" -s ./$(NAME)
+	
 .PHONY: all clean fclean re sanitize libft valgrind

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/07/15 15:07:25 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/15 13:27:52 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// #include "../../includes/cub3d.h"
 #include "cub3d.h"
 
-void    parsing(t_cub *cub, char *input_file)
+void	parsing(t_cub *cub, char *input_file)
 {
-    (void)cub;
-    (void)input_file;
+	file(cub, input_file);
 }
