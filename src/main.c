@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 15:47:14 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/16 16:41:19 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,4 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-// todo check the file name and what if he passed empty file and should i clean whatever prior to the /
+// todo => this case not handled yet => F    50    ,       60     ,   1 00

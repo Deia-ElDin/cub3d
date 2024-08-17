@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:53 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 18:29:56 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 // 	fd = open(file, O_RDONLY);
 // 	if (fd == -1)
 // 		exit_error(map, FD_ERR);
-// 	len = map_len(map, fd, file);
+// 	len = map_height(map, fd, file);
 // 	map->arr = (char **)ft_calloc(len + 1, sizeof(char *));
 // 	map->cpy = (char **)ft_calloc(len + 1, sizeof(char *));
 // 	if (!map->arr || !map->cpy)

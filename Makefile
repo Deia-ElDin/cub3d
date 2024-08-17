@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/15 20:32:28 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/17 20:40:47 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
-CFLAGS += -fsanitize=address -g3
 
 LIBFT_DIR = includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
@@ -24,8 +23,8 @@ MLX_LIB = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 MAIN = main.c delete_me.c
 
-PARSING = parsing.c
-PARSING_UTILS_FILE = file.c utils.c
+PARSING = parsing.c 
+PARSING_UTILS = file.c map.c validate.c utils.c
 
 EXECUTION = execution.c 
 
@@ -34,20 +33,21 @@ UTILS = exit.c init.c img.c
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
-	$(addprefix src/parsing/utils/file/, $(PARSING_UTILS_FILE)) \
+	$(addprefix src/parsing/utils/, $(PARSING_UTILS)) \
 	$(addprefix src/execution/, $(EXECUTION)) \
 	$(addprefix src/utils/, $(UTILS)) \
 
 OBJS = $(SRCS:.c=.o)
 
 
-
 all: $(NAME)
 	./$(NAME) maps/m1.cub
 
-# sanitize: CFLAGS += -fsanitize=address -g3
-sanitize:
-	make re
+sanitize: CFLAGS += -fsanitize=address -g3
+sanitize: all
+
+valgrind: all
+	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" -s ./minishell
 	
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
@@ -64,13 +64,6 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	make -C $(MLX_DIR) clean
 
-re:
-	make fclean
-	make all
-
-
-
-valgrind: all
-	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" -s ./$(NAME)
+re: fclean all
 	
 .PHONY: all clean fclean re sanitize libft valgrind

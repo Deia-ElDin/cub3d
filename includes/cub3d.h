@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 23:04:55 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 21:57:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 // Constants
 // # define PX 50
 // # define ELEMENTS_CHARS "01PNSEW\n "
-# define MAP_CHARS "01NSEW\n "
+# define MAP_CHARS " 01NSEW"
+# define MIN_HEIGHT 3
+# define MAX_HEIGHT 200
 // # define FILE_EXTENSION ".cub"
 // # define IMG_EXTENSION ".xpm"
 
@@ -35,26 +37,33 @@ typedef struct s_imgs
 	int		c_color;
 }	t_imgs;
 
+typedef struct s_map
+{
+	char	*line;
+	int		len;
+}	t_map;
+
 typedef struct s_file
 {
 	char	**file_arr;
-	char	**map_arr;
-	char	**cpy_arr;
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	// char	*s_path;
+	char	**map;
+	void	*no_path;
+	void	*so_path;
+	void	*we_path;
+	void	*ea_path;
 	int		c_color[3];
 	int		f_color[3];
 	int		filename_len;
 	int		stage;
 	int		file_len;
-	int		is_valid_color;
-	int		is_full_element;
-	int		map_len;
+	int		is_valid_colors;
+	int		map_st;
+	int		map_end;
 	int		map_width;
 	int		map_height;
+	int		wall_counter;
+	int		player_counter;
+	char	player_position;
 }	t_file;
 
 typedef struct s_cub
@@ -64,7 +73,6 @@ typedef struct s_cub
 	t_file	file;
 	t_imgs	imgs;
 }	t_cub;
-
 
 // void	file_read(t_cub *cub, char *input_file, int len);
 // // Images
@@ -85,6 +93,13 @@ typedef struct s_cub
 kindly try again later.\n"
 # define ELEMENTS_ERR "Error\nInvalid elements."
 # define MAP_ERR "Error\nInvalid map."
+# define EMPTY_MAP_ERR "Error\nInvalid map, the map is empty."
+# define MAP_HEIGHT_ERR "Error\nInvalid map, the map is either greater than \
+200 lines or less than 3 lines."
+# define MAP_LINE_ERR "Error\nInvalid map, not a map line."
+# define SPACE_ERR "Error\nInvalid map, invalid spaces."
+# define PLAYER_ERR "Error\nInvalid characters of player."
+# define WALL_ERR "Error\nInvalid map, not surrounded by walls."
 # define MLX_ERR "Error\nSomething went wrong with mlx lib, kindly try later.\n"
 # define IMG_ERR "Error\nCorrupted image source file.\n"
 # define COLOR_ERR "Error\nInvalid color.\n"
@@ -94,7 +109,6 @@ kindly try again later.\n"
 // # define NO_FD_ERR "Error\nKindly provide us a file to work with.\n"
 // # define LARGE_MAP_ERR "Error\nThe map is too large, \
 // it doesn't make sense dude.\n"
-
 
 // # define LEN_ERR "Error\nEach line of the map \
 // can't be less than 4 characters.\n"
@@ -113,21 +127,24 @@ kindly try again later.\n"
 // # define SQR_MAP_ERR "Error\nThe map can't be square.\n"
 // # define PATH_ERR "Error\nCan't reach either the exit or the collectables.\n"
 
-
-// ********************* parsing ********************* //
+// ********************* PARSING ********************* //
 
 void	parsing(t_cub *cub, char *input_file);
 
 // ****************** PARSING UTILS ****************** //
 
-// **	FILE FOLDER
-// 		*	file.c
-void	file(t_cub *cub, char *input_file);
+// // 		*	file.c
+// void	file(t_cub *cub, char *input_file);
+// // 		*	map.c
+// void	map(t_cub *cub);
+// 		*	validate.c
+void	validate_file(t_cub *cub, t_file *file);
 // 		*	utils.c
-bool	is_element_line(char *line);
-bool	is_map_line(char *line);
 bool	is_elements_ready(t_file *file);
-void	validate_color(t_cub *cub, int *color_arr, char *line);
+void	is_player(t_cub *cub, char *map_line);
+void	set_map_width(t_file *file, char *map_line);
+char	*set_map_line(t_cub *cub, t_file *file, char *map_line);
+void	use_atoi(t_cub *cub, char *str_nbr, int *counter);
 
 // ******************** APP UTILS ******************** //
 
@@ -136,10 +153,9 @@ void	exit_failure(t_cub *cub, char *err_msg);
 void	exit_success(t_cub *cub);
 // 		*	init.c
 void	init(t_cub *cub, char *input_file);
-// 		*	img.c
-char	*validate_img(t_cub *cub, char *line);
 
-// DELETE ME
-void	print_file_paths(t_cub *cub);
+// *************************** DELETE ME *************************** //
+void	print_elements(t_cub *cub);
+void	print_map(t_cub *cub);
 
 #endif

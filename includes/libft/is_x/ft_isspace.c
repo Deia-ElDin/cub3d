@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 17:31:35 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/05 22:03:39 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 13:24:44 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_isspace(int c)
 {
-	return (c == ' ' || (c >= 9 && c <= 13));
+	return (c == ' ' || c == '\n');
 }

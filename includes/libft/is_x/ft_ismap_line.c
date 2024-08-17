@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ispipe.c                                        :+:      :+:    :+:   */
+/*   ft_ismap_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 19:26:41 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 19:28:13 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/17 13:57:32 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/17 14:01:57 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "is.h"
 
-int	ft_ispipe(int c)
+int	ft_ismap_line(char *line)
 {
-	return (c == '|');
+	if (!line || !*line)
+		return (false);
+	while (*line)
+	{
+		if (!ft_strchr(" 01NSEW", *line))
+			return (0);
+		line++;
+	}
+	return (1);
 }

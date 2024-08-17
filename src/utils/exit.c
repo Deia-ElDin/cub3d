@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 18:37:34 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 21:48:28 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static void	exit_clean(t_cub *cub)
 {
 	ft_free(&cub->file.file_arr, 'a');
-	ft_free(&cub->file.map_arr, 'a');
-	ft_free(&cub->file.cpy_arr, 'a');
-	
+	ft_free(&cub->file.map, 'a');
 	ft_free(&cub->file.no_path, 'p');
 	ft_free(&cub->file.so_path, 'p');
 	ft_free(&cub->file.we_path, 'p');
@@ -30,7 +28,7 @@ void	exit_failure(t_cub *cub, char *err_msg)
 {
 	exit_clean(cub);
 	if (*err_msg)
-		ft_printf(2, "%s", err_msg);
+		ft_printf(2, "%s\n", err_msg);
 	exit(EXIT_FAILURE);
 }
 

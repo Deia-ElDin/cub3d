@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 23:05:44 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 21:57:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ void	init(t_cub *cub, char *input_file)
 	cub->mlx = NULL;
 	cub->win = NULL;
 	cub->file.file_arr = NULL;
-	cub->file.map_arr = NULL;
-	cub->file.cpy_arr = NULL;
+	cub->file.map = NULL;
 	cub->file.no_path = NULL;
 	cub->file.so_path = NULL;
 	cub->file.we_path = NULL;
 	cub->file.ea_path = NULL;
 	cub->file.filename_len = (int)ft_strlen(input_file);
-	if(!cub->file.filename_len)
-		exit_failure(cub, INVALID_FILE_NAME);
 	cub->file.stage = 1;
 	cub->file.file_len = 0;
-	cub->file.is_valid_color = 0;
-	cub->file.is_full_element = 0;
-	cub->file.map_len = 0;
+	cub->file.is_valid_colors = 0;
+	cub->file.map_st = 0;
+	cub->file.map_end = 0;
 	cub->file.map_width = 0;
 	cub->file.map_height = 0;
+	cub->file.wall_counter = 0;
+	cub->file.player_counter = 0;
+	cub->file.player_position = '\0';
 }
 
 /*
@@ -45,7 +45,7 @@ void	init(t_cub *cub, char *input_file)
 	* cub->file.file_arr = NULL;
 		- we store the whole file into that array.
 	
-	* cub->file.map_arr = NULL;
+	* cub->file.map = NULL;
 		- we store the map into that array.
 
 	* cub->file.cpy_arr = NULL;
@@ -89,5 +89,5 @@ void	init(t_cub *cub, char *input_file)
 */
 
 // cub->file.player = 0;
-			// cub->file.res_x = 0;
-	// cub->file.res_y = 0;
+// cub->file.res_x = 0;
+// cub->file.res_y = 0;
