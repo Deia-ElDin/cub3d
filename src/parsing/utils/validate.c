@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 21:57:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 22:59:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,16 @@ static void	validate_color(t_cub *cub, int *color_arr, char *line)
 	letters_counter = 0;
 	while (*line && letters_counter < 2)
 	{
-		if (*line && ft_issep(*line, ',') && line++)
+		if (*line && *line == ',' && line++)
 			commas_counter++;
 		if (*line && ft_isletter(line, ',') && line++)
 			letters_counter++;
-		if (*line && ft_isdigit(*line))
-		{
-			if (idx < 3 && (use_atoi(cub, line, &color_arr[idx]), 1))
-				line += ft_intlen(color_arr[idx++]);
-			else
-				break ;
-		}
+		if (*line && ft_isdigit(*line)
+			&& idx < 3 && idx == commas_counter
+			&& (use_atoi(cub, line, &color_arr[idx]), 1))
+			line += ft_intlen(color_arr[idx++]);
+		else
+			break ;
 		while (*line && ft_isspace(*line))
 			line++;
 	}
@@ -96,6 +95,8 @@ static void	validate_map(t_cub *cub, t_file *file, int st)
 			exit_failure(cub, WALL_ERR);
 		if (file->wall_counter == 1 && ft_isempty_str(file->file_arr[st]))
 			exit_failure(cub, WALL_ERR);
+		else if (file->wall_counter && ft_isempty_str(file->file_arr[st]))
+			exit_failure(cub, MAP_ERR);
 		else if (file->wall_counter < 2 && !ft_ismap_line(file->file_arr[st]))
 			exit_failure(cub, MAP_LINE_ERR);
 		else if (ft_iswall(file->file_arr[st]))

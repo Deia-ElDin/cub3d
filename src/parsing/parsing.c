@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 22:00:04 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 22:52:51 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	parsing(t_cub *cub, char *input_file)
 	validate_file(cub, &cub->file);
 	map_create(cub, file, file->map_st, file->map_end);
 	map_validate(cub, file, file->map, '\0');
-	print_elements(cub);
 }
 
 static void	file_len(t_cub *cub, char *input_file)
@@ -134,3 +133,14 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 		}
 	}
 }
+
+/*
+ 
+there's 2 walls but both below the player, the last wall isn't a wall
+1
+1111             1111
+11011           1111
+1N11 1             111
+11111011
+
+*/
