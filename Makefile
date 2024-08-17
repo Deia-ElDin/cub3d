@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/17 20:40:47 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/17 23:11:38 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ MLX_LIB = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 MAIN = main.c delete_me.c
 
 PARSING = parsing.c 
-PARSING_UTILS = file.c map.c validate.c utils.c
+PARSING_UTILS = validate.c utils.c
 
 EXECUTION = execution.c 
 

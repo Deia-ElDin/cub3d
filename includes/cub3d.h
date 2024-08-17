@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 21:57:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 23:11:17 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,6 @@ void	parsing(t_cub *cub, char *input_file);
 
 // ****************** PARSING UTILS ****************** //
 
-// // 		*	file.c
-// void	file(t_cub *cub, char *input_file);
-// // 		*	map.c
-// void	map(t_cub *cub);
 // 		*	validate.c
 void	validate_file(t_cub *cub, t_file *file);
 // 		*	utils.c

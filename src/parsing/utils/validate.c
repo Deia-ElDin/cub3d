@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 22:59:59 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/17 23:25:24 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,37 @@ static void	validate_img(t_cub *cub, void **img, char *line)
 		exit_failure(cub, IMG_ERR);
 }
 
+// static void	validate_color(t_cub *cub, int *color_arr, char *line)
+// {
+// 	int		idx;
+// 	int		commas_counter;
+// 	int		letters_counter;
+
+// 	idx = 0;
+// 	commas_counter = 0;
+// 	letters_counter = 0;
+// 	while (*line && letters_counter < 2)
+// 	{
+// 		if (*line && *line == ',' && line++)
+// 			commas_counter++;
+// 		if (*line && ft_isletter(line, ',') && line++)
+// 			letters_counter++;
+// 		if (*line && ft_isdigit(*line) && idx == commas_counter)
+// 		{
+// 			printf("idx: %d\n", idx);
+// 			printf("commas_counter: %d\n", commas_counter);
+// 			if (idx < 3 && (use_atoi(cub, line, &color_arr[idx]), 1))
+// 				line += ft_intlen(color_arr[idx++]);
+// 			else
+// 				break ;
+// 		}
+// 		while (*line && ft_isspace(*line))
+// 			line++;
+// 	}
+// 	if (letters_counter != 1 || commas_counter != 2 || idx != 3)
+// 		exit_failure(cub, COLOR_ERR);
+// }
+
 static void	validate_color(t_cub *cub, int *color_arr, char *line)
 {
 	int		idx;
@@ -42,6 +73,8 @@ static void	validate_color(t_cub *cub, int *color_arr, char *line)
 	letters_counter = 0;
 	while (*line && letters_counter < 2)
 	{
+		while (*line && ft_isspace(*line))
+			line++;
 		if (*line && *line == ',' && line++)
 			commas_counter++;
 		if (*line && ft_isletter(line, ',') && line++)
@@ -50,10 +83,8 @@ static void	validate_color(t_cub *cub, int *color_arr, char *line)
 			&& idx < 3 && idx == commas_counter
 			&& (use_atoi(cub, line, &color_arr[idx]), 1))
 			line += ft_intlen(color_arr[idx++]);
-		else
+		else if (!ft_isspace(*line))
 			break ;
-		while (*line && ft_isspace(*line))
-			line++;
 	}
 	if (letters_counter != 1 || commas_counter != 2 || idx != 3)
 		exit_failure(cub, COLOR_ERR);
@@ -123,7 +154,7 @@ void	validate_file(t_cub *cub, t_file *file)
 		else if (ft_iselement_line(file_arr[i]))
 			validate_elements(cub, file, file_arr[i++]);
 		else
-			exit_failure(cub, MAP_ERR);
+			exit_failure(cub, ELEMENTS_ERR);
 	}
 	while (file->stage == 2 && file_arr[i])
 	{
@@ -236,3 +267,5 @@ void	validate_file(t_cub *cub, t_file *file)
 			-	If the player counter != 1 => exit error.
 			-	If the wall counter != 2 => exit error.
 */
+
+
