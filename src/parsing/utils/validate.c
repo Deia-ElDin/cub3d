@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 15:32:01 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 15:44:32 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,13 @@ void	validate_file(t_cub *cub, t_file *file)
 			4-	EA => validate the image path.
 			5-	F or C => validate the color.
 			Once we got all the elements ready, we increment the stage to 2.
+		- While we are validating the colors we increment the is_valid_colors
+		  counter, it's a flag we use to check if we got our colors ready or not,
+		  if there's was an error while validating the colors,
+		  we will exist anyway, so we won't reach the limit where we check,
+		  if our elements are ready or not, if there was no error,
+		  then we simply did an early increment,
+		  the conclusion is it's a well calculated and we are good.
 	}
 
 	*	validate_img(t_cub *cub, void **img, char *line)
