@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 14:37:06 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 15:32:01 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,99 +136,127 @@ void	validate_file(t_cub *cub, t_file *file)
 
 /*
 	*	validate_file(t_cub *cub, t_file *file)
-		- This function is used to validate the file.
+	{
+			- This function is used to validate the file.
 		- It has 2 while loops:
 			-	One for the element portion of the file.
 			-	The other for the map portion of the file.
+		- There's 2 stages here, 1 for elements and 2 for the map.
 
-		It has 3 sections
-		1- Elements while loop (Stage 1)
-			- It has 3 conditions:
-				-	Empty line => just increment the i.
-				-	Element line => parse it and validate it.
-				-	Not Empty and not element line while the stage still 1
-					=> exit error.
-				-	One we got all our elements ready and accepted 
-					=> increment the stage to stage 2 (the map stage).
-		2- Map while loop (Stage 2)
-			- It has 3 conditions:
-				-	Empty line => just increment the i.
-				-	We didn't set the starting index of the map && NOT Element
-					line => set the map start index and increment the i.
-				-	We sat the index && !empty line 
-					=> increment the i.
-				-	Once we finish the loop, we set the map end index.
-				-	The purpose of this loop is to:
-					set the map start and end index of the map.
-		3- Validate the map
-
+		It has 4 sections:
+			1- Elements while loop (Stage 1)
+				- It has 3 conditions:
+					-	Empty line => i++.
+					-	Element line => parse it and validate it.
+					-	Not Empty and not element line while the stage still 1
+						=> exit error.
+					-	Once we got all our elements ready and accepted 
+						=> increment the stage to stage 2 (the map stage).
+			2- Map while loop (Stage 2)
+				- It has 3 conditions:
+					-	Empty line => i++.
+					-	if (!file->map_st) We didn't set the starting index 
+						of the map && NOT Element line (means a map line)
+						=> set the map start index and i++.
+					-	else if not empty line and not a map line just break out.
+			3- Set the map end index.
+			4- Validate the map
+	}
 
 	*	validate_elements(t_cub *cub, t_file *file, char *line)
-		- This function is used to validate the elements of the file.
+	{
+		- This function is used to validate the elements portion of the file.
 		- It has 5 conditions:
-			-	NO => validate the image path.
-			-	SO => validate the image path.
-			-	WE => validate the image path.
-			-	EA => validate the image path.
-			-	F or C => validate the color.
-			-	Once we got all the elements ready, we increment the stage to 2.
+			1-	NO => validate the image path.
+			2-	SO => validate the image path.
+			3-	WE => validate the image path.
+			4-	EA => validate the image path.
+			5-	F or C => validate the color.
+			Once we got all the elements ready, we increment the stage to 2.
+	}
 
-	*	validate_img(t_cub *cub, char *line)
-		- This function is used to validate the image path.
-		- It has 3 sections:
-			-	Split the line by a whitespace.
+	*	validate_img(t_cub *cub, void **img, char *line)
+	{
+		- This function is used to validate 3 things:
+			1- If the image is not already set.
+			2- If the image extention is valid.
+			3- If the image is not corrupted.
+			
+		- It has 4 sections:
+			1-	If the image is already set => exit error.
+				i.e passing the same element twice on the map
+			2-	Split the line by a whitespace.
 				-	If it splits into more than 2 parts => exit error.
 					i.e. the line should be like "NO ./path/to/img.xpm"
 					but not like "NO ./path/to/img.xpm 100 100"
 				- 	So if NOT split[0] || NOT split[1] || split[2] 
 					=> exit error.
-			-	Set the img to whatever mlx_xpm_file_to_image returns.
-			-	Return the img and save into it's variable.
+			3-	If the image extention is not .xpm => exit error.
+			4-	Set the img to whatever mlx_xpm_file_to_image returns.
+			Return the img and save into it's variable.
+	}
 
 	*	validate_color(t_cub *cub, int *color_arr, char *line)
+	{
 		- This function is used to validate the color.
 		- It takes the color_arr based on what color we are validating.
 		- It has 2 sections:
-			-	While loop:
-				-	If i's a comma => increment the commas counter.
-				-	If i's a letter => increment the letters counter.
-				-	If i's a digit => use the atoi function to convert it
-					to an int and store it in the proper index.
-				-	The color_idx is used to keep a trace of how many colors we
-					extracted from the line, if it's not 3 => exit error.
-				-	While i's a whitespace => increment the i.
-			-	If Condition:
+			1-	While loop:
+				-	IF it was whitespace => increment the line.
+				-	If i's a comma => increment the commas counter & the line.
+				-	If i's a letter => increment the letters counter & the line.
+				-	If it's a color => increment the color counter & the line.
+				-	If (letters > 1 || commas > 2 || colors > 3)
+					=> exit error.
+				-	We are only allowing 1 Letter and we are sure that 
+					this letter will be either F or C (check validate_elements).
+				-	We are only allowing 2 commas.
+				-	We are only allowing 3 colors.
+			2-	If Condition:
 				-	If the letters counter is not 1 => exit error.
 					i.e. FF or F 10T,10,10
 				-	If the commas counter is not 2 => exit error.
 					i.e. F 10,10 10
 				-	If the color_idx is not 3 => exit error.
 					i.e. F 10,10
+	}
 	
 	*	validate_map(t_cub *cub, t_file *file, int st)
+	{
 		- This function is used to validate the map in these aspects:
-			-	Count the player character.
-			-	Count the walls.
-			-	Count the map lines.
+			-	Count the letters and if they are a player ot not.
 			-	Validate the empty lines within & after the map,
-				and check if it's valid to create it not early exit.
-			-	After this function we are sure that we have 1 player 2 walls
-				and the map is valid (there's no empty lines within the map).
+				and check if it's valid to create or not, if not => early exit.
+			-	After this function we are sure that we have 1 player, 2 or
+				more walls and the map is valid for creation,
+				(there's no empty lines within the map).
 			-	We didn't yet check if the map it self is valid or not.
 			-	We will do that after we create the map.
 		- It has 4 sections:
-			-	If map start index or end index == 0 => exit error.
-			-	If 200 > map length < 3 => exit error  .
-			-	While loop:
-				-	While we didn't reach the map end index.
-				-	For each line:
-					-	Count how many player character we have.
-					-	If the wall counter is less than 2 and the line is
-						not a map line => exit error.
-					-	If the wall counter is more than or equal to 2
-						and the line is not empty => exit error.
-					-	If the line is a wall line => increment the wall counter.
-				-	Increment the st to move to the next map line.
+			1-	If map start index or end index == 0 => exit error.
+			2-	If map length < 3 => exit error.
+			3-	While loop:
+				-	Set the map width and keep updating it to get the max width.
+				-	Check if it's a player or not.
+					- If it's a player => increment the player counter.
+					- If not exist error.
+				-	We have a flag for empty lines within the map,
+					if it's found or not.
+				-	We sat a counter for walls, and we keep trace of it.
+				-	If we found a player and no walls => exit error.
+				-	If we found an empty line within the map => exit error.
+					-	If our is_empty_line_exist has a value, 
+						meaning we found empty line,
+						now if the current line we are at is a map line,
+						=> exit error.
+						i.e:
+							1111
+							1101
+
+							11N1
+							1111
 			-	If the player counter != 1 => exit error.
-			-	If the wall counter != 2 => exit error.
+			-	If the wall counter < 2 => exit error.
+				There's no problem if we had multiple walls.
+	}
 */
