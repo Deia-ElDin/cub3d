@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 13:39:20 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 14:54:37 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 // ******************** Constants ******************** //
 
 // ********************* Errors ********************* //
-# define INVALID_FILE_NAME "Error\nInvalid file, kindly check the file name.\n"
 # define INVALID_FD "Error\nFailed to open the file you provided.\n"
-# define INVALID_FILE_EMPTY "Error\nKindly provide us a file to work with.\n"
+# define INVALID_FILE_NAME "Error\nInvalid file, kindly check the file name.\n"
+# define INVALID_FILE_EMPTY "Error\nInvalid file, \
+kindly provide us a file to work with.\n"
 # define INVALID_MAP "Error\nInvalid map, kindly check the map.\n"
 # define MALLOC_ERR "Error\nFailed to malloc.\n"
 # define READ_ERR "Error\nSomething went wrong with the read function, \
