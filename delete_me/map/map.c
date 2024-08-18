@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 18:29:56 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 12:05:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 // 	if (!len)
 // 	{
 // 		close(fd);
-// 		exit_error(map, EMPTY_MAP_ERR);
+// 		exit_error(map, MAP_EMPTY_ERR);
 // 	}
 // 	map->lines = len;
 // 	return ((void)close(fd), len);

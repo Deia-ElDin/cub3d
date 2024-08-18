@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/17 23:11:38 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/18 13:23:20 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ PARSING_UTILS = validate.c utils.c
 
 EXECUTION = execution.c 
 
-UTILS = exit.c init.c img.c
+UTILS = exit.c init.c img.c utils.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \

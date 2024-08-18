@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 23:25:24 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 14:37:06 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,74 +19,40 @@ static void	validate_img(t_cub *cub, void **img, char *line)
 	int		height;
 
 	if (*img)
-		exit_failure(cub, ELEMENTS_ERR);
+		exit_failure(cub, ELEMENTS_EXIST_ERR);
 	split = ft_split(line, ' ');
 	if (!split)
 		exit_failure(cub, MALLOC_ERR);
 	if ((!split[0] || !split[1] || split[2]) && (ft_free(&split, 'a'), 1))
-		exit_failure(cub, ELEMENTS_ERR);
+		exit_failure(cub, ELEMENTS_SPACE_ERR);
+	if (!ft_strrchr(split[1], '.xpm'))
+		return (ft_free(&split, 'a'), exit_failure(cub, ELEMENTS_IMG_NAME_ERR));
 	*img = mlx_xpm_file_to_image(cub->mlx, split[1], &width, &height);
 	ft_free(&split, 'a');
 	if (!*img)
-		exit_failure(cub, IMG_ERR);
+		exit_failure(cub, ELEMENTS_IMG_CORRUPTED_ERR);
 }
-
-// static void	validate_color(t_cub *cub, int *color_arr, char *line)
-// {
-// 	int		idx;
-// 	int		commas_counter;
-// 	int		letters_counter;
-
-// 	idx = 0;
-// 	commas_counter = 0;
-// 	letters_counter = 0;
-// 	while (*line && letters_counter < 2)
-// 	{
-// 		if (*line && *line == ',' && line++)
-// 			commas_counter++;
-// 		if (*line && ft_isletter(line, ',') && line++)
-// 			letters_counter++;
-// 		if (*line && ft_isdigit(*line) && idx == commas_counter)
-// 		{
-// 			printf("idx: %d\n", idx);
-// 			printf("commas_counter: %d\n", commas_counter);
-// 			if (idx < 3 && (use_atoi(cub, line, &color_arr[idx]), 1))
-// 				line += ft_intlen(color_arr[idx++]);
-// 			else
-// 				break ;
-// 		}
-// 		while (*line && ft_isspace(*line))
-// 			line++;
-// 	}
-// 	if (letters_counter != 1 || commas_counter != 2 || idx != 3)
-// 		exit_failure(cub, COLOR_ERR);
-// }
 
 static void	validate_color(t_cub *cub, int *color_arr, char *line)
 {
-	int		idx;
-	int		commas_counter;
-	int		letters_counter;
+	int	colors_counter;
+	int	commas_counter;
+	int	letters_counter;
 
-	idx = 0;
+	colors_counter = 0;
 	commas_counter = 0;
 	letters_counter = 0;
-	while (*line && letters_counter < 2)
+	while (*line)
 	{
 		while (*line && ft_isspace(*line))
 			line++;
-		if (*line && *line == ',' && line++)
-			commas_counter++;
-		if (*line && ft_isletter(line, ',') && line++)
-			letters_counter++;
-		if (*line && ft_isdigit(*line)
-			&& idx < 3 && idx == commas_counter
-			&& (use_atoi(cub, line, &color_arr[idx]), 1))
-			line += ft_intlen(color_arr[idx++]);
-		else if (!ft_isspace(*line))
-			break ;
+		line += ft_iscomma(*line, &commas_counter);
+		line += ft_isletter(*line, &letters_counter);
+		line += is_color(cub, line, &colors_counter, color_arr);
+		if (letters_counter > 1 || commas_counter > 2 || colors_counter > 3)
+			exit_failure(cub, COLOR_ERR);
 	}
-	if (letters_counter != 1 || commas_counter != 2 || idx != 3)
+	if (letters_counter != 1 || commas_counter != 2 || colors_counter != 3)
 		exit_failure(cub, COLOR_ERR);
 }
 
@@ -113,31 +79,30 @@ static void	validate_elements(t_cub *cub, t_file *file, char *line)
 
 static void	validate_map(t_cub *cub, t_file *file, int st)
 {
+	int	is_empty_line_exist;
+
+	is_empty_line_exist = 0;
 	if (!file->map_st || !file->map_end)
-		exit_failure(cub, EMPTY_MAP_ERR);
+		exit_failure(cub, MAP_EMPTY_ERR);
 	file->map_height = file->map_end - file->map_st;
-	if (file->map_height < MIN_HEIGHT || file->map_height > MAX_HEIGHT)
+	if (file->map_height < 3)
 		exit_failure(cub, MAP_HEIGHT_ERR);
-	while (file->file_arr[st] && st <= file->map_end)
+	while (st <= file->map_end && file->file_arr[st])
 	{
 		set_map_width(file, file->file_arr[st]);
 		is_player(cub, file->file_arr[st]);
+		is_empty_line_exist += ft_isempty_str(file->file_arr[st]);
+		file->wall_counter += ft_iswall(file->file_arr[st]);
 		if (file->player_counter && !file->wall_counter)
-			exit_failure(cub, WALL_ERR);
-		if (file->wall_counter == 1 && ft_isempty_str(file->file_arr[st]))
-			exit_failure(cub, WALL_ERR);
-		else if (file->wall_counter && ft_isempty_str(file->file_arr[st]))
-			exit_failure(cub, MAP_ERR);
-		else if (file->wall_counter < 2 && !ft_ismap_line(file->file_arr[st]))
-			exit_failure(cub, MAP_LINE_ERR);
-		else if (ft_iswall(file->file_arr[st]))
-			file->wall_counter++;
+			exit_failure(cub, MAP_WALL_ERR);
+		else if (is_empty_line_exist && ft_ismap_line(file->file_arr[st]))
+			exit_failure(cub, MAP_EMPTY_LINE);
 		st++;
 	}
 	if (file->player_counter != 1)
-		exit_failure(cub, PLAYER_ERR);
+		exit_failure(cub, MAP_CHARS_ERR);
 	if (file->wall_counter < 2)
-		exit_failure(cub, WALL_ERR);
+		exit_failure(cub, MAP_WALL_ERR);
 }
 
 void	validate_file(t_cub *cub, t_file *file)
@@ -158,14 +123,14 @@ void	validate_file(t_cub *cub, t_file *file)
 	}
 	while (file->stage == 2 && file_arr[i])
 	{
-		if (ft_isempty_str(file_arr[i]))
+		while (file_arr[i] && ft_isempty_str(file_arr[i]))
 			i++;
-		else if (!file->map_st && !ft_iselement_line(file_arr[i]))
+		if (!file->map_st && !ft_iselement_line(file_arr[i]))
 			file->map_st = i++;
 		else
-			i++;
+			break ;
 	}
-	file->map_end = i;
+	file->map_end = file->file_len;
 	validate_map(cub, file, file->map_st);
 }
 
@@ -229,7 +194,7 @@ void	validate_file(t_cub *cub, t_file *file)
 				-	If i's a letter => increment the letters counter.
 				-	If i's a digit => use the atoi function to convert it
 					to an int and store it in the proper index.
-				-	The idx is used to keep a trace of how many colors we
+				-	The color_idx is used to keep a trace of how many colors we
 					extracted from the line, if it's not 3 => exit error.
 				-	While i's a whitespace => increment the i.
 			-	If Condition:
@@ -237,7 +202,7 @@ void	validate_file(t_cub *cub, t_file *file)
 					i.e. FF or F 10T,10,10
 				-	If the commas counter is not 2 => exit error.
 					i.e. F 10,10 10
-				-	If the idx is not 3 => exit error.
+				-	If the color_idx is not 3 => exit error.
 					i.e. F 10,10
 	
 	*	validate_map(t_cub *cub, t_file *file, int st)
@@ -267,5 +232,3 @@ void	validate_file(t_cub *cub, t_file *file)
 			-	If the player counter != 1 => exit error.
 			-	If the wall counter != 2 => exit error.
 */
-
-

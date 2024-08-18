@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isletter.c                                      :+:      :+:    :+:   */
+/*   ft_iscomma.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 13:55:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 13:00:48 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/18 12:44:57 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/18 12:57:03 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "is.h"
 
-int	ft_isletter(int c, int *counter)
+int	ft_iscomma(int c, int *counter)
 {
-	if (c && !ft_isdigit(c) && !ft_isspace(c) && c != ',' && ++(*counter))
+	if (c == ',' && ++(*counter))
 		return (1);
 	return (0);
 }

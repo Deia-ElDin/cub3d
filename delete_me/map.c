@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 13:05:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 21:34:03 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 12:06:57 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	map_create(t_cub *cub, t_file *file, int st, int end)
 	}
 	file->map_end = st;
 	file->map_height = file->map_end - file->map_st;
-	if (file->map_height < MIN_HEIGHT || file->map_height > MAX_HEIGHT)
+	if (file->map_height < 3)
 		exit_failure(cub, MAP_HEIGHT_ERR);
 }
 
@@ -75,13 +75,13 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 			else
 				continue ;
 			if (x > 0 && map[y][x - 1] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 			if (x < file->map_width - 1 && map[y][x + 1] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 			if (y > 0 && map[y - 1][x] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 			if (y < file->map_height - 1 && map[y + 1][x] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 		}
 	}
 }

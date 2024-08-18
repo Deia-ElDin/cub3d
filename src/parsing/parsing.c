@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 22:52:51 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 14:41:30 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	parsing(t_cub *cub, char *input_file)
 	validate_file(cub, &cub->file);
 	map_create(cub, file, file->map_st, file->map_end);
 	map_validate(cub, file, file->map, '\0');
+	print_elements(cub);
 }
 
 static void	file_len(t_cub *cub, char *input_file)
@@ -91,7 +92,7 @@ static void	map_create(t_cub *cub, t_file *file, int st, int end)
 	idx = 0;
 	while (file->file_arr[st] && *file->file_arr[st] && st <= end)
 	{
-		if (idx == 0 && !ft_iswall(file->file_arr[st]) && ++st)
+		if (idx == 0 && ft_isempty_str(file->file_arr[st]) && ++st)
 			continue ;
 		file->map[idx] = set_map_line(cub, file, file->file_arr[st]);
 		if (!file->map[idx])
@@ -101,7 +102,7 @@ static void	map_create(t_cub *cub, t_file *file, int st, int end)
 	}
 	file->map_end = st;
 	file->map_height = file->map_end - file->map_st;
-	if (file->map_height < MIN_HEIGHT || file->map_height > MAX_HEIGHT)
+	if (file->map_height < 3)
 		exit_failure(cub, MAP_HEIGHT_ERR);
 }
 
@@ -111,6 +112,9 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 	int		x;
 
 	y = -1;
+	printf("map_height: %d\n", file->map_height);
+	printf("map_width: %d\n", file->map_width);
+	ft_printf(1, "%a", map);
 	while (map[++y])
 	{
 		x = -1;
@@ -123,24 +127,59 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 			else
 				continue ;
 			if (x > 0 && map[y][x - 1] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 			if (x < file->map_width - 1 && map[y][x + 1] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 			if (y > 0 && map[y - 1][x] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 			if (y < file->map_height - 1 && map[y + 1][x] == invalid)
-				return (exit_failure(cub, SPACE_ERR));
+				return (exit_failure(cub, MAP_SPACE_ERR));
 		}
 	}
+	printf("done\n");
 }
 
 /*
- 
+ .1111                  .
 there's 2 walls but both below the player, the last wall isn't a wall
-1
-1111             1111
-11011           1111
-1N11 1             111
-11111011
 
+NO        textures/bluestone.png
+
+
+
+
+
+
+F    32,     250, 255            0
+
+
+
+
+
+
+
+
+
+NO textures/bluestone.xpm
+WE textures/greenlight.xpm 
+SO textures/colorstone.xpm
+EA textures/eagle.xpm
+
+       C  150,150,150
+F    32,     250, 255          
+
+
+
+
+
+
+
+
+ 0
+1111
+1111             1111
+1 111           111N1
+1 11 1             111
+11111011           
+     1                                          1
 */

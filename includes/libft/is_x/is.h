@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 12:05:42 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 14:06:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 13:00:16 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ int	ft_issign(int c);
 int	ft_isdifferent_sign(int num1, int num2);
 int	ft_isempty_str(char *str);
 int	ft_iselement_line(char *line);
-int	ft_isletter(char *line, char sep);
 int	ft_ismap_line(char *line);
 int	ft_iswall(char *line);
+int	ft_isletter(int c, int *counter);
+int	ft_iscomma(int c, int *counter);
 
 #endif

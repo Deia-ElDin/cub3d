@@ -6,11 +6,25 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 21:57:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/18 14:47:49 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	is_color(t_cub *cub, char *line, int *color_idx, int *color_arr)
+{
+	if (!line || !*line)
+		return (0);
+	if (*line && ft_isdigit(*line))
+	{
+		if (*color_idx == 3)
+			exit_failure(cub, COLOR_ERR);
+		use_atoi(cub, line, &color_arr[(*color_idx)]);
+		return (ft_intlen(color_arr[(*color_idx)++]));
+	}
+	return (0);
+}
 
 bool	is_elements_ready(t_file *file)
 {
@@ -27,18 +41,22 @@ void	is_player(t_cub *cub, char *map_line)
 {
 	int		i;
 
+	if (!map_line || !*map_line)
+		return ;
 	i = 0;
 	while (map_line[i])
 	{
-		if (map_line[i] && !ft_isdigit(map_line[i]) && !isspace(map_line[i]))
+		if (!isspace(map_line[i]) && map_line[i] != '0' && map_line[i] != '1')
 		{
+			if (!ft_strchr("NSWE", map_line[i]))
+				exit_failure(cub, MAP_CHARS_ERR);
 			cub->file.player_position = map_line[i];
 			cub->file.player_counter++;
 		}
 		i++;
 	}
 	if (cub->file.player_counter > 1)
-		exit_failure(cub, PLAYER_ERR);
+		exit_failure(cub, MAP_CHARS_ERR);
 }
 
 void	set_map_width(t_file *file, char *map_line)
@@ -74,20 +92,4 @@ char	*set_map_line(t_cub *cub, t_file *file, char *map_line)
 	if (!res)
 		exit_failure(cub, MALLOC_ERR);
 	return (ft_free(&tmp, 'p'), ft_free(&fill, 'p'), res);
-}
-
-void	use_atoi(t_cub *cub, char *str_nbr, int *counter)
-{
-	t_atoi	res;
-	int		nbr;
-
-	if (!str_nbr || !*str_nbr)
-		return (exit_failure(cub, COLOR_ERR));
-	res = ft_atoi(str_nbr);
-	if (res.error)
-		return (exit_failure(cub, COLOR_ERR));
-	nbr = (int)res.nbr;
-	if (nbr < 0 || nbr > 255)
-		return (exit_failure(cub, COLOR_ERR));
-	*counter = nbr;
 }
