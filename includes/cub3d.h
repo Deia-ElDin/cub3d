@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 14:54:37 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 12:53:02 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,17 @@
 
 // ******************** Constants ******************** //
 
+# define SCREEN_HEIGHT 720
+# define SCREEN_WIDTH 1280
+
 // ********************* Errors ********************* //
+
 # define INVALID_FD "Error\nFailed to open the file you provided.\n"
 # define INVALID_FILE_NAME "Error\nInvalid file, kindly check the file name.\n"
 # define INVALID_FILE_EMPTY "Error\nInvalid file, \
 kindly provide us a file to work with.\n"
+# define INVALID_FILE_NOT_COMPLETE "Error\nInvalid file, \
+the file missing some elements or the map.\n"
 # define INVALID_MAP "Error\nInvalid map, kindly check the map.\n"
 # define MALLOC_ERR "Error\nFailed to malloc.\n"
 # define READ_ERR "Error\nSomething went wrong with the read function, \
@@ -46,21 +52,49 @@ the map can't be separated by one or more empty line(s).\n"
 # define MLX_ERR "Error\nSomething went wrong with mlx lib, kindly try later.\n"
 # define COLOR_ERR "Error\nInvalid color.\n"
 
-typedef struct s_imgs
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_img;
+
+typedef struct s_texture
 {
 	void	*no_img;
 	void	*so_img;
 	void	*we_img;
 	void	*ea_img;
+	int		f_array[2];
+	int		c_array[2];
 	int		f_color;
 	int		c_color;
-}	t_imgs;
+}	t_texture;
 
 typedef struct s_map
 {
-	char	*line;
-	int		len;
+	char	**map_arr;
+	int		map_width;
+	int		map_height;
+	int		map_st;
+	int		map_end;
+	int		wall_counter;
+	int		player_counter;
+	char	player_position;
 }	t_map;
+
+typedef struct s_player
+{
+	int		plyr_x;
+	int		plyr_y;
+	double	angle;
+	float	fov_rd;
+	int		rot;
+	int		l_r;
+	int		u_d;
+}	t_player;
 
 typedef struct s_file
 {
@@ -87,43 +121,14 @@ typedef struct s_file
 
 typedef struct s_cub
 {
-	void	*mlx;
-	void	*win;
-	t_file	file;
-	t_imgs	imgs;
+	void		*mlx;
+	void		*win;
+	t_file		file;
+	t_texture	texture;
+	t_map		map;
+	t_player	player;
+	t_img		img;
 }	t_cub;
-
-// void	file_read(t_cub *cub, char *input_file, int len);
-// // Images
-// # define WALL_IMG "textures/wall.xpm"
-// # define GRASS_IMG "textures/grass.xpm"
-// # define PLAYER_RIGHT_IMG "textures/player_right.xpm"
-// # define PLAYER_LEFT_IMG "textures/player_left.xpm"
-// # define COLLECTABLES_IMG "textures/collectables.xpm"
-// # define EXIT_IMG "textures/exit.xpm"
-
-// # define INPUTS_ERR "Error\nInvalid inputs, \
-// kindly provide us only 1 file to work with.\n"
-// # define NO_FD_ERR "Error\nKindly provide us a file to work with.\n"
-// # define LARGE_MAP_ERR "Error\nThe map is too large, \
-// it doesn't make sense dude.\n"
-
-// # define LEN_ERR "Error\nEach line of the map \
-// can't be less than 4 characters.\n"
-// # define LINES_ERR "Error\nThe map lines can't be of a different length.\n"
-// # define MAP_WALL_ERR "Error\nThe map frame \
-// must be all one's representing the wall.\n"
-// # define NO_MAP_CHARS_ERR "Error\nCan't start the game without a player!.\n"
-// # define MORE_PLAYERS_ERR "Error\nCan't start the game \
-// with more than 1 player!.\n"
-// # define NO_EXIT_ERR "Error\nCan't start the game without an exit door!.\n"
-// # define MORE_EXITS_ERR "Error\nCan't start the game \
-// with more than 1 exit door!.\n"
-// # define COLLECTABLES_ERR "Error\nCan't start the game \
-// without some collectables!.\n"
-// # define INVALID_CHAR_ERR "Error\nInvalid character.\n"
-// # define SQR_MAP_ERR "Error\nThe map can't be square.\n"
-// # define PATH_ERR "Error\nCan't reach either the exit or the collectables.\n"
 
 // ********************* PARSING ********************* //
 
@@ -139,6 +144,10 @@ bool	is_elements_ready(t_file *file);
 void	is_player(t_cub *cub, char *map_line);
 void	set_map_width(t_file *file, char *map_line);
 char	*set_map_line(t_cub *cub, t_file *file, char *map_line);
+
+// ******************** EXECUTION ******************** //
+
+void	execution(t_cub *cub);
 
 // ******************** APP UTILS ******************** //
 

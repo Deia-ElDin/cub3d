@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 15:08:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 12:51:54 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	parsing(t_cub *cub, char *input_file)
 	validate_file(cub, &cub->file);
 	map_create(cub, file, file->map_st, file->map_end);
 	map_validate(cub, file, file->map, '\0');
-	print_elements(cub);
 }
 
 static void	file_len(t_cub *cub, char *input_file)
@@ -53,7 +52,7 @@ static void	file_len(t_cub *cub, char *input_file)
 		cub->file.file_len++;
 	}
 	close(fd);
-	if (!cub->file.file_len)
+	if (!cub->file.file_len || cub->file.file_len < 9)
 		exit_failure(cub, INVALID_FILE_EMPTY);
 }
 

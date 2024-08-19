@@ -6,11 +6,52 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 16:07:41 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 12:50:20 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	init_texture(t_texture *texture)
+{
+	texture->no_img = NULL;
+	texture->so_img = NULL;
+	texture->we_img = NULL;
+	texture->ea_img = NULL;
+	texture->f_color = -1;
+	texture->c_color = -1;
+}
+
+static void	init_map(t_map *map)
+{
+	map->map_arr = NULL;
+	map->map_width = -1;
+	map->map_height = -1;
+	map->wall_counter = -1;
+	map->map_st = -1;
+	map->map_end = -1;
+	map->player_counter = -1;
+	map->player_position = '\0';
+}
+
+static void	init_player(t_player *player)
+{
+	player->plyr_x = -1;
+	player->plyr_y = -1;
+	player->angle = -1;
+	player->fov_rd = -1;
+	player->rot = -1;
+	player->l_r = -1;
+	player->u_d = -1;
+}
+
+static void	init_file(t_file *file, char *input_file)
+{
+	file->file_arr = NULL;
+	cub->file.filename_len = (int)ft_strlen(input_file);
+	cub->file.file_len = 0;
+	cub->file.stage = 1;
+}
 
 void	init(t_cub *cub, char *input_file)
 {
@@ -33,6 +74,12 @@ void	init(t_cub *cub, char *input_file)
 	cub->file.wall_counter = 0;
 	cub->file.player_counter = 0;
 	cub->file.player_position = '\0';
+	// cub->img = NULL;
+
+	init_texture(&cub->texture);
+	init_map(&cub->map);
+	init_player(&cub->player);
+	// init_file(&cub->file, input_file);
 }
 
 /*

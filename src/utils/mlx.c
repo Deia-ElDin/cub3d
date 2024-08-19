@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 12:41:52 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/19 12:38:54 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/19 12:39:18 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
-int	main(int ac, char **av)
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
-	t_cub	cub;
+	char	*dst;
 
-	if (ac != 2)
-		return (0);
-	init(&cub, av[1]);
-	cub.mlx = mlx_init();
-	if (!cub.mlx)
-		exit_failure(&cub, MLX_ERR);
-	parsing(&cub, av[1]);
-	// print_elements(cub);
-	// execution(&cub);
-	return (0);
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
