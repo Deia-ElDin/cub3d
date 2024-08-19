@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 12:41:52 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 14:59:31 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av)
 	if (!cub.mlx)
 		exit_failure(&cub, MLX_ERR);
 	parsing(&cub, av[1]);
-	// print_elements(cub);
+	// print_textures(cub);
 	// execution(&cub);
 	return (0);
 }

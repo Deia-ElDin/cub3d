@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:33:41 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 12:10:06 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 14:17:06 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ void	execution(t_cub *cub)
 	img->img = mlx_new_image(cub->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 		&img->line_length, &img->endian);
-	map_draw(cub, cub->file.map);
+	map_draw(cub, cub->map.map_arr);
 	mlx_loop(cub->mlx);
 }

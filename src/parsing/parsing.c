@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 12:51:54 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:12:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 static void	file_len(t_cub *cub, char *input_file);
 static void	file_create(t_cub *cub, t_file *file, char *input_file);
-static void	map_create(t_cub *cub, t_file *file, int st, int end);
-static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid);
+static void	map_create(t_cub *cub, t_file *file, t_map *map);
+static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid);
 
 void	parsing(t_cub *cub, char *input_file)
 {
 	t_file	*file;
+	t_map	*map;
 	int		len;
 
 	file = &cub->file;
-	len = cub->file.filename_len;
+	map = &cub->map;
+	len = cub->file.filepath_len;
 	if ((len - 4) <= 0 || ft_strcmp(".cub", input_file + (len - 4)))
 		exit_failure(cub, INVALID_FILE_NAME);
 	file_len(cub, input_file);
-	file_create(cub, &cub->file, input_file);
-	validate_file(cub, &cub->file);
-	map_create(cub, file, file->map_st, file->map_end);
-	map_validate(cub, file, file->map, '\0');
+	file_create(cub, file, input_file);
+	validate_file(cub, file, map);
+	print_file(cub);
+	print_textures(cub);
+	map_create(cub, file, map);
+	map_validate(cub, map, map->map_arr, '\0');
+	print_map(cub);
 }
 
 static void	file_len(t_cub *cub, char *input_file)
@@ -52,8 +57,10 @@ static void	file_len(t_cub *cub, char *input_file)
 		cub->file.file_len++;
 	}
 	close(fd);
-	if (!cub->file.file_len || cub->file.file_len < 9)
+	if (!cub->file.file_len)
 		exit_failure(cub, INVALID_FILE_EMPTY);
+	if (cub->file.file_len < 9)
+		exit_failure(cub, INVALID_FILE_NOT_COMPLETE);
 }
 
 static void	file_create(t_cub *cub, t_file *file, char *input_file)
@@ -81,54 +88,58 @@ static void	file_create(t_cub *cub, t_file *file, char *input_file)
 	close(fd);
 }
 
-static void	map_create(t_cub *cub, t_file *file, int st, int end)
+static void	map_create(t_cub *cub, t_file *file, t_map *map)
 {
 	int	idx;
+	int	st;
+	int	end;
 
-	file->map = ft_calloc(file->map_height + 1, sizeof(char *));
-	if (!file->map)
+	map->map_arr = ft_calloc(map->map_height + 1, sizeof(char *));
+	if (!map->map_arr)
 		exit_failure(cub, MALLOC_ERR);
 	idx = 0;
+	st = map->map_st;
+	end = map->map_end;
 	while (file->file_arr[st] && *file->file_arr[st] && st <= end)
 	{
 		if (idx == 0 && ft_isempty_str(file->file_arr[st]) && ++st)
 			continue ;
-		file->map[idx] = set_map_line(cub, file, file->file_arr[st]);
-		if (!file->map[idx])
+		map->map_arr[idx] = set_map_line(cub, map, file->file_arr[st]);
+		if (!map->map_arr[idx])
 			exit_failure(cub, MALLOC_ERR);
 		st++;
 		idx++;
 	}
-	file->map_end = st;
-	file->map_height = file->map_end - file->map_st;
-	if (file->map_height < 3)
+	map->map_end = st;
+	map->map_height = map->map_end - map->map_st;
+	if (map->map_height < 3)
 		exit_failure(cub, MAP_HEIGHT_ERR);
 }
 
-static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
+static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid)
 {
-	int		y;
-	int		x;
+	int	y;
+	int	x;
 
 	y = -1;
-	while (map[++y])
+	while (map_arr[++y])
 	{
 		x = -1;
-		while (map[y][++x])
+		while (map_arr[y][++x])
 		{
-			if (map[y][x] == ' ')
+			if (map_arr[y][x] == ' ')
 				invalid = '0';
-			else if (map[y][x] == file->player_position)
+			else if (map_arr[y][x] == map->player_position)
 				invalid = ' ';
 			else
 				continue ;
-			if (x > 0 && map[y][x - 1] == invalid)
+			if (x > 0 && map_arr[y][x - 1] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
-			if (x < file->map_width - 1 && map[y][x + 1] == invalid)
+			if (x < map->map_width - 1 && map_arr[y][x + 1] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
-			if (y > 0 && map[y - 1][x] == invalid)
+			if (y > 0 && map_arr[y - 1][x] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
-			if (y < file->map_height - 1 && map[y + 1][x] == invalid)
+			if (y < map->map_height - 1 && map_arr[y + 1][x] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
 		}
 	}

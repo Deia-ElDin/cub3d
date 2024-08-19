@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 21:48:28 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 14:19:09 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static void	exit_clean(t_cub *cub)
 {
+	// t_file		*file;
+	// t_texture	*texture;
+	// t_map		*map;
+
+	// file = &cub->file;
+	// texture = &cub->texture;
+	// map = &cub->map;
 	ft_free(&cub->file.file_arr, 'a');
-	ft_free(&cub->file.map, 'a');
-	ft_free(&cub->file.no_path, 'p');
-	ft_free(&cub->file.so_path, 'p');
-	ft_free(&cub->file.we_path, 'p');
-	ft_free(&cub->file.ea_path, 'p');
+	ft_free(&cub->map.map_arr, 'a');
+	// ft_free(&cub->file.no_path, 'p');
+	// ft_free(&cub->file.so_path, 'p');
+	// ft_free(&cub->file.we_path, 'p');
+	// ft_free(&cub->file.ea_path, 'p');
 	if (cub->mlx)
 		free(cub->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 15:36:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/17 18:26:14 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:12:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	file_name(t_cub *cub, char *input_file)
 {
 	int	len;
 
-	len = cub->file.filename_len;
+	len = cub->file.filepath_len;
 	if ((len - 4) <= 0 || ft_strcmp(".cub", input_file + (len - 4)))
 		exit_failure(cub, INVALID_FILE_NAME);
 }

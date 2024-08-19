@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 15:58:32 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 14:41:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,49 +26,50 @@ int	is_color(t_cub *cub, char *line, int *color_idx, int *color_arr)
 	return (0);
 }
 
-bool	is_elements_ready(t_file *file)
+bool	is_elements_ready(t_texture *texture)
 {
-	if (ft_isempty_str(file->no_path)
-		|| ft_isempty_str(file->so_path)
-		|| ft_isempty_str(file->we_path)
-		|| ft_isempty_str(file->ea_path)
-		|| file->is_valid_colors != 2)
-		return (false);
-	return (true);
+	return (texture->no_img
+		&& texture->so_img
+		&& texture->we_img
+		&& texture->ea_img
+		&& texture->f_color != -1
+		&& texture->c_color != -1);
 }
 
 void	is_player(t_cub *cub, char *map_line)
 {
+	t_map	*map;
 	int		i;
 
 	if (!map_line || !*map_line)
 		return ;
 	i = 0;
+	map = &cub->map;
 	while (map_line[i])
 	{
 		if (!isspace(map_line[i]) && map_line[i] != '0' && map_line[i] != '1')
 		{
 			if (!ft_strchr("NSWE", map_line[i]))
 				exit_failure(cub, MAP_CHARS_ERR);
-			cub->file.player_position = map_line[i];
-			cub->file.player_counter++;
+			map->player_position = map_line[i];
+			map->player_counter++;
 		}
 		i++;
 	}
-	if (cub->file.player_counter > 1)
+	if (map->player_counter > 1)
 		exit_failure(cub, MAP_CHARS_ERR);
 }
 
-void	set_map_width(t_file *file, char *map_line)
+void	set_map_width(t_map *map, char *map_line)
 {
 	int	len;
 
 	len = (int)ft_strlen(map_line);
-	if (len > file->map_width)
-		file->map_width = len;
+	if (len > map->map_width)
+		map->map_width = len;
 }
 
-char	*set_map_line(t_cub *cub, t_file *file, char *map_line)
+char	*set_map_line(t_cub *cub, t_map *map, char *map_line)
 {
 	int		len;
 	int		diff;
@@ -80,9 +81,9 @@ char	*set_map_line(t_cub *cub, t_file *file, char *map_line)
 	tmp = ft_strdup(map_line);
 	if (!tmp)
 		exit_failure(cub, MALLOC_ERR);
-	if (len == file->map_width)
+	if (len == map->map_width)
 		return (tmp);
-	diff = file->map_width - len;
+	diff = map->map_width - len;
 	fill = ft_calloc(diff + 1, sizeof(char));
 	if (!fill)
 		exit_failure(cub, MALLOC_ERR);

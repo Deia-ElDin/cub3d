@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 12:53:02 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:12:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ typedef struct s_texture
 	void	*so_img;
 	void	*we_img;
 	void	*ea_img;
-	int		f_array[2];
-	int		c_array[2];
+	int		f_arr[3];
+	int		c_arr[3];
 	int		f_color;
 	int		c_color;
 }	t_texture;
@@ -99,24 +99,24 @@ typedef struct s_player
 typedef struct s_file
 {
 	char	**file_arr;
-	char	**map;
-	void	*no_path;
-	void	*so_path;
-	void	*we_path;
-	void	*ea_path;
-	int		c_color[3];
-	int		f_color[3];
-	int		filename_len;
+	int		filepath_len;
 	int		stage;
 	int		file_len;
-	int		is_valid_colors;
-	int		map_st;
-	int		map_end;
-	int		map_width;
-	int		map_height;
-	int		wall_counter;
-	int		player_counter;
-	char	player_position;
+	// char	**map;
+	// void	*no_path;
+	// void	*so_path;
+	// void	*we_path;
+	// void	*ea_path;
+	// int		c_color[3];
+	// int		f_color[3];
+	// int		is_valid_colors;
+	// int		map_st;
+	// int		map_end;
+	// int		map_width;
+	// int		map_height;
+	// int		wall_counter;
+	// int		player_counter;
+	// char	player_position;
 }	t_file;
 
 typedef struct s_cub
@@ -137,13 +137,13 @@ void	parsing(t_cub *cub, char *input_file);
 // ****************** PARSING UTILS ****************** //
 
 // 		*	validate.c
-void	validate_file(t_cub *cub, t_file *file);
+void	validate_file(t_cub *cub, t_file *file, t_map *map);
 // 		*	utils.c
 int		is_color(t_cub *cub, char *line, int *color_idx, int *color_arr);
-bool	is_elements_ready(t_file *file);
+bool	is_elements_ready(t_texture *texture);
 void	is_player(t_cub *cub, char *map_line);
-void	set_map_width(t_file *file, char *map_line);
-char	*set_map_line(t_cub *cub, t_file *file, char *map_line);
+void	set_map_width(t_map *map, char *map_line);
+char	*set_map_line(t_cub *cub, t_map *map, char *map_line);
 
 // ******************** EXECUTION ******************** //
 
@@ -161,7 +161,8 @@ void	use_atoi(t_cub *cub, char *str_nbr, int *counter);
 
 // *************************** DELETE ME *************************** //
 
-void	print_elements(t_cub *cub);
+void	print_textures(t_cub *cub);
+void	print_file(t_cub *cub);
 void	print_map(t_cub *cub);
 
 #endif
