@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:58:57 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	is_player(t_cub *cub, char *map_line, int y)
 			map->plyr_counter++;
 			calculate_angle(cub, map_line[x]);
 			cub->player.plyr_x = x;
-			cub->player.plyr_y = cub->file.file_len - y - 1;
+			printf("y: %d\n", y);
+			cub->player.plyr_y = y;
 		}
 		x++;
 	}

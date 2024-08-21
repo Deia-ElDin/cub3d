@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:44:02 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	double		plyr_x;
-	double		plyr_y;
+	double	plyr_x;
+	double	plyr_y;
 	double	angle;
 	float	fov_rd;
 	int		rot;

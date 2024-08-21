@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 17:43:14 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:58:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static void	validate_map(t_cub *cub, t_file *file, t_map *map, int st)
 	while (st <= map->map_end && file->file_arr[st])
 	{
 		set_map_width(map, file->file_arr[st]);
-		is_player(cub, file->file_arr[st], st);
+		is_player(cub, file->file_arr[st], st - map->map_st);
 		is_empty_line_exist += ft_isempty_str(file->file_arr[st]);
 		map->wall_counter += ft_iswall(file->file_arr[st]);
 		if (map->plyr_counter && !map->wall_counter)
