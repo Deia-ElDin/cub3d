@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 14:41:48 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/20 19:44:44 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_color(t_cub *cub, char *line, int *color_idx, int *color_arr)
 	return (0);
 }
 
-bool	is_elements_ready(t_texture *texture)
+bool	is_textures_ready(t_texture *texture)
 {
 	return (texture->no_img
 		&& texture->so_img
@@ -36,27 +36,37 @@ bool	is_elements_ready(t_texture *texture)
 		&& texture->c_color != -1);
 }
 
-void	is_player(t_cub *cub, char *map_line)
+void	is_player(t_cub *cub, char *map_line, int y)
 {
 	t_map	*map;
-	int		i;
+	int		x;
 
 	if (!map_line || !*map_line)
 		return ;
-	i = 0;
+	x = 0;
 	map = &cub->map;
-	while (map_line[i])
+	while (map_line[x])
 	{
-		if (!isspace(map_line[i]) && map_line[i] != '0' && map_line[i] != '1')
+		if (!isspace(map_line[x]) && map_line[x] != '0' && map_line[x] != '1')
 		{
-			if (!ft_strchr("NSWE", map_line[i]))
+			if (!ft_strchr("NSWE", map_line[x]))
 				exit_failure(cub, MAP_CHARS_ERR);
-			map->player_position = map_line[i];
-			map->player_counter++;
+			map->plyr_position = map_line[x];
+			map->plyr_counter++;
+			if (map_line[x] == 'N')
+				cub->player.angle = M_PI / 2;
+			else if (map_line[x] == 'S')
+				cub->player.angle = 3 * M_PI / 2;
+			else if (map_line[x] == 'E')
+				cub->player.angle = 0;
+			else if (map_line[x] == 'W')
+				cub->player.angle = M_PI;
+			cub->player.plyr_x = x;
+			cub->player.plyr_y = cub->file.file_len - y - 1;
 		}
-		i++;
+		x++;
 	}
-	if (map->player_counter > 1)
+	if (map->plyr_counter > 1)
 		exit_failure(cub, MAP_CHARS_ERR);
 }
 
@@ -123,7 +133,7 @@ char	*set_map_line(t_cub *cub, t_map *map, char *map_line)
 				and we increment line len outside the function.
 	}
 
-	*	is_elements_ready(t_file *file)
+	*	is_textures_ready(t_file *file)
 	{
 		We use this function to check if all the elements portion of the file
 		is ready or not.

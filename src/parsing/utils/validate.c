@@ -6,11 +6,45 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 14:21:06 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 21:38:08 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	validate_img(t_cub *cub, void **img, char *line);
+static void	validate_color(t_cub *cub, int *arr, int *value, char *line);
+static void	validate_elements(t_cub *cub, char *line);
+static void	validate_map(t_cub *cub, t_file *file, t_map *map, int st);
+
+void	file_validate(t_cub *cub, t_file *file, t_map *map)
+{
+	char	**file_arr;
+	int		i;
+
+	file_arr = file->file_arr;
+	i = 0;
+	while (file->stage == 1 && file_arr[i])
+	{
+		if (ft_isempty_str(file_arr[i]))
+			i++;
+		else if (ft_iselement_line(file_arr[i]))
+			validate_elements(cub, file_arr[i++]);
+		else
+			exit_failure(cub, ELEMENTS_ERR);
+	}
+	while (file->stage == 2 && file_arr[i])
+	{
+		while (file_arr[i] && ft_isempty_str(file_arr[i]))
+			i++;
+		if (!map->map_st && !ft_iselement_line(file_arr[i]))
+			map->map_st = i++;
+		else
+			break ;
+	}
+	map->map_end = file->file_len;
+	validate_map(cub, file, map, map->map_st);
+}
 
 static void	validate_img(t_cub *cub, void **img, char *line)
 {
@@ -55,7 +89,6 @@ static void	validate_color(t_cub *cub, int *arr, int *value, char *line)
 	if (letters_counter != 1 || commas_counter != 2 || colors_counter != 3)
 		exit_failure(cub, COLOR_ERR);
 	*value = (arr[0] << 16) | (arr[1] << 8) | arr[2];
-	printf("Color: %d\n", *value);
 }
 
 static void	validate_elements(t_cub *cub, char *line)
@@ -79,7 +112,7 @@ static void	validate_elements(t_cub *cub, char *line)
 		validate_color(cub, texture->f_arr, &texture->f_color, line);
 	else if (ft_strnstr(line, "C", len))
 		validate_color(cub, texture->c_arr, &texture->c_color, line);
-	if (is_elements_ready(&cub->texture))
+	if (is_textures_ready(&cub->texture))
 		file->stage++;
 }
 
@@ -96,52 +129,23 @@ static void	validate_map(t_cub *cub, t_file *file, t_map *map, int st)
 	while (st <= map->map_end && file->file_arr[st])
 	{
 		set_map_width(map, file->file_arr[st]);
-		is_player(cub, file->file_arr[st]);
+		is_player(cub, file->file_arr[st], st);
 		is_empty_line_exist += ft_isempty_str(file->file_arr[st]);
 		map->wall_counter += ft_iswall(file->file_arr[st]);
-		if (map->player_counter && !map->wall_counter)
+		if (map->plyr_counter && !map->wall_counter)
 			exit_failure(cub, MAP_WALL_ERR);
 		else if (is_empty_line_exist && ft_ismap_line(file->file_arr[st]))
 			exit_failure(cub, MAP_EMPTY_LINE);
 		st++;
 	}
-	if (map->player_counter != 1)
+	if (map->plyr_counter != 1)
 		exit_failure(cub, MAP_CHARS_ERR);
 	if (map->wall_counter < 2)
 		exit_failure(cub, MAP_WALL_ERR);
 }
 
-void	validate_file(t_cub *cub, t_file *file, t_map *map)
-{
-	char	**file_arr;
-	int		i;
-
-	file_arr = file->file_arr;
-	i = 0;
-	while (file->stage == 1 && file_arr[i])
-	{
-		if (ft_isempty_str(file_arr[i]))
-			i++;
-		else if (ft_iselement_line(file_arr[i]))
-			validate_elements(cub, file_arr[i++]);
-		else
-			exit_failure(cub, ELEMENTS_ERR);
-	}
-	while (file->stage == 2 && file_arr[i])
-	{
-		while (file_arr[i] && ft_isempty_str(file_arr[i]))
-			i++;
-		if (!map->map_st && !ft_iselement_line(file_arr[i]))
-			map->map_st = i++;
-		else
-			break ;
-	}
-	map->map_end = file->file_len;
-	validate_map(cub, file, map, map->map_st);
-}
-
 /*
-	*	validate_file(t_cub *cub, t_file *file)
+	*	file_validate(t_cub *cub, t_file *file)
 	{
 			- This function is used to validate the file.
 		- It has 2 while loops:

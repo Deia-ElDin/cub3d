@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/19 14:19:09 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/19 19:53:17 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	exit_failure(t_cub *cub, char *err_msg)
 	exit(EXIT_FAILURE);
 }
 
-void	exit_success(t_cub *cub)
+int	exit_success(t_cub *cub)
 {
 	exit_clean(cub);
 	exit(EXIT_SUCCESS);
+	return (0);
 }

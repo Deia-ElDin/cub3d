@@ -6,14 +6,14 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/19 14:14:25 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/21 14:03:53 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -Iincludes 
 
 LIBFT_DIR = includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
@@ -27,14 +27,16 @@ PARSING = parsing.c
 PARSING_UTILS = validate.c utils.c
 
 EXECUTION = execution.c 
+EXECUTION_UTILS = draw.c movement.c
 
-UTILS = exit.c init.c img.c utils.c
+UTILS = exit.c init.c img.c utils.c mlx.c math.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
 	$(addprefix src/parsing/utils/, $(PARSING_UTILS)) \
 	$(addprefix src/execution/, $(EXECUTION)) \
+	$(addprefix src/execution/utils/, $(EXECUTION_UTILS)) \
 	$(addprefix src/utils/, $(UTILS)) \
 
 OBJS = $(SRCS:.c=.o)
@@ -44,7 +46,7 @@ all: $(NAME)
 	./$(NAME) maps/m1.cub
 
 sanitize: CFLAGS += -fsanitize=address -g3
-sanitize: all
+sanitize: re
 
 valgrind: all
 	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" -s ./minishell
