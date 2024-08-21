@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 12:05:42 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 13:00:16 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:19:30 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int	ft_ismap_line(char *line);
 int	ft_iswall(char *line);
 int	ft_isletter(int c, int *counter);
 int	ft_iscomma(int c, int *counter);
+int	ft_istab(char *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 14:06:00 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ enum
 kindly provide us a file to work with.\n"
 # define INVALID_FILE_NOT_COMPLETE "Error\nInvalid file, \
 the file missing some elements or the map.\n"
-# define INVALID_MAP "Error\nInvalid map, kindly check the map.\n"
 # define MALLOC_ERR "Error\nFailed to malloc.\n"
 # define READ_ERR "Error\nSomething went wrong with the read function, \
 kindly try again later.\n"
+# define TAB_ERR "Error\nInvalid file, tab character found.\n"
 # define ELEMENTS_ERR "Error\nInvalid elements.\n"
 # define ELEMENTS_EXIST_ERR "Error\nInvalid elements. element already exist.\n"
 # define ELEMENTS_SPACE_ERR "Error\nInvalid elements, \
@@ -92,7 +92,7 @@ typedef struct s_map
 	int		map_end;
 	int		wall_counter;
 	int		plyr_counter;
-	char	plyr_position;
+	char	plyr_direction;
 }	t_map;
 
 typedef struct s_player

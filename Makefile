@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/21 14:03:53 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/21 17:40:07 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ PARSING_UTILS = validate.c utils.c
 EXECUTION = execution.c 
 EXECUTION_UTILS = draw.c movement.c
 
-UTILS = exit.c init.c img.c utils.c mlx.c math.c
+UTILS = exit.c init.c utils.c mlx.c math.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \

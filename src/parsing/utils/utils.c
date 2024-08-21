@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/20 19:44:44 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,9 @@ void	is_player(t_cub *cub, char *map_line, int y)
 		{
 			if (!ft_strchr("NSWE", map_line[x]))
 				exit_failure(cub, MAP_CHARS_ERR);
-			map->plyr_position = map_line[x];
+			map->plyr_direction = map_line[x];
 			map->plyr_counter++;
-			if (map_line[x] == 'N')
-				cub->player.angle = M_PI / 2;
-			else if (map_line[x] == 'S')
-				cub->player.angle = 3 * M_PI / 2;
-			else if (map_line[x] == 'E')
-				cub->player.angle = 0;
-			else if (map_line[x] == 'W')
-				cub->player.angle = M_PI;
+			calculate_angle(cub, map_line[x]);
 			cub->player.plyr_x = x;
 			cub->player.plyr_y = cub->file.file_len - y - 1;
 		}

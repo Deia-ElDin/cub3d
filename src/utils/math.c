@@ -6,16 +6,11 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:27:58 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 14:05:22 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:41:16 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// double	degrees_to_radians(double degrees)
-// {
-// 	return (degrees * (M_PI / 180.0));
-// }
 
 void	calculate_angle(t_cub *cub, char direction)
 {
@@ -31,8 +26,8 @@ void	calculate_angle(t_cub *cub, char direction)
 
 void	calculate_center(double x, double y, int *center_x, int *center_y)
 {
-    *center_x = (int)(x * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
-    *center_y = (int)(y * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
+	*center_x = (int)(x * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
+	*center_y = (int)(y * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
 }
 
 void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy)
@@ -62,8 +57,6 @@ void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy)
 	}
 }
 
-
-
 /*
 	*	void	calculate_center(int x, int y, int *center_x, int *center_y)
 	{
@@ -71,17 +64,17 @@ void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy)
 			The function finds the center of a specific tile on the map.
 
 		-	Parameters:
-			x: The x-coordinate of the tile (the start of the tile from the left).
-			y: The y-coordinate of the tile (the start of the tile from the top).
+			x: The x-cords of the tile (the start of the tile from the left).
+			y: The y-cords of the tile (the start of the tile from the top).
 			center_x: The address which we will set the x center to.
 			center_y: The address which we will set the y center to.
 			
 		-	How It Works:
-			1- Calculate Position: It multiplies the tile's x and y positions by the 
-				tile size to get the top-left corner of the tile.
+			1- Calculate Position: It multiplies the tile's x and y positions 
+				by the tile size to get the top-left corner of the tile.
 			2- Find Center: It adds half the tile size to these positions 
 				to find the center of the tile.
-			3- Output: The calculated center coordinates are stored in center_x and center_y.
+			3- Output: The calculated center cords are stored in
+				center_x and center_y.
 	}
 */
-

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/20 20:47:46 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // print_map(cub);
 static void	file_len(t_cub *cub, char *input_file);
 static void	file_create(t_cub *cub, t_file *file, char *input_file);
-static void	map_create(t_cub *cub, t_file *file, t_map *map);
+static void	map_create(t_cub *cub, t_map *map, int st, int end);
 static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid);
 
 void	parsing(t_cub *cub, char *input_file)
@@ -34,7 +34,7 @@ void	parsing(t_cub *cub, char *input_file)
 	file_len(cub, input_file);
 	file_create(cub, file, input_file);
 	file_validate(cub, file, map);
-	map_create(cub, file, map);
+	map_create(cub, map, map->map_st, map->map_end);
 	map_validate(cub, map, map->map_arr, '\0');
 }
 
@@ -83,37 +83,38 @@ static void	file_create(t_cub *cub, t_file *file, char *input_file)
 			return ((void)close(fd), exit_failure(cub, READ_ERR));
 		if (!ret.line)
 			break ;
+		if (ft_istab(ret.line))
+			exit_failure(cub, TAB_ERR);
 		file->file_arr[idx++] = ret.line;
 	}
 	close(fd);
 }
 
-static void	map_create(t_cub *cub, t_file *file, t_map *map)
+static void	map_create(t_cub *cub, t_map *map, int st, int end)
 {
-	int	idx;
-	int	st;
-	int	end;
+	char	**file_arr;
+	int		idx;
 
+	file_arr = cub->file.file_arr;
 	map->map_arr = ft_calloc(map->map_height + 1, sizeof(char *));
 	if (!map->map_arr)
 		exit_failure(cub, MALLOC_ERR);
 	idx = 0;
-	st = map->map_st;
-	end = map->map_end;
-	while (file->file_arr[st] && *file->file_arr[st] && st <= end)
+	while (st <= end && file_arr[st] && *file_arr[st])
 	{
-		if (idx == 0 && ft_isempty_str(file->file_arr[st]) && ++st)
+		if (ft_isempty_str(file_arr[st]) && ++st)
 			continue ;
-		map->map_arr[idx] = set_map_line(cub, map, file->file_arr[st]);
+		map->map_arr[idx] = set_map_line(cub, map, file_arr[st]);
 		if (!map->map_arr[idx])
 			exit_failure(cub, MALLOC_ERR);
 		st++;
 		idx++;
 	}
-	map->map_end = st;
-	map->map_height = map->map_end - map->map_st;
+	map->map_height = idx;
 	if (map->map_height < 3)
 		exit_failure(cub, MAP_HEIGHT_ERR);
+	if (!ft_iswall(map->map_arr[0]) || !ft_iswall(map->map_arr[idx - 1]))
+		exit_failure(cub, MAP_WALL_ERR);
 }
 
 static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid)
@@ -129,7 +130,7 @@ static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid)
 		{
 			if (map_arr[y][x] == ' ')
 				invalid = '0';
-			else if (map_arr[y][x] == map->plyr_position)
+			else if (map_arr[y][x] == map->plyr_direction)
 				invalid = ' ';
 			else
 				continue ;

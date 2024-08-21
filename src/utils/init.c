@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/20 16:51:35 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	init_map(t_map *map)
 	map->map_end = 0;
 	map->wall_counter = 0;
 	map->plyr_counter = 0;
-	map->plyr_position = '\0';
+	map->plyr_direction = '\0';
 }
 
 static void	init_player(t_player *player)
@@ -128,7 +128,7 @@ void	init(t_cub *cub, char *input_file)
 			used to store the number of walls in the map.
 		-	map->plyr_counter = 0;
 			used to store the number of players in the map.
-		-	map->plyr_position = '\0';
+		-	map->plyr_direction = '\0';
 			used to store the position of the player in the map.
 	}
 

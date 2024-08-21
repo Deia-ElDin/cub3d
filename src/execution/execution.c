@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:33:41 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/20 22:57:13 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:04:58 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	execution(t_cub *cub)
 	map = &cub->map;
 	img = &cub->img;
 	// print_player(cub);
-	// print_map(cub);
+	print_map(cub);
 	init_mlx(cub, img);
 	mlx_hook(cub->win, ON_DESTROY, 0, exit_success, cub);
 	mlx_hook(cub->win, ON_KEYDOWN, 0, movement, cub);
