@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 17:58:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/22 14:59:51 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	validate_color(t_cub *cub, int *arr, int *value, char *line)
 	}
 	if (letters_counter != 1 || commas_counter != 2 || colors_counter != 3)
 		exit_failure(cub, COLOR_ERR);
-	*value = (arr[0] << 16) | (arr[1] << 8) | arr[2];
+	*value = create_rgb(arr);
 }
 
 static void	validate_elements(t_cub *cub, char *line)

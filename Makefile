@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/21 17:40:07 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/22 20:46:09 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,10 @@ MAIN = main.c delete_me.c
 PARSING = parsing.c 
 PARSING_UTILS = validate.c utils.c
 
-EXECUTION = execution.c 
-EXECUTION_UTILS = draw.c movement.c
+# EXECUTION = execution.c 
+# EXECUTION_UTILS = draw/utils.c draw/draw.c movement.c rays.c
+
+EXEC = execution.c movement.c rays.c render.c render2.c
 
 UTILS = exit.c init.c utils.c mlx.c math.c
 
@@ -35,9 +37,10 @@ SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
 	$(addprefix src/parsing/utils/, $(PARSING_UTILS)) \
-	$(addprefix src/execution/, $(EXECUTION)) \
-	$(addprefix src/execution/utils/, $(EXECUTION_UTILS)) \
+	$(addprefix src/exec/, $(EXEC)) \
 	$(addprefix src/utils/, $(UTILS)) \
+	# $(addprefix src/execution/, $(EXECUTION)) \
+	# $(addprefix src/execution/utils/, $(EXECUTION_UTILS)) \
 
 OBJS = $(SRCS:.c=.o)
 

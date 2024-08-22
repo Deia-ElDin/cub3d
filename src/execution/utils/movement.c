@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 18:21:28 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 14:02:06 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/22 19:36:06 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ static void	rotate(t_cub *cub, int keycode)
 	if (!direction)
 		return ;
 	player = &cub->player;
-	// printf("prev angle: %f\n", player->angle);
 	player->angle += direction * ROTATION_SPEED;
-	// printf("new angle: %f\n", player->angle);
 	if (player->angle < 0)
 		player->angle += 2 * M_PI;
 	if (player->angle > 2 * M_PI)
