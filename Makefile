@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/22 20:46:09 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/23 18:27:39 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,27 +23,22 @@ MLX_LIB = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 MAIN = main.c delete_me.c
 
-PARSING = parsing.c 
-PARSING_UTILS = validate.c utils.c
+PARSING = parsing.c validate.c utils.c
 
-# EXECUTION = execution.c 
-# EXECUTION_UTILS = draw/utils.c draw/draw.c movement.c rays.c
+EXECUTION = execution.c draw.c movement.c rays.c utils.c
 
-EXEC = execution.c movement.c rays.c render.c render2.c
+# EXEC = execution.c movement.c rays.c render.c render2.c
 
-UTILS = exit.c init.c utils.c mlx.c math.c
+UTILS = exit.c init.c utils.c mlx.c 
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
-	$(addprefix src/parsing/utils/, $(PARSING_UTILS)) \
-	$(addprefix src/exec/, $(EXEC)) \
 	$(addprefix src/utils/, $(UTILS)) \
-	# $(addprefix src/execution/, $(EXECUTION)) \
-	# $(addprefix src/execution/utils/, $(EXECUTION_UTILS)) \
+	$(addprefix src/execution/, $(EXECUTION)) \
+	# $(addprefix src/exec/, $(EXEC)) \
 
 OBJS = $(SRCS:.c=.o)
-
 
 all: $(NAME)
 	./$(NAME) maps/m1.cub

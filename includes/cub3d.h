@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/22 20:44:36 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/23 18:28:33 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,36 +172,35 @@ int		exit_success(t_cub *cub);
 void	init(t_cub *cub, char *input_file);
 // 		*	utils.c
 void	use_atoi(t_cub *cub, char *str_nbr, int *counter);
-// 		*	mlx.c
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-int		create_rgb(int *color_arr);
-// 		*	math.c
 void	calculate_angle(t_cub *cub, char direction);
 void	calculate_center(double x, double y, int *center_x, int *center_y);
 void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy);
+// 		*	mlx.c
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+int		create_rgb(int *color_arr);
 
 // ********************** EXEC ********************** //
-void	exec(t_cub *cub);
-void	rotate_player(t_cub *cub, int direction);
-void	move_player(t_cub *cub, double move_x, double move_y);
-void	cub_hook(t_cub *cub, double move_x, double move_y);
-void	ft_reles(int keycode, t_cub *cub);
-void	key_press(int keycode, void *cb);
-int inter_check(float angle, float *inter, float *step, int is_horizon);
-int wall_hit(float x, float y, t_cub *cub);
-float get_h_inter(t_cub *cub, float angl);
-float get_v_inter(t_cub *cub, float angl);
-void cast_rays(t_cub *cub);
-void	draw_floor_ceiling(t_texture *texture, t_img *img, int ray, int t_pix, int b_pix);
-void	*get_texture(t_texture *texture, t_ray *ray);
-double	get_x_o(void *texture, t_ray *ray);
-void	draw_wall(t_img *img, t_ray *ray, t_texture *texture, int t_pix, int b_pix, double wall_h);
-void	render_wall(t_cub *cub, int ray);
-int	get_rgba(int r, int g, int b, int a);
-int	reverse_bytes(int c);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-float	normalize_angle(float angle);
-int	unit_circle(float angle, char c);
+// void	exec(t_cub *cub);
+// void	rotate_player(t_cub *cub, int direction);
+// void	move_player(t_cub *cub, double move_x, double move_y);
+// void	cub_hook(t_cub *cub, double move_x, double move_y);
+// void	ft_reles(int keycode, t_cub *cub);
+// void	key_press(int keycode, void *cb);
+// int inter_check(float angle, float *inter, float *step, int is_horizon);
+// int wall_hit(float x, float y, t_cub *cub);
+// float get_h_inter(t_cub *cub, float angl);
+// float get_v_inter(t_cub *cub, float angl);
+// void cast_rays(t_cub *cub);
+// void	draw_floor_ceiling(t_texture *texture, t_img *img, int ray, int t_pix, int b_pix);
+// void	*get_texture(t_texture *texture, t_ray *ray);
+// double	get_x_o(void *texture, t_ray *ray);
+// void	draw_wall(t_img *img, t_ray *ray, t_texture *texture, int t_pix, int b_pix, double wall_h);
+// void	render_wall(t_cub *cub, int ray);
+// int	get_rgba(int r, int g, int b, int a);
+// int	reverse_bytes(int c);
+// void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+// float	normalize_angle(float angle);
+// int	unit_circle(float angle, char c);
 // ************************************************** //
 // ************************************************** //
 // ************************************************** //

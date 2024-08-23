@@ -6,21 +6,11 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:02 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 18:59:40 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/23 18:25:35 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
-
-
-
-
-
-
-
-
 
 static int	unit_circle(float angle, char c)	// check the unit circle
 {
