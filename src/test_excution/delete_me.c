@@ -1,23 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   delete_me.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/07/15 15:06:50 by dehamad          ###   ########.fr       */
+/*   Created: 2024/07/12 16:23:51 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/07 07:11:57 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-int	main(int ac, char **av)
-{
-	t_cub	cub;
-
-    if (ac != 2)
-        return (0);
-    parsing(&cub, av[1]);
-	return (0);
-}

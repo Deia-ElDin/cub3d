@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/07/15 14:58:07 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/15 17:49:42 by aalshafy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,15 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
+SANITIZER = -fsanitize=address
 
 LIBFT_DIR = includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 MLX_DIR = includes/mlx
+MLX_LIB = $(MLX_DIR)/libmlx.a
+LIBS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
-MAIN = main.c delete_me.c
+MAIN = main.c delete_me.c init.c raycasting.c render.c movement.c
 PARSING = parsing.c
 EXECUTION = execution.c 
 UTILS = exit.c map.c 
@@ -33,7 +36,7 @@ SRCS = \
 
 OBJS = $(SRCS:.c=.o)
 
-all: $(NAME)
+all: mlx libft $(NAME)
 
 sanitize: CFLAGS += -fsanitize=address
 sanitize: all
@@ -44,8 +47,11 @@ valgrind: all
 libft: 
 	make -C $(LIBFT_DIR)
 
+mlx:
+	make -C $(MLX_DIR)
+
 $(NAME): $(LIBFT_LIB) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) $(LIBS) -o $(NAME) $(SANITIZER)
 
 $(LIBFT_LIB):
 	make -C $(LIBFT_DIR)
