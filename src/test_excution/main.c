@@ -6,11 +6,11 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:04:54 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/15 18:06:36 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:28:57 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/cub3d_test.h"
+# include "cub3d_test.h"
 
 int main()
 {
@@ -36,6 +36,7 @@ void start_the_game(t_data *data)
     cube.img = (t_mlx_img *)ft_calloc(1, sizeof(t_mlx_img));
     cube.mlx_ptr = mlx_init();
     cube.win_ptr = mlx_new_window(cube.mlx_ptr, S_WIDTH, S_HEIGHT, "cub3d");
+    init_txtures(&cube);
     mlx_hook(cube.win_ptr, MLX_PRESS, MLX_RELEASE, &mlx_key, &cube); // key press
     mlx_hook(cube.win_ptr, MLX_RELEASE, MLX_RELEASE, &key_reles, &cube); // key release
     mlx_loop_hook(cube.mlx_ptr, &game_loop, &cube); // game loop continous called to render the game
@@ -71,4 +72,24 @@ void	ft_exit(t_cube *mlx) 		// exit the game
 	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr); // destroy the window
 	printf("Game closed\n"); // print the message
 	exit(0); // exit the game
+}
+
+void init_txtures(t_cube *cube)
+{
+    t_txtrs *txtrs;
+
+    txtrs = (t_txtrs *)ft_calloc(1, sizeof(t_txtrs));
+    cube->txtrs = txtrs;
+    txtrs->no = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+    txtrs->so = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+    txtrs->we = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+    txtrs->ea = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+    txtrs->no->img = cube->texture->no_img;
+    txtrs->so->img = cube->texture->so_img;
+    txtrs->we->img = cube->texture->we_img;
+    txtrs->ea->img = cube->texture->ea_img;
+    txtrs->no->addr = mlx_get_data_addr(txtrs->no->img, &txtrs->no->bpp, &txtrs->no->line_len, &txtrs->no->endian);
+    txtrs->so->addr = mlx_get_data_addr(txtrs->so->img, &txtrs->so->bpp, &txtrs->so->line_len, &txtrs->so->endian);
+    txtrs->we->addr = mlx_get_data_addr(txtrs->we->img, &txtrs->we->bpp, &txtrs->we->line_len, &txtrs->we->endian);
+    txtrs->ea->addr = mlx_get_data_addr(txtrs->ea->img, &txtrs->ea->bpp, &txtrs->ea->line_len, &txtrs->ea->endian);
 }

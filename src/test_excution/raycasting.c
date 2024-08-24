@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:17:35 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/18 17:35:22 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/24 14:07:11 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ float get_h_inter(t_cube *mlx, float angl) // get the horizontal intersection
 		h_x += x_step;
 		h_y += y_step;
 	}
+	mlx->ray->hor_x = h_x;
+	mlx->ray->hor_y = h_y;
 	return (sqrt(pow(h_x - mlx->player->plyr_x, 2) + pow(h_y - mlx->player->plyr_y, 2))); // get the distance
 }
 
@@ -110,6 +112,8 @@ float get_v_inter(t_cube *mlx, float angl) // get the vertical intersection
 		v_x += x_step;
 		v_y += y_step;
 	}
+	mlx->ray->ver_x = v_x;
+	mlx->ray->ver_y = v_y;
 	return (sqrt(pow(v_x - mlx->player->plyr_x, 2) + pow(v_y - mlx->player->plyr_y, 2))); // get the distance
 }
 

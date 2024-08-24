@@ -6,11 +6,11 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:23:52 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/15 17:32:55 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:09:32 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/cub3d_test.h"
+# include "cub3d_test.h"
 
 void	my_pixel_put(t_mlx_img *img, int x, int y, int color)
 {
@@ -42,17 +42,17 @@ float nor_angle(float angle) // normalize the angle
 	return (angle);
 }
 
-void draw_floor_ceiling(t_cube *mlx, int ray, int t_pix, int b_pix) // draw the floor and the ceiling
-{
-    int  i;
+// void draw_floor_ceiling(t_cube *mlx, int ray, int t_pix, int b_pix) // draw the floor and the ceiling
+// {
+//     int  i;
 
-	i = b_pix;
-	while (i < S_HEIGHT)
-		my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // floor
-	i = 0;
-	while (i < t_pix)
-		my_mlx_pixel_put(mlx, ray, i++, 0x89CFF3FF); // ceiling
-}
+// 	i = b_pix;
+// 	while (i < S_HEIGHT)
+// 		my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // floor
+// 	i = 0;
+// 	while (i < t_pix)
+// 		my_mlx_pixel_put(mlx, ray, i++, 0x89CFF3FF); // ceiling
+// }
 
 int get_color(t_cube *mlx, int flag) // get the color of the wall
 {
@@ -73,13 +73,26 @@ int get_color(t_cube *mlx, int flag) // get the color of the wall
 	}
 }
 
-void draw_wall(t_cube *mlx, int ray, int t_pix, int b_pix) // draw the wall
+void draw_wall(t_cube *mlx, int t_pix, int b_pix, double wall_h) // draw the wall
 {
 	int color;
+	t_txtdata *txt;
+	double x_o;
+	double y_o;
+	double fact;
 
-	color = get_color(mlx, mlx->ray->wall_flag); // get the color of the wall
+	txt = get_txt(mlx, mlx->ray->wall_flag); // get the texture
+	fact = (double)txt->height / wall_h; // get the texture height
+	x_o = texture_x(mlx, txt, mlx->ray->wall_flag); // get the x coordinate of the texture
+	y_o = (t_pix - (S_HEIGHT / 2) + (wall_h / 2)) * fact; // get the y coordinate of the texture
+	if (y_o < 0)
+		y_o = 0;
 	while (t_pix < b_pix)
-		my_mlx_pixel_put(mlx, ray, t_pix++, color);
+	{
+		color = reverse_color(*(unsigned int *)(txt->addr + ((int)y_o * txt->line_len + (int)x_o * (txt->bpp / 8)))); // get the color
+		my_mlx_pixel_put(mlx, mlx->ray->indx, t_pix++, color); // put the pixel
+		y_o += fact; // increment the y coordinate
+	}
 }
 
 void render_wall(t_cube *mlx, int ray) // render the wall
@@ -96,6 +109,7 @@ void render_wall(t_cube *mlx, int ray) // render the wall
 		b_pix = S_HEIGHT;
 	if (t_pix < 0) // check the top pixel
 		t_pix = 0;
-	draw_wall(mlx, ray, t_pix, b_pix); // draw the wall
+	mlx->ray->indx = ray; // get the index
+	draw_wall(mlx, t_pix, b_pix, wall_h); // draw the wall
 	draw_floor_ceiling(mlx, ray, t_pix, b_pix); // draw the floor and the ceiling
 }
