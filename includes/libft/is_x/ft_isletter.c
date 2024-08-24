@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isquote.c                                       :+:      :+:    :+:   */
+/*   ft_isletter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 22:15:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 22:51:40 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/17 13:55:13 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/18 13:00:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "is.h"
 
-int	ft_isquote(int c)
+int	ft_isletter(int c, int *counter)
 {
-	return (c == '\'' || c == '\"');
+	if (c && !ft_isdigit(c) && !ft_isspace(c) && c != ',' && ++(*counter))
+		return (1);
+	return (0);
 }

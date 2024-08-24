@@ -1,19 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isredirect.c                                    :+:      :+:    :+:   */
+/*   delete_me.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 19:26:47 by dehamad           #+#    #+#             */
-/*   Updated: 2024/05/19 21:30:35 by dehamad          ###   ########.fr       */
+/*   Created: 2024/07/12 16:23:51 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/07 07:11:57 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "is.h"
-
-int	ft_isredirect(char *str)
-{
-	return ((*str == '>' || *str == '<' || *str == '|' || *str == '&')
-		&& *(str + 1) == *str);
-}

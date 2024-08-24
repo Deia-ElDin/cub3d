@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 11:52:48 by dehamad           #+#    #+#             */
-/*   Updated: 2024/01/30 07:28:30 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/16 13:59:29 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*ft_ret(char **arr_fd)
 	if (newline_ptr)
 	{
 		*newline_ptr = '\0';
-		ret = ft_strjoin(*arr_fd, "\n");
+		ret = ft_strdup(*arr_fd);
 		if (*(newline_ptr + 1))
 		{
 			temp = ft_strdup(newline_ptr + 1);

@@ -1,26 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isempty_str.c                                   :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 15:42:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/15 22:37:26 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/16 11:44:37 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/16 11:44:48 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "is.h"
+#include "cub3d"
 
-int	ft_isempty_str(char *str)
-{
-	if (!str || !*str)
-		return (1);
-	while (*str)
-	{
-		if (!ft_isspace(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}

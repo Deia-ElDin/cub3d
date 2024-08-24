@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ispipe.c                                        :+:      :+:    :+:   */
+/*   ft_iswall.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 19:26:41 by dehamad           #+#    #+#             */
-/*   Updated: 2024/04/16 19:28:13 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/17 13:57:04 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/17 14:02:02 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "is.h"
 
-int	ft_ispipe(int c)
+int	ft_iswall(char *line)
 {
-	return (c == '|');
+	if (!line || !*line)
+		return (0);
+	while (*line)
+	{
+		if (*line != '1' && *line != ' ')
+			return (0);
+		line++;
+	}
+	return (1);
 }

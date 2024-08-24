@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pfarr.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 22:02:49 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 14:38:10 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/16 11:58:17 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/18 13:04:22 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "print.h"
+#include "cub3d.h"
 
-void	ft_pfarr(t_fmt *fmt)
+void	use_atoi(t_cub *cub, char *str_nbr, int *counter)
 {
-	char	**arr;
-	char	*str;
-	size_t	len;
-	int		index;
+	t_atoi	res;
+	int		nbr;
 
-	arr = va_arg(fmt->args, char **);
-	index = 0;
-	while (arr[index])
-	{
-		str = arr[index];
-		len = ft_strlen(str);
-		fmt->len += ft_strlen(arr[index]);
-		ft_putchar_fd('.', fmt->fd);
-		ft_putstr_fd(arr[index++], fmt->fd);
-		ft_putchar_fd('.', fmt->fd);
-		if (str[len - 1] != '\n')
-			ft_putchar_fd('\n', fmt->fd);
-	}
+	if (!str_nbr || !*str_nbr)
+		return (exit_failure(cub, COLOR_ERR));
+	res = ft_atoi(str_nbr);
+	if (res.error)
+		return (exit_failure(cub, COLOR_ERR));
+	nbr = (int)res.nbr;
+	if (nbr < 0 || nbr > 255)
+		return (exit_failure(cub, COLOR_ERR));
+	*counter = nbr;
 }
