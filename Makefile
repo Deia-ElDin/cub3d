@@ -12,16 +12,14 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 14:00:58 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/18 13:23:20 by dehamad          ###   ########.fr        #
->>>>>>> de3ccccf2d3c8d420dadb2f33a4832f7f10ab5bf
+#    Updated: 2024/08/23 18:27:39 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
-SANITIZER = -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iincludes 
 
 LIBFT_DIR = includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
@@ -38,33 +36,29 @@ MLX_LIB = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 MAIN = main.c delete_me.c
 
-PARSING = parsing.c 
-PARSING_UTILS = validate.c utils.c
+PARSING = parsing.c validate.c utils.c
 
->>>>>>> de3ccccf2d3c8d420dadb2f33a4832f7f10ab5bf
-EXECUTION = execution.c 
+EXECUTION = execution.c draw.c movement.c rays.c utils.c
 
-UTILS = exit.c init.c img.c utils.c
+# EXEC = execution.c movement.c rays.c render.c render2.c
+
+UTILS = exit.c init.c utils.c mlx.c 
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
 	$(addprefix src/parsing/, $(PARSING)) \
-	$(addprefix src/parsing/utils/, $(PARSING_UTILS)) \
-	$(addprefix src/execution/, $(EXECUTION)) \
 	$(addprefix src/utils/, $(UTILS)) \
+	$(addprefix src/execution/, $(EXECUTION)) \
+	# $(addprefix src/exec/, $(EXEC)) \
 
 OBJS = $(SRCS:.c=.o)
-
-<<<<<<< HEAD
-all: mlx libft $(NAME)
-=======
 
 all: $(NAME)
 	./$(NAME) maps/m1.cub
 >>>>>>> de3ccccf2d3c8d420dadb2f33a4832f7f10ab5bf
 
 sanitize: CFLAGS += -fsanitize=address -g3
-sanitize: all
+sanitize: re
 
 valgrind: all
 <<<<<<< HEAD

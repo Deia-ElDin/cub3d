@@ -6,11 +6,11 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/16 16:41:19 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/22 21:04:15 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 int	main(int ac, char **av)
 {
@@ -23,10 +23,8 @@ int	main(int ac, char **av)
 	if (!cub.mlx)
 		exit_failure(&cub, MLX_ERR);
 	parsing(&cub, av[1]);
-	// cub.win = mlx_new_window(cub.mlx, &cub.width, &cub.height, "so_long");
-	// if (!cub.win)
-	// 	exit_failure(&cub, MLX_ERR);
+	execution(&cub);
+	// exec(&cub);
+	exit_success(&cub);
 	return (0);
 }
-
-// todo => this case not handled yet => F    50    ,       60     ,   1 00

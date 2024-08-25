@@ -6,32 +6,36 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/18 15:08:21 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// print_file(cub);
+// print_textures(cub);
+// print_map(cub);
 static void	file_len(t_cub *cub, char *input_file);
 static void	file_create(t_cub *cub, t_file *file, char *input_file);
-static void	map_create(t_cub *cub, t_file *file, int st, int end);
-static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid);
+static void	map_create(t_cub *cub, t_map *map, int st, int end);
+static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid);
 
 void	parsing(t_cub *cub, char *input_file)
 {
 	t_file	*file;
+	t_map	*map;
 	int		len;
 
 	file = &cub->file;
-	len = cub->file.filename_len;
+	map = &cub->map;
+	len = cub->file.filepath_len;
 	if ((len - 4) <= 0 || ft_strcmp(".cub", input_file + (len - 4)))
 		exit_failure(cub, INVALID_FILE_NAME);
 	file_len(cub, input_file);
-	file_create(cub, &cub->file, input_file);
-	validate_file(cub, &cub->file);
-	map_create(cub, file, file->map_st, file->map_end);
-	map_validate(cub, file, file->map, '\0');
-	print_elements(cub);
+	file_create(cub, file, input_file);
+	file_validate(cub, file, map);
+	map_create(cub, map, map->map_st, map->map_end);
+	map_validate(cub, map, map->map_arr, '\0');
 }
 
 static void	file_len(t_cub *cub, char *input_file)
@@ -55,6 +59,8 @@ static void	file_len(t_cub *cub, char *input_file)
 	close(fd);
 	if (!cub->file.file_len)
 		exit_failure(cub, INVALID_FILE_EMPTY);
+	if (cub->file.file_len < 9)
+		exit_failure(cub, INVALID_FILE_NOT_COMPLETE);
 }
 
 static void	file_create(t_cub *cub, t_file *file, char *input_file)
@@ -77,66 +83,71 @@ static void	file_create(t_cub *cub, t_file *file, char *input_file)
 			return ((void)close(fd), exit_failure(cub, READ_ERR));
 		if (!ret.line)
 			break ;
+		if (ft_istab(ret.line))
+			exit_failure(cub, TAB_ERR);
 		file->file_arr[idx++] = ret.line;
 	}
 	close(fd);
 }
 
-static void	map_create(t_cub *cub, t_file *file, int st, int end)
+static void	map_create(t_cub *cub, t_map *map, int st, int end)
 {
-	int	idx;
+	char	**file_arr;
+	int		idx;
 
-	file->map = ft_calloc(file->map_height + 1, sizeof(char *));
-	if (!file->map)
+	file_arr = cub->file.file_arr;
+	map->map_arr = ft_calloc(map->map_height + 1, sizeof(char *));
+	if (!map->map_arr)
 		exit_failure(cub, MALLOC_ERR);
 	idx = 0;
-	while (file->file_arr[st] && *file->file_arr[st] && st <= end)
+	while (st <= end && file_arr[st] && *file_arr[st])
 	{
-		if (idx == 0 && ft_isempty_str(file->file_arr[st]) && ++st)
+		if (ft_isempty_str(file_arr[st]) && ++st)
 			continue ;
-		file->map[idx] = set_map_line(cub, file, file->file_arr[st]);
-		if (!file->map[idx])
+		map->map_arr[idx] = set_map_line(cub, map, file_arr[st]);
+		if (!map->map_arr[idx])
 			exit_failure(cub, MALLOC_ERR);
 		st++;
 		idx++;
 	}
-	file->map_end = st;
-	file->map_height = file->map_end - file->map_st;
-	if (file->map_height < 3)
+	map->map_height = idx;
+	if (map->map_height < 3)
 		exit_failure(cub, MAP_HEIGHT_ERR);
+	if (!ft_iswall(map->map_arr[0]) || !ft_iswall(map->map_arr[idx - 1]))
+		exit_failure(cub, MAP_WALL_ERR);
 }
 
-static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
+static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid)
 {
-	int		y;
-	int		x;
+	int	y;
+	int	x;
 
 	y = -1;
-	while (map[++y])
+	while (map_arr[++y])
 	{
 		x = -1;
-		while (map[y][++x])
+		while (map_arr[y][++x])
 		{
-			if (map[y][x] == ' ')
+			if (map_arr[y][x] == ' ')
 				invalid = '0';
-			else if (map[y][x] == file->player_position)
+			else if (map_arr[y][x] == map->plyr_direction)
 				invalid = ' ';
 			else
 				continue ;
-			if (x > 0 && map[y][x - 1] == invalid)
+			if (x > 0 && map_arr[y][x - 1] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
-			if (x < file->map_width - 1 && map[y][x + 1] == invalid)
+			if (x < map->map_width - 1 && map_arr[y][x + 1] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
-			if (y > 0 && map[y - 1][x] == invalid)
+			if (y > 0 && map_arr[y - 1][x] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
-			if (y < file->map_height - 1 && map[y + 1][x] == invalid)
+			if (y < map->map_height - 1 && map_arr[y + 1][x] == invalid)
 				return (exit_failure(cub, MAP_SPACE_ERR));
 		}
 	}
 }
 
 /*
-	*	void	parsing(t_cub *cub, char *input_file)
+	*	parsing(t_cub *cub, char *input_file)
 	{
 		- check if the file name is valid
 		- we get the length of the file name (check init.c)
@@ -145,7 +156,7 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 		- if the file name is invalid we exit with INVALID_FILE_NAME	
 	}
 
-	*	file_len(cub, input_file);
+	*	file_len(t_cub *cub, char *input_file)
 	{
 		- used to get the length of the file
 		- we open the file we make sure we have a valid fd
@@ -155,7 +166,7 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 		- if the file_len is 0 we exit with INVALID_FILE_NAME
 	}
 
-	*	file_create(cub, &cub->file, input_file);
+	*	file_create(t_cub *cub, t_file *file, char *input_file));
 	{
 		- read the file and store it in file_arr
 		- we open the file we make sure we have a valid fd
@@ -165,7 +176,7 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 		- we close the file
 	}
 
-	*	validate_file(cub, &cub->file, cub->file.file_arr);
+	*	file_validate(t_cub *cub, t_file *file, t_map *map);
 	{
 		-	validate the whole file (elements and map)
 		-	in this function we fully validate the elements
@@ -173,7 +184,7 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 			we only check if it's valid for creation or not
 	}
 
-	*	map_create(cub, file, file->map_st, file->map_end);
+	*	map_create(t_cub *cub, t_file *file, t_map *map);
 	{
 		-	create the map
 		-	we malloc the map based on the map_height
@@ -189,7 +200,7 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 		-	we will need the new map height in the next function (map_validate)
 	}
 
-	*	map_validate(cub, file, file->map, '\0');
+	*	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid);
 	{
 		-	validate the map
 		-	we check if the map is surrounded by walls
@@ -216,5 +227,4 @@ static void	map_validate(t_cub *cub, t_file *file, char **map, char invalid)
 				this way we avoid the invalid checks and we check everything else
 				if any of these condition end up invalid we exit with err
 	}
-		
 */

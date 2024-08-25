@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ismap_line.c                                    :+:      :+:    :+:   */
+/*   ft_istab.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 13:57:32 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 17:13:31 by dehamad          ###   ########.fr       */
+/*   Created: 2024/08/21 17:18:29 by dehamad           #+#    #+#             */
+/*   Updated: 2024/08/21 17:39:30 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "is.h"
 
-int	ft_ismap_line(char *line)
+int	ft_istab(char *line)
 {
-	if (!line || !*line)
-		return (0);
-	if (ft_isempty_str(line))
-		return (0);
 	while (*line)
 	{
-		if (!ft_strchr(" 01NSEW", *line))
-			return (0);
+		if (*line == '\t')
+			return (1);
 		line++;
 	}
-	return (1);
+	return (0);
 }
