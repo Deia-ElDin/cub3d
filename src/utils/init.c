@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/26 09:26:03 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,22 @@ static void	init_player(t_player *player)
 {
 	player->plyr_x = -1;
 	player->plyr_y = -1;
-	player->angle = -1;
-	player->fov_rd = -1;
-	player->rot = -1;
-	player->l_r = -1;
-	player->u_d = -1;
+	player->plyr_angle = -1;
+	player->fov_rd = FOV * (M_PI / 180);
+	player->r_l = 0;
+	player->u_d = 0;
+	player->rot_flag = 0;
+	
 }
 
 void	init(t_cub *cub, char *input_file)
 {
-	cub->mlx = NULL;
-	cub->win = NULL;
+	cub->mlx_ptr = NULL;
+	cub->win_ptr = NULL;
 	init_file(&cub->file, input_file);
 	init_texture(&cub->texture);
-	init_map(&cub->map);
-	init_player(&cub->player);
+	init_map(cub->map);
+	init_player(cub->player);
 }
 
 /*
@@ -135,18 +136,18 @@ void	init(t_cub *cub, char *input_file)
 	*	static void	init_player(t_player *player)
 	{
 		-	player->plyr_x = -1;
-			used to store the x position of the player.
+			used to store the x position of the player->
 		-	player->plyr_y = -1;
-			used to store the y position of the player.
+			used to store the y position of the player->
 		-	player->angle = -1;
-			used to store the angle of the player.
+			used to store the angle of the player->
 		-	player->fov_rd = -1;
-			used to store the field of view of the player.
+			used to store the field of view of the player->
 		-	player->rot = -1;
-			used to store the rotation of the player.
+			used to store the rotation of the player->
 		-	player->l_r = -1;
-			used to store the left right movement of the player.
+			used to store the left right movement of the player->
 		-	player->u_d = -1;
-			used to store the up down movement of the player.
+			used to store the up down movement of the player->
 	}
 */

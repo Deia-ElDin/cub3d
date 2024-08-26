@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/22 14:59:51 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/26 11:57:12 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	validate_img(t_cub *cub, void **img, char *line)
 		exit_failure(cub, ELEMENTS_SPACE_ERR);
 	if (!ft_strrchr(split[1], '.xpm'))
 		return (ft_free(&split, 'a'), exit_failure(cub, ELEMENTS_IMG_NAME_ERR));
-	*img = mlx_xpm_file_to_image(cub->mlx, split[1], &width, &height);
+	*img = mlx_xpm_file_to_image(cub->mlx_ptr, split[1], &width, &height);
 	ft_free(&split, 'a');
 	if (!*img)
 		exit_failure(cub, ELEMENTS_IMG_CORRUPTED_ERR);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:58:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/23 18:27:16 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/26 08:27:34 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,47 +31,47 @@ void	use_atoi(t_cub *cub, char *str_nbr, int *counter)
 void	calculate_angle(t_cub *cub, char direction)
 {
 	if (direction == 'N')
-		cub->player.angle = M_PI / 2;
+		cub->player->plyr_angle = M_PI / 2;
 	else if (direction == 'S')
-		cub->player.angle = 3 * M_PI / 2;
+		cub->player->plyr_angle = 3 * M_PI / 2;
 	else if (direction == 'E')
-		cub->player.angle = 0;
+		cub->player->plyr_angle = 0;
 	else if (direction == 'W')
-		cub->player.angle = M_PI;
+		cub->player->plyr_angle = M_PI;
 }
 
-void	calculate_center(double x, double y, int *center_x, int *center_y)
-{
-	*center_x = (int)(x * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
-	*center_y = (int)(y * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
-}
+// void	calculate_center(double x, double y, int *center_x, int *center_y)
+// {
+// 	*center_x = (int)(x * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
+// 	*center_y = (int)(y * MINI_TILE_SIZE + MINI_TILE_SIZE / 2);
+// }
 
-void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy)
-{
-	double	move_speed;
+// void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy)
+// {
+// 	double	move_speed;
 
-	move_speed = PLYR_SPEED / 50.0;
-	if (keycode == 0)
-	{
-		*dx = player->plyr_x + cos(player->angle + M_PI_2) * move_speed;
-		*dy = player->plyr_y - sin(player->angle + M_PI_2) * move_speed;
-	}
-	else if (keycode == 2)
-	{
-		*dx = player->plyr_x - cos(player->angle + M_PI_2) * move_speed;
-		*dy = player->plyr_y + sin(player->angle + M_PI_2) * move_speed;
-	}
-	else if (keycode == 13)
-	{
-		*dx = player->plyr_x + cos(player->angle) * move_speed;
-		*dy = player->plyr_y - sin(player->angle) * move_speed;
-	}
-	else if (keycode == 1)
-	{
-		*dx = player->plyr_x - cos(player->angle) * move_speed;
-		*dy = player->plyr_y + sin(player->angle) * move_speed;
-	}
-}
+// 	move_speed = PLYR_SPEED / 50.0;
+// 	if (keycode == 0)
+// 	{
+// 		*dx = player->plyr_x + cos(player->angle + M_PI_2) * move_speed;
+// 		*dy = player->plyr_y - sin(player->angle + M_PI_2) * move_speed;
+// 	}
+// 	else if (keycode == 2)
+// 	{
+// 		*dx = player->plyr_x - cos(player->angle + M_PI_2) * move_speed;
+// 		*dy = player->plyr_y + sin(player->angle + M_PI_2) * move_speed;
+// 	}
+// 	else if (keycode == 13)
+// 	{
+// 		*dx = player->plyr_x + cos(player->angle) * move_speed;
+// 		*dy = player->plyr_y - sin(player->angle) * move_speed;
+// 	}
+// 	else if (keycode == 1)
+// 	{
+// 		*dx = player->plyr_x - cos(player->angle) * move_speed;
+// 		*dy = player->plyr_y + sin(player->angle) * move_speed;
+// 	}
+// }
 
 /*
 	*	void	calculate_center(int x, int y, int *center_x, int *center_y)

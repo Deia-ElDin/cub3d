@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:31:00 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/15 18:15:27 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/25 17:58:58 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,51 +97,51 @@ typedef struct s_data
     int     h_map; // map height
     int     rows;
     int     cols;
-}          t_data;
+}          t_map;
 
 typedef struct s_cube
 {
     t_mlx_img   *img;
     void        *win_ptr;
     void        *mlx_ptr;
-    t_data      *data;
+    t_map      *data;
     t_player    *player;
     t_ray       *ray;
-}           t_cube;
+}           t_cub;
 
 /*-------------------PROTOTYPES-------------------*/
 
 /*-------------------INIT-------------------*/
-t_data  *init_argument();
+t_map  *init_argument();
 char    **init_map();
-void    init_player_data(t_cube cube);
+void    init_player_data(t_cub cube);
 
 
 /*-------------------GAME-------------------*/
-void    start_the_game(t_data *data);
+void    start_the_game(t_map *data);
 int    game_loop(void *param);
 int unit_circle(float angle, char c);
 int inter_check(float angle, float *inter, float *step, int is_horizon);
-int wall_hit(float x, float y, t_cube *mlx);
-float get_h_inter(t_cube *mlx, float angl);
-float get_v_inter(t_cube *mlx, float angl);
-void cast_rays(t_cube *mlx);
-void my_mlx_pixel_put(t_cube *mlx, int x, int y, int color);
+int wall_hit(float x, float y, t_cub *mlx);
+float get_h_inter(t_cub *mlx, float angl);
+float get_v_inter(t_cub *mlx, float angl);
+void cast_rays(t_cub *mlx);
+void my_mlx_pixel_put(t_cub *mlx, int x, int y, int color);
 float nor_angle(float angle);
-void draw_floor_ceiling(t_cube *mlx, int ray, int t_pix, int b_pix);
-int get_color(t_cube *mlx, int flag);
-void draw_wall(t_cube *mlx, int ray, int t_pix, int b_pix);
-void render_wall(t_cube *mlx, int ray);
+void draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix);
+int get_color(t_cub *mlx, int flag);
+void draw_wall(t_cub *mlx, int ray, int t_pix, int b_pix);
+void render_wall(t_cub *mlx, int ray);
 
 /*-------------------MOVEMENT-------------------*/
-void    hook(t_cube *mlx, double move_x, double move_y);
-void    move_player(t_cube *mlx, double move_x, double move_y);
-void    rotate_player(t_cube *mlx, int flag);
+void    hook(t_cub *mlx, double move_x, double move_y);
+void    move_player(t_cub *mlx, double move_x, double move_y);
+void    rotate_player(t_cub *mlx, int flag);
 int     mlx_key(mlx_key_data_t keydata, void *ml);
-int     key_reles(mlx_key_data_t keydata, t_cube *mlx);
+int     key_reles(mlx_key_data_t keydata, t_cub *mlx);
 
 /*-------------------UTILS-------------------*/
-void    ft_exit(t_cube *mlx);
+// void    ft_exit(t_cub *mlx);
 
 
 

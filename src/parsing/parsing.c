@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/21 17:42:41 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/26 08:41:14 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	parsing(t_cub *cub, char *input_file)
 	int		len;
 
 	file = &cub->file;
-	map = &cub->map;
+	map = cub->map;
 	len = cub->file.filepath_len;
 	if ((len - 4) <= 0 || ft_strcmp(".cub", input_file + (len - 4)))
 		exit_failure(cub, INVALID_FILE_NAME);
 	file_len(cub, input_file);
 	file_create(cub, file, input_file);
-	file_validate(cub, file, map);
+	file_validate(cub, file, cub->map);
 	map_create(cub, map, map->map_st, map->map_end);
 	map_validate(cub, map, map->map_arr, '\0');
 }

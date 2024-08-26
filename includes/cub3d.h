@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/23 18:28:33 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/26 08:08:28 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,31 @@ enum
 	ON_DESTROY = 17
 };
 
+/*-------------------KEYS-------------------*/
+# define MLX_KEY_ESCAPE 53
+# define MLX_KEY_W 13
+# define MLX_KEY_A 0
+# define MLX_KEY_S 1
+# define MLX_KEY_D 2
+# define MLX_KEY_LEFT 123
+# define MLX_KEY_RIGHT 124
+# define MLX_PRESS 2
+# define MLX_RELEASE 3
+# define MLX_REPEAT 1
+
+/*-------------------COLORS-------------------*/
+# define BLACK 0x000000
+# define WHITE 0xFFFFFF
+
+
 // ******************** Constants ******************** //
 
-# define SCREEN_HEIGHT 720
-# define SCREEN_WIDTH 1280
+# define S_HEIGHT 1900
+# define S_WIDTH 1000
 # define TILE_SIZE 30
 # define FOV 60 
-# define ROTATION_SPEED 0.2
-# define PLYR_SPEED 4
+# define ROTATE_SPEED 0.2
+# define PLAYER_SPEED 4
 
 // ********************* Errors ********************* //
 
@@ -63,6 +80,13 @@ the map can't be separated by one or more empty line(s).\n"
 # define MLX_ERR "Error\nSomething went wrong with mlx lib, kindly try later.\n"
 # define COLOR_ERR "Error\nInvalid color.\n"
 
+
+typedef struct s_mlx_key_data	//the mlx key data structure
+{
+	int		key;	// the key
+	int		action;	// the action
+}	mlx_key_data_t;
+
 typedef struct s_file
 {
 	char	**file_arr;
@@ -92,46 +116,96 @@ typedef struct s_map
 	int		map_end;
 	int		wall_counter;
 	int		plyr_counter;
+	int		p_x; // player x position in the map for testing needs delete it later
+	int		p_y; // player y position in the map for testing needs delete it later
 	char	plyr_direction;
 }	t_map;
 
 typedef struct s_player
 {
-	double	plyr_x;
-	double	plyr_y;
-	double	angle;
+	int		plyr_x;
+	int		plyr_y;
+	double	plyr_angle;
 	float	fov_rd;
-	int		rot;
-	int		l_r;
+	int		rot_flag;
+	int		r_l;
 	int		u_d;
+	int		m_x;
+	int		m_y;
 }	t_player;
 
-typedef struct s_img
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_img;
+// typedef struct s_img
+// {
+// 	void	*img;
+// 	char	*addr;
+// 	int		bits_per_pixel;
+// 	int		line_length;
+// 	int		endian;
+// }	t_img;
 
+typedef struct s_mlx_img
+{
+    void    *background_img;
+    void    *wall_img;
+    void    *img;
+    char    *addr;
+    char    *pixel;
+    int     bpp;
+    int     line_len;
+    int     endian;
+    int     tx_width;
+    int     tx_height;
+}           t_mlx_img;
+
+// typedef struct s_ray
+// {
+// 	double	ray_ngl;
+// 	double	distance;
+// 	int		flag;
+// }	t_ray;
+
+typedef struct s_txtdata
+{
+    void    *img;
+    char    *addr;
+    int     bpp;
+    int     line_len;
+    int     endian;
+    int     width;
+    int     height;
+}           t_txtdata;
+
+typedef struct s_txtrs
+{
+    t_txtdata   *no;
+    t_txtdata   *so;
+    t_txtdata   *we;
+    t_txtdata   *ea;
+}           t_txtrs;
+ 
 typedef struct s_ray
 {
-	double	ray_ngl;
-	double	distance;
-	int		flag;
-}	t_ray;
+    int     indx;
+    double  ray_angle;
+    double  hor_x;
+    double  hor_y;
+    double  ver_x;
+    double  ver_y;
+    double  distance;
+    int     wall_flag;
+}           t_ray;
 
 typedef struct s_cub
 {
-	void		*mlx;
-	void		*win;
+	void		*mlx_ptr;
+	void		*win_ptr;
 	t_file		file;
 	t_texture	texture;
-	t_map		map;
-	t_player	player;
-	t_img		img;
-	t_ray		ray;
+	t_map		*map;
+	t_player	*player;
+	t_mlx_img   *img;
+	t_ray		*ray;
+	t_txtrs     *txtrs;
 }	t_cub;
 
 // ********************* PARSING ********************* //
@@ -151,7 +225,6 @@ char	*set_map_line(t_cub *cub, t_map *map, char *map_line);
 
 // ******************** EXECUTION ******************** //
 
-void	execution(t_cub *cub);
 
 // ***************** EXECUTION UTILS ***************** //
 // 		*	draw.c
@@ -176,48 +249,61 @@ void	calculate_angle(t_cub *cub, char direction);
 void	calculate_center(double x, double y, int *center_x, int *center_y);
 void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy);
 // 		*	mlx.c
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+// void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int		create_rgb(int *color_arr);
 
-// ********************** EXEC ********************** //
-// void	exec(t_cub *cub);
-// void	rotate_player(t_cub *cub, int direction);
-// void	move_player(t_cub *cub, double move_x, double move_y);
-// void	cub_hook(t_cub *cub, double move_x, double move_y);
-// void	ft_reles(int keycode, t_cub *cub);
-// void	key_press(int keycode, void *cb);
-// int inter_check(float angle, float *inter, float *step, int is_horizon);
-// int wall_hit(float x, float y, t_cub *cub);
-// float get_h_inter(t_cub *cub, float angl);
-// float get_v_inter(t_cub *cub, float angl);
-// void cast_rays(t_cub *cub);
-// void	draw_floor_ceiling(t_texture *texture, t_img *img, int ray, int t_pix, int b_pix);
-// void	*get_texture(t_texture *texture, t_ray *ray);
-// double	get_x_o(void *texture, t_ray *ray);
-// void	draw_wall(t_img *img, t_ray *ray, t_texture *texture, int t_pix, int b_pix, double wall_h);
-// void	render_wall(t_cub *cub, int ray);
-// int	get_rgba(int r, int g, int b, int a);
-// int	reverse_bytes(int c);
-// void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-// float	normalize_angle(float angle);
-// int	unit_circle(float angle, char c);
-// ************************************************** //
-// ************************************************** //
-// ************************************************** //
+// ******************** EXCUTION ******************** //
+
+/*-------------------INIT-------------------*/
+// t_map  *init_argument();
+// char    **init_map();
+// void    init_player_map(t_cub cube);
+
+int execution(t_cub *cub);
+
+/*-------------------GAME-------------------*/
+void    start_the_game(t_cub *data);
+int    game_loop(void *param);
+int unit_circle(float angle, char c);
+int inter_check(float angle, float *inter, float *step, int is_horizon);
+int wall_hit(float x, float y, t_cub *mlx);
+float get_h_inter(t_cub *mlx, float angl);
+float get_v_inter(t_cub *mlx, float angl);
+void cast_rays(t_cub *mlx);
+void my_mlx_pixel_put(t_cub *mlx, int x, int y, int color);
+float nor_angle(float angle);
+void draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix);
+int get_color(t_cub *mlx, int flag);
+void draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h);
+void render_wall(t_cub *mlx, int ray);
+
+/*-------------------TEXTURE-------------------*/
+t_txtdata *get_txt(t_cub *mlx, int flag);
+void init_txtures(t_cub *cube);
+t_txtdata *get_txt(t_cub *mlx, int flag);
+double texture_x(t_cub *mlx, t_txtdata *texture, int flag);
+void draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix);
+
+
+/*-------------------MOVEMENT-------------------*/
+void    hook(t_cub *mlx, double move_x, double move_y);
+void    move_player(t_cub *mlx, double move_x, double move_y);
+void    rotate_player(t_cub *mlx, int flag);
+int     mlx_key(mlx_key_data_t keydata, void *ml);
+int     key_reles(mlx_key_data_t keydata, t_cub *mlx);
+
+/*-------------------UTILS-------------------*/
+// void    ft_exit(t_cub *mlx);
 
 // *************************** DELETE ME *************************** //
 void	print_textures(t_cub *cub);
 void	print_file(t_cub *cub);
 void	print_map(t_cub *cub);
 void	print_player(t_cub *cub);
+t_map 	*init_argument();
+void 	init_player_data(t_cub cub);
 
-# define MINI_TILE_SIZE 30
-# define BLACK 0x000000
-# define WHITE 0xFFFFFF
-# define RED 0xFF0000
-# define GREEN 0x00FF00
-# define GRAY 0x808080
-# define YELLOW 0xFF00FF
+
 // ***************************************************************** //
 
 #endif

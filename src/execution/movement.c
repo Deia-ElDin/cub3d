@@ -1,123 +1,106 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   movement.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/19 18:21:28 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/22 19:36:06 by dehamad          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
-static int	is_valid_grid(char **map, int x, int y)
+int	key_reles(mlx_key_data_t keydata, t_cub *mlx)	// release the key
 {
-	if (map[y][x])
+	if (keydata.key == MLX_KEY_D)
+		mlx->player->r_l = 0;
+	else if (keydata.key == MLX_KEY_A)
+		mlx->player->r_l = 0;
+	else if (keydata.key == MLX_KEY_S)
+		mlx->player->u_d = 0;
+	else if (keydata.key == MLX_KEY_W)
+		mlx->player->u_d = 0;
+	else if (keydata.key == MLX_KEY_LEFT)
+		mlx->player->rot_flag = 0;
+	else if (keydata.key == MLX_KEY_RIGHT)
+		mlx->player->rot_flag = 0;
+	return (0);
+}
+
+int mlx_key(mlx_key_data_t keydata, void *ml)	// key press
+{
+	t_cub    *mlx;
+
+	mlx = ml;
+	if (keydata.key == MLX_KEY_ESCAPE) // exit the game
+		exit(0);
+		// exit_success(mlx);
+	else if (keydata.key == MLX_KEY_A) // move left
+		mlx->player->r_l -= 1;
+	else if (keydata.key == MLX_KEY_D) // move right
+		mlx->player->r_l += 1;
+	else if (keydata.key == MLX_KEY_S) // move down
+		mlx->player->u_d = -1;
+	else if (keydata.key == MLX_KEY_W) // move up
+		mlx->player->u_d = 1;
+	else if (keydata.key == MLX_KEY_LEFT) // rotate left
+		mlx->player->rot_flag = -1;
+	else if (keydata.key == MLX_KEY_RIGHT) // rotate right
+		mlx->player->rot_flag = 1;
+	return (0);
+}
+
+void	rotate_player(t_cub *mlx, int i)	// rotate the player
+{
+	if (i == 1)
 	{
-		if (map[y][x] == '0')
-			return (1);
-		else if (ft_strchr("NSWE", map[y][x]))
-			return (1);
-		else
-			return (0);
+		mlx->player->plyr_angle += ROTATE_SPEED; // rotate right
+		if (mlx->player->plyr_angle > 2 * M_PI)
+			mlx->player->plyr_angle -= 2 * M_PI;
 	}
-	return (0);
+	else
+	{
+		mlx->player->plyr_angle -= ROTATE_SPEED; // rotate left
+		if (mlx->player->plyr_angle < 0)
+			mlx->player->plyr_angle += 2 * M_PI;
+	}
 }
 
-
-static void move(t_cub *cub, int keycode)
+void	move_player(t_cub *mlx, double move_x, double move_y)	// move the player
 {
-    t_player	*player;
-    double		dx;
-    double		dy;
+	int		map_grid_y;
+	int		map_grid_x;
+	int		new_x;
+	int		new_y;
 
-	player = &cub->player;
-    calculate_deltas(player, keycode, &dx, &dy);
-    if (is_valid_grid(cub->map.map_arr, round(dx), round(dy)))
-    {
-        player->plyr_x = dx;
-        player->plyr_y = dy;
-    }
+	new_x = roundf(mlx->player->plyr_x + move_x); // get the new x position
+	new_y = roundf(mlx->player->plyr_y + move_y); // get the new y position
+	map_grid_x = (new_x / TILE_SIZE); // get the x position in the map
+	map_grid_y = (new_y / TILE_SIZE); // get the y position in the map
+	if (mlx->map->map_arr[map_grid_y][map_grid_x] != '1' && \
+	(mlx->map->map_arr[map_grid_y][mlx->player->plyr_x / TILE_SIZE] != '1' && \
+	mlx->map->map_arr[mlx->player->plyr_y / TILE_SIZE][map_grid_x] != '1')) // check the wall hit and the diagonal wall hit
+	{
+		mlx->player->plyr_x = new_x; // move the player
+		mlx->player->plyr_y = new_y; // move the player
+	}
 }
 
-
-static void	rotate(t_cub *cub, int keycode)
+void	hook(t_cub *mlx, double move_x, double move_y)	// hook the player
 {
-	t_player	*player;
-	int 		direction;
-	
-	direction = 0;
-	if (keycode == 123)
-		direction = 1;
-	else if (keycode == 124)
-		direction = -1;
-	if (!direction)
-		return ;
-	player = &cub->player;
-	player->angle += direction * ROTATION_SPEED;
-	if (player->angle < 0)
-		player->angle += 2 * M_PI;
-	if (player->angle > 2 * M_PI)
-		player->angle -= 2 * M_PI;
+	if (mlx->player->rot_flag == 1) //rotate right
+		rotate_player(mlx, 1);
+	if (mlx->player->rot_flag == -1) //rotate left
+		rotate_player(mlx, 0);
+	if (mlx->player->r_l == 1) //move right
+	{
+		move_x = -sin(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_y = cos(mlx->player->plyr_angle) * PLAYER_SPEED;
+	}
+	if (mlx->player->r_l == -1) //move left
+	{
+		move_x = sin(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_y = -cos(mlx->player->plyr_angle) * PLAYER_SPEED;
+	}
+	if (mlx->player->u_d == 1) //move up
+	{
+		move_x = cos(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_y = sin(mlx->player->plyr_angle) * PLAYER_SPEED;
+	}
+	if (mlx->player->u_d == -1) //move down
+	{
+		move_x = -cos(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_y = -sin(mlx->player->plyr_angle) * PLAYER_SPEED;
+	}
+	move_player(mlx, move_x, move_y); // move the player
 }
-
-int	movement(int keycode, t_cub *cub)
-{
-	t_map		*map;
-	t_player	*player;
-	char		**map_arr;
-	int			x;
-	int			y;
-
-	map = &cub->map;
-	player = &cub->player;
-	map_arr = map->map_arr;
-	x = player->plyr_x;
-	y = player->plyr_y;
-	// print_player(cub);
-	if (keycode == 2 || keycode == 0 || keycode == 13 || keycode == 1)
-		move(cub, keycode);
-	if (keycode == 123 || keycode == 124)
-		rotate(cub, keycode);
-	else if (keycode == 53)
-		exit_success(cub);
-	return (0);
-}
-
-/*
-Imagine the Player as an Arrow:
-Forward (W key, no extra angle added):
-
-The arrow moves in the direction it is pointing (forward).
-Math: x += cos(angle) * speed, y -= sin(angle) * speed
-Backward (S key, no extra angle added):
-
-The arrow moves directly backward, opposite to its direction.
-Math: x -= cos(angle) * speed, y += sin(angle) * speed
-Left (A key, with + M_PI_2 added):
-
-The arrow moves left relative to its current direction. This is perpendicular to the forward direction.
-Math: x += cos(angle + M_PI_2) * speed, y -= sin(angle + M_PI_2) * speed
-Right (D key, with + M_PI_2 added):
-
-The arrow moves right relative to its current direction. This is perpendicular to the forward direction.
-Math: x -= cos(angle + M_PI_2) * speed, y += sin(angle + M_PI_2) * speed
-Why + M_PI_2?
-M_PI_2 (90 degrees) rotates the direction by 90 degrees:
-Left (+ M_PI_2): 90 degrees left of the direction the arrow is pointing.
-Right (+ M_PI_2): 90 degrees right of the direction the arrow is pointing.
-Without + M_PI_2, left and right movements would not be perpendicular to the forward direction, and the player would not strafe properly.
-
-When you move left or right in a 2D space, you still need to update both the x and y coordinates because the player’s movement is not confined to just one axis.
-
-Explanation:
-Strafing Left (A key): The player moves to the left relative to their current direction. This involves both a horizontal and vertical shift, depending on the angle.
-
-Example: If the player is facing diagonally, moving left would require both x and y to change.
-Strafing Right (D key): Similarly, moving to the right also involves both axes, as the movement is perpendicular to the direction the player is facing.
-
-Why dy Is Needed:
-Even if you intend to move left or right (which intuitively seems like only an x change), the actual movement involves a small y adjustment based on the angle, ensuring the player moves accurately in a perpendicular direction.
-*/

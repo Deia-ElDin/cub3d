@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/22 20:34:20 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/26 08:18:26 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ static void	exit_clean(t_cub *cub)
 	// texture = &cub->texture;
 	// map = &cub->map;
 	ft_free(&cub->file.file_arr, 'a');
-	ft_free(&cub->map.map_arr, 'a');
+	ft_free(&cub->map->map_arr, 'a');
 	// ft_free(&cub->file.no_path, 'p');
 	// ft_free(&cub->file.so_path, 'p');
 	// ft_free(&cub->file.we_path, 'p');
 	// ft_free(&cub->file.ea_path, 'p');
-	if (cub->mlx)
-		free(cub->mlx);
+	if (cub->mlx_ptr)
+		free(cub->mlx_ptr);
 	// mlx_delete_image(cub->mlx, cub->img.img);
 	// mlx_close_window(cub->mlx);
 	// freelist(&cub->file.file_arr);
