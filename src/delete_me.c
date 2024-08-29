@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:51 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/20 18:00:45 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 19:53:03 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,30 @@ void	print_file(t_cub *cub)
 
 void	print_textures(t_cub *cub)
 {
-	t_texture	*texture;
+	t_txtrs	*txtrs;
 
-	texture = &cub->texture;
+	txtrs = &cub->txtrs;
 	printf("\n-------------------------------------");
 	printf("\n********* Printing Textures *********\n");
 	printf("-------------------------------------\n");
-	if (texture->no_img)
-		printf("NO Path = %s\n", texture->no_img);
-	if (texture->so_img)
-		printf("SO Path = %s\n", texture->so_img);
-	if (texture->we_img)
-		printf("WE Path = %s\n", texture->we_img);
-	if (texture->ea_img)
-		printf("EA Path = %s\n", texture->ea_img);
-	if (texture->c_arr[0] != -1)
+	if (txtrs->no->img)
+		printf("NO Path = %s\n", txtrs->no->img);
+	if (txtrs->so->img)
+		printf("SO Path = %s\n", txtrs->so->img);
+	if (txtrs->we->img)
+		printf("WE Path = %s\n", txtrs->we->img);
+	if (txtrs->ea->img)
+		printf("EA Path = %s\n", txtrs->ea->img);
+	if (txtrs->c_arr[0] != -1)
 		printf("C Colors = %d, %d, %d\n",
-			texture->c_arr[0], texture->c_arr[1], texture->c_arr[2]);
-	if (texture->f_arr[0] != -1)
+			txtrs->c_arr[0], txtrs->c_arr[1], txtrs->c_arr[2]);
+	if (txtrs->f_arr[0] != -1)
 		printf("F Colors = %d, %d, %d\n",
-			texture->f_arr[0], texture->f_arr[1], texture->f_arr[2]);
-	if (texture->c_color != -1)
-		printf("C Color = %d\n", texture->c_color);
-	if (texture->f_color != -1)
-		printf("F Color = %d\n", texture->f_color);
+			txtrs->f_arr[0], txtrs->f_arr[1], txtrs->f_arr[2]);
+	if (txtrs->c_color != -1)
+		printf("C Color = %d\n", txtrs->c_color);
+	if (txtrs->f_color != -1)
+		printf("F Color = %d\n", txtrs->f_color);
 }
 
 void	print_map(t_cub *cub)

@@ -38,6 +38,7 @@ void start_the_game(t_cub *cub)
     // init_txtures(cub);
     mlx_hook(cub->win_ptr, MLX_PRESS, MLX_RELEASE, &mlx_key, cub); // key press
     mlx_hook(cub->win_ptr, MLX_RELEASE, MLX_RELEASE, &key_reles, cub); // key release
+    mlx_hook(cub->win_ptr, 17, 0, exit_success, cub);
     mlx_loop_hook(cub->mlx_ptr, &game_loop, cub); // game loop continous called to render the game
     mlx_loop(cub->mlx_ptr);
     // ft_exit(&cub);
@@ -57,41 +58,3 @@ int game_loop(void *param)
     mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->img->img, 0, 0);
     return (0);
 }
-
-// void	ft_exit(t_cub *mlx) 		// exit the game
-// {
-// 	int	i = 0;
-// 	while (mlx->data->map2d[i])
-// 		free(mlx->data->map2d[i++]); // free the map line by line
-// 	free(mlx->data->map2d); // free the map
-// 	free(mlx->data); // free the data structure
-// 	free(mlx->player); // free the player structure
-// 	free(mlx->ray); // free the ray structure
-// 	mlx_destroy_image(mlx->mlx_ptr, mlx->img->img); // destroy the image
-// 	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr); // destroy the window
-// 	printf("Game closed\n"); // print the message
-// 	exit(0); // exit the game
-// }
-
-// void init_txtures(t_cub *cub)
-// {
-//     t_txtrs *txtrs;
-//     t_texture texture;
-
-
-//     texture = cub->texture;
-//     txtrs = (t_txtrs *)ft_calloc(1, sizeof(t_txtrs));
-//     cub->txtrs = txtrs;
-//     txtrs->no = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
-//     txtrs->so = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
-//     txtrs->we = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
-//     txtrs->ea = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
-//     txtrs->no->img = texture.no_img;
-//     txtrs->so->img = texture.so_img;
-//     txtrs->we->img = texture.we_img;
-//     txtrs->ea->img = texture.ea_img;
-//     txtrs->no->addr = mlx_get_map_addr(txtrs->no->img, &txtrs->no->bpp, &txtrs->no->line_len, &txtrs->no->endian);
-//     txtrs->so->addr = mlx_get_map_addr(txtrs->so->img, &txtrs->so->bpp, &txtrs->so->line_len, &txtrs->so->endian);
-//     txtrs->we->addr = mlx_get_map_addr(txtrs->we->img, &txtrs->we->bpp, &txtrs->we->line_len, &txtrs->we->endian);
-//     txtrs->ea->addr = mlx_get_map_addr(txtrs->ea->img, &txtrs->ea->bpp, &txtrs->ea->line_len, &txtrs->ea->endian);
-// }

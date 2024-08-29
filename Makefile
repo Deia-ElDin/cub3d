@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/29 16:31:07 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/29 16:33:24 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 MLX_DIR = includes/mlx
 MLX_LIB = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
-MAIN = main.c #delete_me.c
+MAIN = main.c
 PARSING = parsing.c validate.c utils.c
 EXECUTION = execution.c movement.c raycasting.c render.c render_txture.c  old_exc.c
 

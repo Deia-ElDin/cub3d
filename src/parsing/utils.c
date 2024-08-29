@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 16:17:09 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 19:43:37 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	is_color(t_cub *cub, char *line, int *color_idx, int *color_arr)
 	return (0);
 }
 
-bool	is_textures_ready(t_texture *texture)
+bool	is_textures_ready(t_txtrs *txtrs)
 {
-	return (texture->no_img
-		&& texture->so_img
-		&& texture->we_img
-		&& texture->ea_img
-		&& texture->f_color != -1
-		&& texture->c_color != -1);
+	return (txtrs->no->img
+		&& txtrs->so->img
+		&& txtrs->we->img
+		&& txtrs->ea->img
+		&& txtrs->f_color != -1
+		&& txtrs->c_color != -1);
 }
 
 void	is_player(t_cub *cub, char *map_line, int y)

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 16:17:57 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 19:42:59 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	parsing(t_cub *cub, char *input_file);
 void	file_validate(t_cub *cub, t_file *file, t_map *map);
 // 		*	utils.c
 int		is_color(t_cub *cub, char *line, int *color_idx, int *color_arr);
-bool	is_textures_ready(t_texture *texture);
+bool	is_textures_ready(t_txtrs *txtrs);
 void	is_player(t_cub *cub, char *map_line, int y);
 void	set_map_width(t_map *map, char *map_line);
 char	*set_map_line(t_cub *cub, t_map *map, char *map_line);

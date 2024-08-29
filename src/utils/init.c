@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 15:44:50 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 19:59:32 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,17 @@ static void	init_malloc(t_cub *cub)
 	cub->txtrs->c_color = -1;
 }
 
-static void	init_file(t_file *file, char *input_file)
+static void	init_structs(t_cub *cub, t_file *file, char *input_file)
 {
+	t_map		*map;
+	t_player	*player;
+	
+	map = cub->map;
+	player = cub->player;
 	file->file_arr = NULL;
 	file->filepath_len = (int)ft_strlen(input_file);
 	file->file_len = 0;
 	file->stage = 1;
-}
-
-static void	init_texture(t_texture *texture)
-{
-	texture->no_img = NULL;
-	texture->so_img = NULL;
-	texture->we_img = NULL;
-	texture->ea_img = NULL;
-	texture->f_color = -1;
-	texture->c_color = -1;
-}
-
-static void	init_map(t_map *map)
-{
 	map->map_arr = NULL;
 	map->map_width = 0;
 	map->map_height = 0;
@@ -61,10 +52,6 @@ static void	init_map(t_map *map)
 	map->wall_counter = 0;
 	map->plyr_counter = 0;
 	map->plyr_direction = '\0';
-}
-
-static void	init_player(t_player *player)
-{
 	player->plyr_x = -1;
 	player->plyr_y = -1;
 	player->plyr_angle = -1;
@@ -72,7 +59,6 @@ static void	init_player(t_player *player)
 	player->r_l = 0;
 	player->u_d = 0;
 	player->rot_flag = 0;
-	
 }
 
 static void	init_txtr(t_txtdata *txtr)
@@ -89,10 +75,7 @@ static void	init_txtr(t_txtdata *txtr)
 void	init(t_cub *cub, char *input_file)
 {
 	init_malloc(cub);
-	init_file(&cub->file, input_file);
-	init_texture(&cub->texture);
-	init_map(cub->map);
-	init_player(cub->player);
+	init_structs(cub, &cub->file, input_file);
 	init_txtr(cub->txtrs->no);
 	init_txtr(cub->txtrs->so);
 	init_txtr(cub->txtrs->we);

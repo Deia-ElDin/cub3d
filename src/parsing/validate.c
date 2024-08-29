@@ -6,13 +6,13 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 16:21:27 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 20:04:35 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	validate_img(t_cub *cub, t_txtdata *txtr, void **img, char *line);
+static void	validate_img(t_cub *cub, t_txtdata *txtr, char *line);
 static void	validate_color(t_cub *cub, int *arr, int *value, char *line);
 static void	validate_elements(t_cub *cub, char *line);
 static void	validate_map(t_cub *cub, t_file *file, t_map *map, int st);
@@ -46,18 +46,12 @@ void	file_validate(t_cub *cub, t_file *file, t_map *map)
 	validate_map(cub, file, map, map->map_st);
 }
 
-static void	validate_img(t_cub *cub, t_txtdata *txtr, void **img, char *line)
+static void	validate_img(t_cub *cub, t_txtdata *txtr, char *line)
 {
 	char	**split;
 	int		width;
 	int		height;
 
-	if (txtr->img)
-		printf("img = NULL");
-	else
-		printf("img = NOT NULL");
-	if (*img)
-		exit_failure(cub, ELEMENTS_EXIST_ERR);
 	if (txtr->img)
 		exit_failure(cub, ELEMENTS_EXIST_ERR);
 	split = ft_split(line, ' ');
@@ -67,16 +61,14 @@ static void	validate_img(t_cub *cub, t_txtdata *txtr, void **img, char *line)
 		exit_failure(cub, ELEMENTS_SPACE_ERR);
 	if (!ft_strrchr(split[1], '.xpm'))
 		return (ft_free(&split, 'a'), exit_failure(cub, ELEMENTS_IMG_NAME_ERR));
-	*img = mlx_xpm_file_to_image(cub->mlx_ptr, split[1], &width, &height);
-	txtr->img  = mlx_xpm_file_to_image(cub->mlx_ptr, split[1], &width, &height);
+	txtr->img = mlx_xpm_file_to_image(cub->mlx_ptr, split[1], &width, &height);
 	ft_free(&split, 'a');
-	if (!*img)
-		exit_failure(cub, ELEMENTS_IMG_CORRUPTED_ERR);
 	if (!txtr->img)
 		exit_failure(cub, ELEMENTS_IMG_CORRUPTED_ERR);
 	txtr->height = height;
 	txtr->width = width;
-	txtr->addr = mlx_get_map_addr(txtr->img, &txtr->bpp, &txtr->line_len, &txtr->endian);
+	txtr->addr = mlx_get_map_addr(txtr->img,
+			&txtr->bpp, &txtr->line_len, &txtr->endian);
 }
 
 static void	validate_color(t_cub *cub, int *arr, int *value, char *line)
@@ -106,27 +98,25 @@ static void	validate_color(t_cub *cub, int *arr, int *value, char *line)
 static void	validate_elements(t_cub *cub, char *line)
 {
 	t_file		*file;
-	t_texture	*texture;
 	t_txtrs		*txtrs;
 	size_t		len;
 
 	file = &cub->file;
-	texture = &cub->texture;
 	txtrs = cub->txtrs;
 	len = ft_strlen(line);
 	if (ft_strnstr(line, "NO", len))
-		validate_img(cub, txtrs->no, &texture->no_img, line);
+		validate_img(cub, txtrs->no, line);
 	else if (ft_strnstr(line, "SO", len))
-		validate_img(cub, txtrs->so, &texture->so_img, line);
+		validate_img(cub, txtrs->so, line);
 	else if (ft_strnstr(line, "WE", len))
-		validate_img(cub, txtrs->we, &texture->we_img, line);
+		validate_img(cub, txtrs->we, line);
 	else if (ft_strnstr(line, "EA", len))
-		validate_img(cub, txtrs->ea, &texture->ea_img, line);
+		validate_img(cub, txtrs->ea, line);
 	else if (ft_strnstr(line, "F", len))
-		validate_color(cub, texture->f_arr, &texture->f_color, line);
+		validate_color(cub, txtrs->f_arr, &txtrs->f_color, line);
 	else if (ft_strnstr(line, "C", len))
-		validate_color(cub, texture->c_arr, &texture->c_color, line);
-	if (is_textures_ready(&cub->texture))
+		validate_color(cub, txtrs->c_arr, &txtrs->c_color, line);
+	if (is_textures_ready(cub->txtrs))
 		file->stage++;
 }
 
