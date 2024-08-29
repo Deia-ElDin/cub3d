@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+         #
+#    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/26 11:54:51 by aalshafy         ###   ########.fr        #
+#    Updated: 2024/08/29 16:31:07 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ MAIN = main.c #delete_me.c
 PARSING = parsing.c validate.c utils.c
 EXECUTION = execution.c movement.c raycasting.c render.c render_txture.c  old_exc.c
 
-UTILS = exit.c init.c mlx.c utils.c
+UTILS = exit.c init.c utils.c
 
 SRCS = \
 	$(addprefix src/, $(MAIN)) \
