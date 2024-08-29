@@ -87,7 +87,7 @@ void draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h) // draw the wall
 	(void)reverse_color;
 
 	txt = get_txt(mlx, mlx->ray->wall_flag); // get the texture
-	fact = (double)64 / wall_h; // get the texture height
+	fact = (double)txt->height / wall_h; // get the texture height
 	x_o = texture_x(mlx, txt, mlx->ray->wall_flag); // get the x coordinate of the texture
 	y_o = (t_pix - (S_HEIGHT / 2) + (wall_h / 2)) * fact; // get the y coordinate of the texture
 	if (y_o < 0)

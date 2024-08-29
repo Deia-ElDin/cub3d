@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 12:38:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 11:05:03 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:17:32 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,4 @@
 // 	*(unsigned int *)dst = color;
 // }
 
-int	create_rgb(int *color_arr)
-{
-	int	r;
-	int	g;
-	int	b;
-	int a;
 
-	r = color_arr[0];
-	g = color_arr[1];
-	b = color_arr[2];
-	a = 0x00000000;
-	return (r << 16 | g << 8 | b | a);
-}

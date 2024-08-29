@@ -23,8 +23,7 @@ int mlx_key(mlx_key_data_t keydata, void *ml)	// key press
 
 	mlx = ml;
 	if (keydata.key == MLX_KEY_ESCAPE) // exit the game
-		exit(0);
-		// exit_success(mlx);
+		exit_success(mlx);
 	else if (keydata.key == MLX_KEY_A) // move left
 		mlx->player->r_l -= 1;
 	else if (keydata.key == MLX_KEY_D) // move right

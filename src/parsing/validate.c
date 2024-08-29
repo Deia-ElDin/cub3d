@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 16:05:01 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 16:21:27 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	validate_img(t_cub *cub, t_txtdata *txtr, void **img, char *line)
 		exit_failure(cub, ELEMENTS_IMG_CORRUPTED_ERR);
 	txtr->height = height;
 	txtr->width = width;
+	txtr->addr = mlx_get_map_addr(txtr->img, &txtr->bpp, &txtr->line_len, &txtr->endian);
 }
 
 static void	validate_color(t_cub *cub, int *arr, int *value, char *line)

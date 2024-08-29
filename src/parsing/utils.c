@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 10:42:33 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:17:09 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	is_player(t_cub *cub, char *map_line, int y)
 				exit_failure(cub, MAP_CHARS_ERR);
 			map->plyr_direction = map_line[x];
 			map->plyr_counter++;
-			calculate_angle(cub, map_line[x]);
 			map->p_x = x;
 			map->p_y = y;
+			calculate_angle(cub, map_line[x], x, y);
 		}
 		x++;
 	}

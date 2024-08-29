@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 15:45:07 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 16:17:57 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,14 +249,12 @@ int		exit_success(t_cub *cub);
 void	init(t_cub *cub, char *input_file);
 // 		*	utils.c
 void	use_atoi(t_cub *cub, char *str_nbr, int *counter);
-void	calculate_angle(t_cub *cub, char direction);
+void	calculate_angle(t_cub *cub, char direction, int x, int y);
 void	calculate_center(double x, double y, int *center_x, int *center_y);
 void	calculate_deltas(t_player *player, int keycode, double *dx, double *dy);
-// 		*	mlx.c
-// void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int		create_rgb(int *color_arr);
 
-// ******************** EXCUTION ******************** //
+// ******************** EXECUTION ******************** //
 
 /*-------------------INIT-------------------*/
 // t_map  *init_argument();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:58:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 08:27:34 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:17:42 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	use_atoi(t_cub *cub, char *str_nbr, int *counter)
 	*counter = nbr;
 }
 
-void	calculate_angle(t_cub *cub, char direction)
+void	calculate_angle(t_cub *cub, char direction, int x, int y)
 {
 	if (direction == 'N')
 		cub->player->plyr_angle = M_PI / 2;
@@ -38,7 +38,24 @@ void	calculate_angle(t_cub *cub, char direction)
 		cub->player->plyr_angle = 0;
 	else if (direction == 'W')
 		cub->player->plyr_angle = M_PI;
+	cub->player->plyr_x = x * TILE_SIZE + TILE_SIZE / 2;
+    cub->player->plyr_y = y * TILE_SIZE + TILE_SIZE / 2;
 }
+
+int	create_rgb(int *color_arr)
+{
+	int	r;
+	int	g;
+	int	b;
+	int a;
+
+	r = color_arr[0];
+	g = color_arr[1];
+	b = color_arr[2];
+	a = 0x00000000;
+	return (r << 16 | g << 8 | b | a);
+}
+
 
 // void	calculate_center(double x, double y, int *center_x, int *center_y)
 // {
