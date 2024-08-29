@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 08:18:26 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:45:34 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,22 @@
 
 static void	exit_clean(t_cub *cub)
 {
-	// t_file		*file;
-	// t_texture	*texture;
-	// t_map		*map;
-
-	// file = &cub->file;
-	// texture = &cub->texture;
-	// map = &cub->map;
 	ft_free(&cub->file.file_arr, 'a');
 	ft_free(&cub->map->map_arr, 'a');
-	// ft_free(&cub->file.no_path, 'p');
-	// ft_free(&cub->file.so_path, 'p');
-	// ft_free(&cub->file.we_path, 'p');
-	// ft_free(&cub->file.ea_path, 'p');
+	if (cub->txtrs)
+	{
+		free(cub->txtrs->no);
+		free(cub->txtrs->so);
+		free(cub->txtrs->we);
+		free(cub->txtrs->ea);
+		free(cub->txtrs);
+	}
+	free(cub->map);
+	free(cub->player);
+	free(cub->img);
+	free(cub->ray);
 	if (cub->mlx_ptr)
 		free(cub->mlx_ptr);
-	// mlx_delete_image(cub->mlx, cub->img.img);
-	// mlx_close_window(cub->mlx);
-	// freelist(&cub->file.file_arr);
-	// free_map(&cub->map);
-	// ft_delete_tex(&cub->texture);
-	// free(cub->texture.no_img);
-	// free(cub->texture.so_img);
-	// free(cub->texture.we_img);
-	// free(cub->texture.ea_img);
-	// free(cub->player);
-	// free(cub->ray);
-	// mlx_terminate(cub->mlx);
-	// ft_putstr_fd("Game closed\n", 1);
 }
 
 void	exit_failure(t_cub *cub, char *err_msg)

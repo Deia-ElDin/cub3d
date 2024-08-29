@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 08:08:28 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:45:07 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,10 @@ typedef struct s_txtrs
     t_txtdata   *so;
     t_txtdata   *we;
     t_txtdata   *ea;
+	int			f_arr[3];
+	int			c_arr[3];
+	int			f_color;
+	int			c_color;
 }           t_txtrs;
  
 typedef struct s_ray

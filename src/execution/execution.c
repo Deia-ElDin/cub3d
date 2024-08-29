@@ -29,16 +29,6 @@ int execution(t_cub *cub)
 
 void start_the_game(t_cub *cub)
 {
-    // t_cub cub;
-
-    // cub.map = data;
-    // cub->player = (t_player *)ft_calloc(1, sizeof(t_player));
-    // if (!cub->player)
-    //     return ;
-    // init_player_data((*cub));
-    printf("start the game\n");
-    printf("player x: %d\n", cub->player->plyr_x);
-    printf("player y: %d\n", cub->player->plyr_y);
     cub->player->plyr_x = cub->map->p_x * TILE_SIZE + TILE_SIZE / 2;
     cub->player->plyr_y = cub->map->p_y * TILE_SIZE + TILE_SIZE / 2;
     cub->ray = (t_ray *)ft_calloc(1, sizeof(t_ray));

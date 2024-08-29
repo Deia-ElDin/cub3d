@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 08:41:14 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:48:26 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// print_file(cub);
-// print_textures(cub);
-// print_map(cub);
 static void	file_len(t_cub *cub, char *input_file);
 static void	file_create(t_cub *cub, t_file *file, char *input_file);
 static void	map_create(t_cub *cub, t_map *map, int st, int end);

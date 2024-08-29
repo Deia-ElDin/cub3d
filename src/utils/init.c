@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 09:26:03 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:44:50 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	init_malloc(t_cub *cub)
+{
+	cub->mlx_ptr = NULL;
+	cub->win_ptr = NULL;
+	cub->map = (t_map *)ft_calloc(1, sizeof(t_map));
+	cub->player = (t_player *)ft_calloc(1, sizeof(t_player));
+	cub->img = (t_mlx_img *)ft_calloc(1, sizeof(t_mlx_img));
+	cub->ray = (t_ray *)ft_calloc(1, sizeof(t_ray));
+	cub->txtrs = (t_txtrs *)ft_calloc(1, sizeof(t_txtrs));
+	if (!cub->map || !cub->player || !cub->img || !cub->ray || !cub->txtrs)
+		exit_failure(cub, MALLOC_ERR);
+	cub->txtrs->no = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+	cub->txtrs->so = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+	cub->txtrs->we = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+	cub->txtrs->ea = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
+	if (!cub->txtrs->no || !cub->txtrs->so || !cub->txtrs->we || !cub->txtrs->ea)
+		exit_failure(cub, MALLOC_ERR);
+	cub->txtrs->f_color = -1;
+	cub->txtrs->c_color = -1;
+}
 
 static void	init_file(t_file *file, char *input_file)
 {
@@ -54,14 +75,28 @@ static void	init_player(t_player *player)
 	
 }
 
+static void	init_txtr(t_txtdata *txtr)
+{
+	txtr->img = NULL;
+	txtr->addr = NULL;
+	txtr->bpp = 0;
+	txtr->line_len = 0;
+	txtr->endian = 0;
+	txtr->width = 0;
+	txtr->height = 0;
+}
+
 void	init(t_cub *cub, char *input_file)
 {
-	cub->mlx_ptr = NULL;
-	cub->win_ptr = NULL;
+	init_malloc(cub);
 	init_file(&cub->file, input_file);
 	init_texture(&cub->texture);
 	init_map(cub->map);
 	init_player(cub->player);
+	init_txtr(cub->txtrs->no);
+	init_txtr(cub->txtrs->so);
+	init_txtr(cub->txtrs->we);
+	init_txtr(cub->txtrs->ea);
 }
 
 /*
