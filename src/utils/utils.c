@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:58:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 16:17:42 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 20:06:38 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	calculate_angle(t_cub *cub, char direction, int x, int y)
 	else if (direction == 'W')
 		cub->player->plyr_angle = M_PI;
 	cub->player->plyr_x = x * TILE_SIZE + TILE_SIZE / 2;
-    cub->player->plyr_y = y * TILE_SIZE + TILE_SIZE / 2;
+	cub->player->plyr_y = y * TILE_SIZE + TILE_SIZE / 2;
 }
 
 int	create_rgb(int *color_arr)
@@ -47,7 +47,7 @@ int	create_rgb(int *color_arr)
 	int	r;
 	int	g;
 	int	b;
-	int a;
+	int	a;
 
 	r = color_arr[0];
 	g = color_arr[1];
@@ -55,7 +55,6 @@ int	create_rgb(int *color_arr)
 	a = 0x00000000;
 	return (r << 16 | g << 8 | b | a);
 }
-
 
 // void	calculate_center(double x, double y, int *center_x, int *center_y)
 // {

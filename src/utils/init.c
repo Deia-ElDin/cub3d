@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 19:59:32 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/29 20:06:22 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	init_malloc(t_cub *cub)
 	cub->txtrs->so = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
 	cub->txtrs->we = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
 	cub->txtrs->ea = (t_txtdata *)ft_calloc(1, sizeof(t_txtdata));
-	if (!cub->txtrs->no || !cub->txtrs->so || !cub->txtrs->we || !cub->txtrs->ea)
+	if (!cub->txtrs->no || !cub->txtrs->so
+		|| !cub->txtrs->we || !cub->txtrs->ea)
 		exit_failure(cub, MALLOC_ERR);
 	cub->txtrs->f_color = -1;
 	cub->txtrs->c_color = -1;
@@ -37,7 +38,7 @@ static void	init_structs(t_cub *cub, t_file *file, char *input_file)
 {
 	t_map		*map;
 	t_player	*player;
-	
+
 	map = cub->map;
 	player = cub->player;
 	file->file_arr = NULL;
