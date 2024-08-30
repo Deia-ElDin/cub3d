@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/30 22:04:32 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/30 22:09:25 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,6 @@ typedef struct s_file
 	int		file_len;
 }	t_file;
 
-typedef struct s_texture
-{
-	void	*no_img;
-	void	*so_img;
-	void	*we_img;
-	void	*ea_img;
-	int		f_arr[3];
-	int		c_arr[3];
-	int		f_color;
-	int		c_color;
-}	t_texture;
-
 typedef struct s_map
 {
 	char	**map_arr;
@@ -183,7 +171,6 @@ typedef struct s_cub
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_file		file;
-	t_texture	texture;
 	t_map		*map;
 	t_player	*player;
 	t_mlx_img	*img;

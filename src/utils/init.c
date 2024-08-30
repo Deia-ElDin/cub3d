@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:33:53 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 20:06:22 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/30 22:08:37 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,6 @@ void	init(t_cub *cub, char *input_file)
 			we init it to NULL.
 		-	init_file(&cub->file, input_file);
 			used to init the file struct.
-		-	init_texture(&cub->texture);
-			used to init the texture struct.
-		-	init_map(&cub->map);
-			used to init the map struct.
 		-	init_player(&cub->player);
 			used to init the player struct.
 	}
@@ -116,22 +112,6 @@ void	init(t_cub *cub, char *input_file)
 			- we use it to validate if the map follows the right order.
 	}
 
-	*	static void	init_texture(t_texture *texture)
-	{
-		-	texture->no_img = NULL;
-			used to store the north texture into that variable.
-		-	texture->so_img = NULL;
-			used to store the south texture into that variable.
-		-	texture->we_img = NULL;
-			used to store the west texture into that variable.
-		-	texture->ea_img = NULL;
-			used to store the east texture into that variable.
-		-	texture->f_color = -1;
-			used to store the floor color into that variable.
-		-	texture->c_color = -1;
-			used to store the ceiling color into that variable.
-	}
-	
 	*	static void	init_map(t_map *map)
 	{
 		-	map->map_arr = NULL;
