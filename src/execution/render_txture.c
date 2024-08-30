@@ -25,12 +25,17 @@ double texture_x(t_cub *mlx, t_txtdata *texture, int flag) // get the x coordina
 	(void) texture;
 
 	if (flag == 1)
-		x_o = (int)fmodf((mlx->ray->hor_x * \
-		(texture->width / TILE_SIZE)), texture->width);
+		x_o = ((float)((int) mlx->ray->hor_x % TILE_SIZE) / TILE_SIZE )* texture->width;
 	else
-		x_o = (int)fmodf((mlx->ray->ver_y * \
-		(texture->width / TILE_SIZE)), texture->width);
+		x_o = ((float)((int) mlx->ray->ver_y % TILE_SIZE) / TILE_SIZE )* texture->width;
 	return (x_o);
+
+
+	// 	ray->x_texture = ((double)((int)ray->ry % data->pixel_y) / (double)(data->pixel_y)) * data->texture->width;
+	// if (ray->dis_h < ray->dis_v)
+	// 	ray->x_texture = ((double)((int)ray->rx % data->pixel_x)
+	// 			/ (double)(data->pixel_x)) * data->texture->width;
+	// ray->y_step = (float)data->texture->height / ray->line_height;
 }
 
 void draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix) // draw the floor and the ceiling

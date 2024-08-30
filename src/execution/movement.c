@@ -55,24 +55,53 @@ void	rotate_player(t_cub *mlx, int i)	// rotate the player
 	}
 }
 
+
+
+int	check_collision(t_map *data, float new_x, float new_y)
+{
+	int	map_x1;
+	int	map_y1;
+	int	map_x2;
+	int	map_y2;
+
+	map_x1 = (int)(new_x - 5) / TILE_SIZE;
+	map_y1 = (int)(new_y - 5) / TILE_SIZE;
+	map_x2 = (int)(new_x + 5) / TILE_SIZE;
+	map_y2 = (int)(new_y + 5) / TILE_SIZE;
+	if (map_x1 < 0 || map_x1 >= data->map_width || map_y1 < 0
+		|| map_y1 >= data->map_height || map_x2 < 0 || map_x2 >= data->map_width
+		|| map_y2 < 0 || map_y2 >= data->map_height)
+		return (1);
+	return (data->map_arr[map_y1][map_x1] == '1'
+		|| data->map_arr[map_y1][map_x2] == '1'
+		|| data->map_arr[map_y2][map_x1] == '1'
+		|| data->map_arr[map_y2][map_x2] == '1');
+}
+
+
 void	move_player(t_cub *mlx, double move_x, double move_y)	// move the player
 {
-	int		map_grid_y;
-	int		map_grid_x;
+	// int		map_grid_y;
+	// int		map_grid_x;
 	int		new_x;
 	int		new_y;
 
 	new_x = roundf(mlx->player->plyr_x + move_x); // get the new x position
 	new_y = roundf(mlx->player->plyr_y + move_y); // get the new y position
-	map_grid_x = (new_x / TILE_SIZE); // get the x position in the map
-	map_grid_y = (new_y / TILE_SIZE); // get the y position in the map
-	if (mlx->map->map_arr[map_grid_y][map_grid_x] != '1' && \
-	(mlx->map->map_arr[map_grid_y][mlx->player->plyr_x / TILE_SIZE] != '1' && \
-	mlx->map->map_arr[mlx->player->plyr_y / TILE_SIZE][map_grid_x] != '1')) // check the wall hit and the diagonal wall hit
+	if (!check_collision(mlx->map, new_x, new_y))
 	{
 		mlx->player->plyr_x = new_x; // move the player
-		mlx->player->plyr_y = new_y; // move the player
+		mlx->player->plyr_y = new_y; 
 	}
+	// map_grid_x = (new_x / TILE_SIZE); // get the x position in the map
+	// map_grid_y = (new_y / TILE_SIZE); // get the y position in the map
+	// if (mlx->map->map_arr[map_grid_y][map_grid_x] != '1' && \
+	// (mlx->map->map_arr[map_grid_y][mlx->player->plyr_x / TILE_SIZE] != '1' && \
+	// mlx->map->map_arr[mlx->player->plyr_y / TILE_SIZE][map_grid_x] != '1')) // check the wall hit and the diagonal wall hit
+	// {
+	// 	mlx->player->plyr_x = new_x; // move the player
+	// 	mlx->player->plyr_y = new_y; // move the player
+	// }
 }
 
 void	hook(t_cub *mlx, double move_x, double move_y)	// hook the player
