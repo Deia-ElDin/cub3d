@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 19:42:59 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/30 14:23:21 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ enum
 
 // ******************** Constants ******************** //
 
-# define S_HEIGHT 1900
+# define S_HEIGHT 1000
 # define S_WIDTH 1000
 # define TILE_SIZE 30
 # define FOV 60 

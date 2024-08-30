@@ -26,10 +26,10 @@ double texture_x(t_cub *mlx, t_txtdata *texture, int flag) // get the x coordina
 
 	if (flag == 1)
 		x_o = (int)fmodf((mlx->ray->hor_x * \
-		(texture->height / TILE_SIZE)), texture->width);
+		(texture->width / TILE_SIZE)), texture->width);
 	else
 		x_o = (int)fmodf((mlx->ray->ver_y * \
-		(texture->height / TILE_SIZE)), texture->width);
+		(texture->width / TILE_SIZE)), texture->width);
 	return (x_o);
 }
 

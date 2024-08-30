@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/26 09:11:40 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:31:47 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(int ac, char **av)
 	(void)av;
 
 	
-	cub.map = (t_map *)ft_calloc(1, sizeof(t_map));
-	cub.player = (t_player *)ft_calloc(1, sizeof(t_player));
+	// cub.map = (t_map *)ft_calloc(1, sizeof(t_map));
+	// cub.player = (t_player *)ft_calloc(1, sizeof(t_player));
 	if (!cub.mlx_ptr)
 		exit_failure(&cub, MLX_ERR);
 	init(&cub, av[1]);
