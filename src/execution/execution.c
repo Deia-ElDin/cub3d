@@ -31,7 +31,7 @@ void	start_the_game(t_cub *cub)
 	cub->win_ptr = mlx_new_window(cub->mlx_ptr, S_WIDTH, S_HEIGHT, "cub3d");
 	mlx_hook(cub->win_ptr, MLX_PRESS, MLX_RELEASE, &mlx_key, cub);
 	mlx_hook(cub->win_ptr, MLX_RELEASE, MLX_RELEASE, &key_reles, cub);
-	mlx_hook(cub->win_ptr, 17, 0, exit_success, cub);
+	mlx_hook(cub->win_ptr, ON_DESTROY, 0, exit_success, cub);
 	mlx_loop_hook(cub->mlx_ptr, &game_loop, cub);
 	mlx_loop(cub->mlx_ptr);
 	exit_success(cub);
