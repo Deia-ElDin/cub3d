@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render->c                                           :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 19:23:52 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/26 08:17:28 by aalshafy         ###   ########.fr       */
+/*   Created: 2024/08/30 18:32:14 by aalshafy          #+#    #+#             */
+/*   Updated: 2024/08/30 18:36:44 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int reverse_color(int color);
 
 void	my_pixel_put(t_mlx_img *img, int x, int y, int color)
 {
@@ -22,20 +20,20 @@ void	my_pixel_put(t_mlx_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void my_mlx_pixel_put(t_cub *mlx, int x, int y, int color) // put the pixel
+void	my_mlx_pixel_put(t_cub *mlx, int x, int y, int color)
 {
-	if (x < 0) // check the x position
+	if (x < 0)
 		return ;
 	else if (x >= S_WIDTH)
 		return ;
-	if (y < 0) // check the y position
+	if (y < 0)
 		return ;
 	else if (y >= S_HEIGHT)
 		return ;
-	my_pixel_put(mlx->img, x, y, color); // put the pixel
+	my_pixel_put(mlx->img, x, y, color);
 }
 
-float nor_angle(float angle) // normalize the angle
+float	nor_angle(float angle)
 {
 	if (angle < 0)
 		angle += (2 * M_PI);
@@ -44,94 +42,46 @@ float nor_angle(float angle) // normalize the angle
 	return (angle);
 }
 
-// void draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix) // draw the floor and the ceiling
-// {
-//     int  i;
-
-// 	i = b_pix;
-// 	while (i < S_HEIGHT)
-// 		my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // floor
-// 	i = 0;
-// 	while (i < t_pix)
-// 		my_mlx_pixel_put(mlx, ray, i++, 0x89CFF3FF); // ceiling
-// }
-
-int get_color(t_cub *mlx, int flag) // get the color of the wall
+void	draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h)
 {
-	mlx->ray->ray_angle = nor_angle(mlx->ray->ray_angle); // normalize the angle
-	if (flag == 0)
-	{
-		if (mlx->ray->ray_angle > M_PI / 2 && mlx->ray->ray_angle < 3 * (M_PI / 2))
-			return (0x00B5B5FF); // west wall
-		else
-			return (0x00B5B5FF); // east wall
-	}
-	else
-	{
-		if (mlx->ray->ray_angle > 0 && mlx->ray->ray_angle < M_PI)
-			return (0x00F5F5FF); // south wall
-		else
-			return (0x00F5F5FF); // north wall
-	}
-}
+	int			color;
+	t_txtdata	*txt;
+	double		x_o;
+	double		y_o;
+	double		fact;
 
-void draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h) // draw the wall
-{
-	int color;
-	t_txtdata *txt;
-	double x_o;
-	double y_o;
-	double fact;
-
-	// (void)wall_h;
-	(void)reverse_color;
-
-	txt = get_txt(mlx, mlx->ray->wall_flag); // get the texture
-	fact = (double)txt->height / wall_h; // get the texture height
-	x_o = texture_x(mlx, txt, mlx->ray->wall_flag); // get the x coordinate of the texture
-	y_o = (t_pix - (S_HEIGHT / 2) + (wall_h / 2)) * fact; // get the y coordinate of the texture
+	txt = get_txt(mlx, mlx->ray->wall_flag);
+	fact = (double)txt->height / wall_h;
+	x_o = texture_x(mlx, txt, mlx->ray->wall_flag);
+	y_o = (t_pix - (S_HEIGHT / 2) + (wall_h / 2)) * fact;
 	if (y_o < 0)
 		y_o = 0;
-	// color = get_color(mlx, mlx->ray->wall_flag); // get the color
 	while (t_pix < b_pix)
 	{
-		
-		color = *(unsigned int *)(txt->addr + ((int)y_o * txt->line_len + (int)x_o * (txt->bpp / 8))); // get the color
-		// color = reverse_color(color); // reverse the color
-		my_mlx_pixel_put(mlx, mlx->ray->indx, t_pix++, color); // put the pixel
-		y_o += fact; // increment the y coordinate
+		color = *(unsigned int *)(txt->addr + ((int)y_o * txt->line_len
+					+ (int)x_o * (txt->bpp / 8)));
+		my_mlx_pixel_put(mlx, mlx->ray->indx, t_pix++, color);
+		y_o += fact;
 	}
 }
 
-void render_wall(t_cub *mlx, int ray) // render the wall
+void	render_wall(t_cub *mlx, int ray)
 {
-	double wall_h;
-	double b_pix;
-	double t_pix;
+	double	wall_h;
+	double	b_pix;
+	double	t_pix;
 
-	mlx->ray->distance *= cos(nor_angle(mlx->ray->ray_angle - mlx->player->plyr_angle)); // fix the fisheye
-	wall_h = (TILE_SIZE / mlx->ray->distance) * ((S_WIDTH / 2) / tan(mlx->player->fov_rd / 2)); // get the wall height
-	b_pix = (S_HEIGHT / 2) + (wall_h / 2); // get the bottom pixel
-	t_pix = (S_HEIGHT / 2) - (wall_h / 2); // get the top pixel
-	if (b_pix > S_HEIGHT) // check the bottom pixel
+	mlx->ray->distance *= cos(nor_angle(mlx->ray->ray_angle
+				- mlx->player->plyr_angle));
+	wall_h = (TILE_SIZE / mlx->ray->distance) * ((S_WIDTH / 2)
+			/ tan(mlx->player->fov_rd / 2));
+	b_pix = (S_HEIGHT / 2) + (wall_h / 2);
+	t_pix = (S_HEIGHT / 2) - (wall_h / 2);
+	if (b_pix > S_HEIGHT)
 		b_pix = S_HEIGHT;
-	if (t_pix < 0) // check the top pixel
+	if (t_pix < 0)
 		t_pix = 0;
-	mlx->ray->indx = ray; // get the index
-	draw_wall(mlx, t_pix, b_pix, wall_h); // draw the wall
-	draw_floor_ceiling(mlx, ray, t_pix, b_pix); // draw the floor and the ceiling
-}
-
-static int reverse_color(int color) // reverse the color
-{
-	int r;
-	int g;
-	int b;
-	int a;
-
-	r = (color & 0x000000FF) << 24;
-	g = (color & 0x0000FF00) << 8;
-	b = (color & 0x00FF0000) >> 8;
-	a = (color & 0x00000000) >> 24;
-	return (r | g | b | a); // return the color
+	mlx->ray->indx = ray;
+	draw_wall(mlx, t_pix, b_pix, wall_h);
+	draw_floor_ceiling(mlx, ray, t_pix, b_pix);
 }
