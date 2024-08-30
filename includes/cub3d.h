@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/30 18:11:52 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/30 18:16:42 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ enum
 # define S_WIDTH 1000
 # define TILE_SIZE 30
 # define FOV 60 
-# define ROTATE_SPEED 0.2
-# define PLAYER_SPEED 1
+# define ROTATE_SPEED 0.1
+# define PLAYER_SPEED 2
 
 // ********************* Errors ********************* //
 
