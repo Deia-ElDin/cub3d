@@ -34,7 +34,7 @@ void	start_the_game(t_cub *cub)
 	mlx_hook(cub->win_ptr, 17, 0, exit_success, cub);
 	mlx_loop_hook(cub->mlx_ptr, &game_loop, cub);
 	mlx_loop(cub->mlx_ptr);
-	ft_exit(&cub);
+	exit_success(cub);
 }
 
 int	game_loop(void *param)
