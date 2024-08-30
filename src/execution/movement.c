@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:33:04 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/30 18:37:33 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/30 21:13:31 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	key_reles(mlx_key_data_t keydata, t_cub *mlx)
+int	key_reles(t_mlx_key_data keydata, t_cub *mlx)
 {
 	if (keydata.key == MLX_KEY_D)
 		mlx->player->r_l = 0;
@@ -29,7 +29,7 @@ int	key_reles(mlx_key_data_t keydata, t_cub *mlx)
 	return (0);
 }
 
-int	mlx_key(mlx_key_data_t keydata, void *ml)
+int	mlx_key(t_mlx_key_data keydata, void *ml)
 {
 	t_cub	*mlx;
 

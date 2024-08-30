@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/30 18:16:42 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/30 21:13:45 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,11 @@ the map can't be separated by one or more empty line(s).\n"
 # define MLX_ERR "Error\nSomething went wrong with mlx lib, kindly try later.\n"
 # define COLOR_ERR "Error\nInvalid color.\n"
 
-
-typedef struct s_mlx_key_data	//the mlx key data structure
+typedef struct s_mlx_key_data
 {
-	int		key;	// the key
-	int		action;	// the action
-}	mlx_key_data_t;
+	int		key;
+	int		action;
+}	t_mlx_key_data;
 
 typedef struct s_file
 {
@@ -116,8 +115,8 @@ typedef struct s_map
 	int		map_end;
 	int		wall_counter;
 	int		plyr_counter;
-	int		p_x; // player x position in the map for testing needs delete it later
-	int		p_y; // player y position in the map for testing needs delete it later
+	int		p_x;
+	int		p_y;
 	char	plyr_direction;
 }	t_map;
 
@@ -291,8 +290,8 @@ void draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix);
 void    hook(t_cub *mlx, double move_x, double move_y);
 void    move_player(t_cub *mlx, double move_x, double move_y);
 void    rotate_player(t_cub *mlx, int flag);
-int     mlx_key(mlx_key_data_t keydata, void *ml);
-int     key_reles(mlx_key_data_t keydata, t_cub *mlx);
+int     mlx_key(t_mlx_key_data keydata, void *ml);
+int     key_reles(t_mlx_key_data keydata, t_cub *mlx);
 
 /*-------------------UTILS-------------------*/
 // void    ft_exit(t_cub *mlx);

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 20:04:35 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/30 21:13:55 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,12 @@ static void	validate_color(t_cub *cub, int *arr, int *value, char *line)
 		while (*line && ft_isspace(*line))
 			line++;
 		line += ft_iscomma(*line, &commas_counter);
+		if (commas_counter > colors_counter)
+			exit_failure(cub, COLOR_ERR);
 		line += ft_isletter(*line, &letters_counter);
 		line += is_color(cub, line, &colors_counter, arr);
+		if (colors_counter == 3 && commas_counter != 2)
+			exit_failure(cub, COLOR_ERR);
 		if (letters_counter > 1 || commas_counter > 2 || colors_counter > 3)
 			exit_failure(cub, COLOR_ERR);
 	}
