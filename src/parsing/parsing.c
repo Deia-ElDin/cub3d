@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:56 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 14:11:33 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 16:15:05 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ static void	map_create(t_cub *cub, t_map *map, int st, int end)
 		exit_failure(cub, MAP_HEIGHT_ERR);
 	if (!ft_iswall(map->map_arr[0]) || !ft_iswall(map->map_arr[idx - 1]))
 		exit_failure(cub, MAP_WALL_ERR);
-	ft_printf(1, "%a\n", map->map_arr);
 }
 
 static void	map_validate(t_cub *cub, t_map *map, char **map_arr, char invalid)
