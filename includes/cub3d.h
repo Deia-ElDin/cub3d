@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 12:04:10 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 15:51:40 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,6 @@ void			rotate_player(t_cub *cub, int flag);
 int				mlx_key(t_mlx_key_data keydata, void *ml);
 int				key_reles(t_mlx_key_data keydata, t_cub *cub);
 
-/*-------------------UTILS-------------------*/
-
 // ******************** APP UTILS ******************** //
 // 		*	exit.c
 void			exit_failure(t_cub *cub, char *err_msg);
@@ -234,14 +232,5 @@ void			init(t_cub *cub, char *input_file);
 void			use_atoi(t_cub *cub, char *str_nbr, int *counter);
 void			calculate_angle(t_cub *cub, char direction, int x, int y);
 int				create_rgb(int *color_arr);
-
-// *************************** DELETE ME *************************** //
-void			print_textures(t_cub *cub);
-void			print_file(t_cub *cub);
-void			print_map(t_cub *cub);
-void			print_player(t_cub *cub);
-t_map			*init_argument(void);
-void			init_player_data(t_cub cub);
-// ***************************************************************** //
 
 #endif
