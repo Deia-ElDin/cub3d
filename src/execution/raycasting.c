@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:17:35 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/30 18:35:42 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:23:53 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	wall_hit(float x, float y, t_cub *mlx)
 	y_m = floor(y / TILE_SIZE);
 	if ((y_m >= mlx->map->map_height || x_m >= mlx->map->map_width))
 		return (0);
-	if (mlx->map->map_arr[y_m] && x_m <= (int)strlen(mlx->map->map_arr[y_m]))
+	if (mlx->map->map_arr[y_m] && x_m <= (int)ft_strlen(mlx->map->map_arr[y_m]))
 		if (mlx->map->map_arr[y_m][x_m] == '1')
 			return (0);
 	return (1);

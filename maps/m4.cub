@@ -4,7 +4,7 @@ WE ./images/nuklear/wall2.xpm
 EA ./images/nuklear/wall3.xpm
 
 C     22, 22, 21
-F 86, 88, 51
+F 86, 0, 0
 
         1111111111111111111111111
         1000000000100000000000001

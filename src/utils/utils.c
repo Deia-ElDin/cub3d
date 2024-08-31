@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:58:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/30 22:03:39 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 11:14:29 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	use_atoi(t_cub *cub, char *str_nbr, int *counter)
 void	calculate_angle(t_cub *cub, char direction, int x, int y)
 {
 	if (direction == 'N')
-		cub->player->plyr_angle = M_PI / 2;
-	else if (direction == 'S')
 		cub->player->plyr_angle = 3 * M_PI / 2;
+	else if (direction == 'S')
+		cub->player->plyr_angle = M_PI / 2;
 	else if (direction == 'E')
 		cub->player->plyr_angle = 0;
 	else if (direction == 'W')

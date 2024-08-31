@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
+#    By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/30 21:52:18 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/31 11:50:42 by aalshafy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -fsanitize=address -g3 -o3
-SANITIZER = -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iincludes
+HEADER = includes/cub3d.h
 
 LIBFT_DIR = includes/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
@@ -35,17 +35,12 @@ SRCS = \
 
 OBJS = $(SRCS:.c=.o)
 
-
 all: $(NAME)
-	./$(NAME) maps/m1.cub
 	
 sanitize: CFLAGS += -fsanitize=address -g3
 sanitize: all
-
-valgrind: all
-	valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions="rules/valgrind.txt" -s ./minishell
 	
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(HEADER)
 	make -C $(LIBFT_DIR)
 	make -C $(MLX_DIR)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) $(MLX_LIB) $(LIBS) -o $(NAME)
@@ -60,21 +55,21 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	make -C $(MLX_DIR) clean
 
-m1:
+m1: all
 	./$(NAME) maps/m1.cub
 	
-m2:
+m2: all
 	./$(NAME) maps/m2.cub
 
-m3:
+m3: all
 	./$(NAME) maps/m3.cub
 
-m4:
+m4: all
 	./$(NAME) maps/m4.cub
 
-m5:
+m5: all
 	./$(NAME) maps/animals.cub
 
 re: fclean all
 	
-.PHONY: all clean fclean re sanitize libft valgrind
+.PHONY: all clean fclean re sanitize m1 m2 m3 m4 m5

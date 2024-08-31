@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:30:16 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/30 18:35:48 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:15:03 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_txtdata	*get_txt(t_cub *mlx, int flag)
 	{
 		if (mlx->ray->ray_angle > M_PI / 2 && mlx->ray->ray_angle < 3 * (M_PI
 				/ 2))
-			return (mlx->txtrs->ea);
-		else
 			return (mlx->txtrs->we);
+		else
+			return (mlx->txtrs->ea);
 	}
 	else
 	{
