@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 14:48:06 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 16:23:46 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ char	*set_map_line(t_cub *cub, t_map *map, char *map_line)
 	while (diff--)
 		fill[diff] = ' ';
 	res = ft_strjoin(tmp, fill);
-	if (!res)
-		exit_failure(cub, MALLOC_ERR);
+	if (!res && (ft_free(&tmp, 'p'), 1) && (ft_free(&fill, 'p'), 1))
+		(exit_failure(cub, MALLOC_ERR));
 	return (ft_free(&tmp, 'p'), ft_free(&fill, 'p'), res);
 }
 
