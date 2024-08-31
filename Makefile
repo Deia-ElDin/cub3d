@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+         #
+#    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/31 11:59:14 by aalshafy         ###   ########.fr        #
+#    Updated: 2024/08/31 15:36:23 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes -fsanitize=address -g3
+
 HEADER = includes/cub3d.h
 
 LIBFT_DIR = includes/libft

@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 13:34:02 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 15:38:30 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	main(int ac, char **av)
 	t_cub	cub;
 
 	if (ac != 2)
-		return (0);
+	{
+		ft_printf(2, "%s\n", "Invalid arguments");
+		exit(EXIT_FAILURE);
+	}
 	init(&cub, av[1]);
 	cub.mlx_ptr = mlx_init();
 	if (!cub.mlx_ptr)

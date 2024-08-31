@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 13:28:33 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 15:39:28 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ static void	exit_mlx(t_cub *cub)
 		mlx_destroy_image(cub->mlx_ptr, cub->img->img);
 	ft_free(&cub->img, 'p');
 	if (cub->win_ptr)
-	{
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
-		if (cub->mlx_ptr)
-			free(cub->mlx_ptr);
-	}
+	if (cub->mlx_ptr)
+		free(cub->mlx_ptr);
 }
 
 static void	exit_clean(t_cub *cub)
