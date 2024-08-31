@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalshafy <aalshafy@student`.42abudhabi.a    +#+  +:+      
-	+#+        */
+/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:04:54 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/25 17:55:57 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 14:42:29 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +14,9 @@
 
 void	start_the_game(t_cub *cub)
 {
-	cub->ray = (t_ray *)ft_calloc(1, sizeof(t_ray));
-	if (!cub->ray)
-		return ;
-	cub->img = (t_mlx_img *)ft_calloc(1, sizeof(t_mlx_img));
 	cub->win_ptr = mlx_new_window(cub->mlx_ptr, S_WIDTH, S_HEIGHT, "cub3d");
+	if (!cub->win_ptr)
+		exit_failure(cub, MLX_ERR);
 	mlx_hook(cub->win_ptr, MLX_PRESS, MLX_RELEASE, &mlx_key, cub);
 	mlx_hook(cub->win_ptr, MLX_RELEASE, MLX_RELEASE, &key_reles, cub);
 	mlx_hook(cub->win_ptr, ON_DESTROY, 0, exit_success, cub);

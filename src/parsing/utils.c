@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 12:06:13 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/29 19:43:37 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 14:48:06 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ char	*set_map_line(t_cub *cub, t_map *map, char *map_line)
 	tmp = ft_strdup(map_line);
 	if (!tmp)
 		exit_failure(cub, MALLOC_ERR);
+	if (ft_strchr("0NSWE", map_line[0])
+		|| ft_strchr("0NSWE", map_line[len - 1]))
+		exit_failure(cub, MAP_WALL_ERR);
 	if (len == map->map_width)
 		return (tmp);
 	diff = map->map_width - len;

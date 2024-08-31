@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 12:47:43 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 13:34:02 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (0);
-	if (!cub.mlx_ptr)
-		exit_failure(&cub, MLX_ERR);
 	init(&cub, av[1]);
 	cub.mlx_ptr = mlx_init();
+	if (!cub.mlx_ptr)
+		exit_failure(&cub, MLX_ERR);
 	parsing(&cub, av[1]);
 	start_the_game(&cub);
 	return (0);

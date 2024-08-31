@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 11:56:17 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/30 21:13:55 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 14:52:39 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ static void	validate_color(t_cub *cub, int *arr, int *value, char *line)
 		if (letters_counter > 1 || commas_counter > 2 || colors_counter > 3)
 			exit_failure(cub, COLOR_ERR);
 	}
-	if (letters_counter != 1 || commas_counter != 2 || colors_counter != 3)
+	if (*value != -1 || letters_counter != 1
+		|| commas_counter != 2 || colors_counter != 3)
 		exit_failure(cub, COLOR_ERR);
 	*value = create_rgb(arr);
 }

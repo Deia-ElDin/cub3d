@@ -1,6 +1,6 @@
+
 WE     textures/greenlight.xpm 
     NO    textures/bluestone.xpm
-C   0,192     ,          192
 C   0,192     ,          192
 SO   textures/colorstone.xpm
 EA   textures/eagle.xpm
@@ -9,14 +9,7 @@ F  128,128,12
 
 
 
-1111111111111111111111
-1000000000000000000010
-1000000000000000000010
-100111111111111111101N1
-1111111111111111111111
-
-
-
-
-
-
+ 11
+ 101
+1N1
+ 1

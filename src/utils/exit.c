@@ -6,7 +6,7 @@
 /*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 12:49:49 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 13:28:33 by dehamad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void	exit_mlx(t_cub *cub)
 	if (cub->win_ptr)
 	{
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
-		free(cub->mlx_ptr);
+		if (cub->mlx_ptr)
+			free(cub->mlx_ptr);
 	}
 }
 
