@@ -6,7 +6,7 @@
 #    By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/31 15:36:23 by dehamad          ###   ########.fr        #
+#    Updated: 2024/08/31 15:43:04 by dehamad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ m4: all
 	./$(NAME) maps/m4.cub
 
 m5: all
-	./$(NAME) maps/animals.cub
+	./$(NAME) maps/m5.cub
 
 re: fclean all
 	
