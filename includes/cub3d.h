@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:43 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 11:26:12 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:04:10 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,8 @@
 # include "mlx/mlx.h"
 # include <math.h>
 
-enum
-{
-	ON_DESTROY = 17
-};
-
 // ********************** Keys ********************** //
+# define ON_DESTROY 17
 # define MLX_KEY_ESCAPE 53
 # define MLX_KEY_W 13
 # define MLX_KEY_A 0
@@ -39,10 +35,10 @@ enum
 # define WHITE 0xFFFFFF
 
 // ******************** Constants ******************** //
-# define S_HEIGHT 2000
-# define S_WIDTH 2000
+# define S_HEIGHT 1000
+# define S_WIDTH 1000
 # define TILE_SIZE 30
-# define FOV 60 
+# define FOV 60
 # define ROTATE_SPEED 0.1
 # define PLAYER_SPEED 2
 
@@ -78,69 +74,69 @@ the map can't be separated by one or more empty line(s).\n"
 
 typedef struct s_mlx_key_data
 {
-	int		key;
-	int		action;
-}	t_mlx_key_data;
+	int			key;
+	int			action;
+}				t_mlx_key_data;
 
 typedef struct s_file
 {
-	char	**file_arr;
-	int		filepath_len;
-	int		stage;
-	int		file_len;
-}	t_file;
+	char		**file_arr;
+	int			filepath_len;
+	int			stage;
+	int			file_len;
+}				t_file;
 
 typedef struct s_map
 {
-	char	**map_arr;
-	int		map_width;
-	int		map_height;
-	int		map_st;
-	int		map_end;
-	int		wall_counter;
-	int		plyr_counter;
-	int		p_x;
-	int		p_y;
-	char	plyr_direction;
-}	t_map;
+	char		**map_arr;
+	int			map_width;
+	int			map_height;
+	int			map_st;
+	int			map_end;
+	int			wall_counter;
+	int			plyr_counter;
+	int			p_x;
+	int			p_y;
+	char		plyr_direction;
+}				t_map;
 
 typedef struct s_player
 {
-	int		plyr_x;
-	int		plyr_y;
-	double	plyr_angle;
-	float	fov_rd;
-	int		rot_flag;
-	int		r_l;
-	int		u_d;
-	int		m_x;
-	int		m_y;
-}	t_player;
+	int			plyr_x;
+	int			plyr_y;
+	double		plyr_angle;
+	float		fov_rd;
+	int			rot_flag;
+	int			r_l;
+	int			u_d;
+	int			m_x;
+	int			m_y;
+}				t_player;
 
 typedef struct s_mlx_img
 {
-	void	*background_img;
-	void	*wall_img;
-	void	*img;
-	char	*addr;
-	char	*pixel;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		tx_width;
-	int		tx_height;
-}	t_mlx_img;
+	void		*background_img;
+	void		*wall_img;
+	void		*img;
+	char		*addr;
+	char		*pixel;
+	int			bpp;
+	int			line_len;
+	int			endian;
+	int			tx_width;
+	int			tx_height;
+}				t_mlx_img;
 
 typedef struct s_txtdata
 {
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		width;
-	int		height;
-}	t_txtdata;
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+	int			width;
+	int			height;
+}				t_txtdata;
 
 typedef struct s_txtrs
 {
@@ -152,19 +148,19 @@ typedef struct s_txtrs
 	int			c_arr[3];
 	int			f_color;
 	int			c_color;
-}	t_txtrs;
+}				t_txtrs;
 
 typedef struct s_ray
 {
-	int		indx;
-	double	ray_angle;
-	double	hor_x;
-	double	hor_y;
-	double	ver_x;
-	double	ver_y;
-	double	distance;
-	int		wall_flag;
-}	t_ray;
+	int			indx;
+	double		ray_angle;
+	double		hor_x;
+	double		hor_y;
+	double		ver_x;
+	double		ver_y;
+	double		distance;
+	int			wall_flag;
+}				t_ray;
 
 typedef struct s_cub
 {
@@ -176,74 +172,76 @@ typedef struct s_cub
 	t_mlx_img	*img;
 	t_ray		*ray;
 	t_txtrs		*txtrs;
-}	t_cub;
+}				t_cub;
 
 // ********************* PARSING ********************* //
-void	parsing(t_cub *cub, char *input_file);
+void			parsing(t_cub *cub, char *input_file);
 
 // ****************** PARSING UTILS ****************** //
 // 		*	validate.c
-void	file_validate(t_cub *cub, t_file *file, t_map *map);
+void			file_validate(t_cub *cub, t_file *file, t_map *map);
 // 		*	utils.c
-int		is_color(t_cub *cub, char *line, int *color_idx, int *color_arr);
-bool	is_textures_ready(t_txtrs *txtrs);
-void	is_player(t_cub *cub, char *map_line, int y);
-void	set_map_width(t_map *map, char *map_line);
-char	*set_map_line(t_cub *cub, t_map *map, char *map_line);
+int				is_color(t_cub *cub, char *line, int *color_idx,
+					int *color_arr);
+bool			is_textures_ready(t_txtrs *txtrs);
+void			is_player(t_cub *cub, char *map_line, int y);
+void			set_map_width(t_map *map, char *map_line);
+char			*set_map_line(t_cub *cub, t_map *map, char *map_line);
 
 // ******************** EXECUTION ******************** //
-int		execution(t_cub *cub);
+int				execution(t_cub *cub);
 
 /*-------------------GAME-------------------*/
-void	start_the_game(t_cub *data);
-int		game_loop(void *param);
-int		unit_circle(float angle, char c);
-int		inter_check(float angle, float *inter, float *step, int is_horizon);
-int		wall_hit(float x, float y, t_cub *mlx);
-float	get_h_inter(t_cub *mlx, float angl);
-float	get_v_inter(t_cub *mlx, float angl);
-void	cast_rays(t_cub *mlx);
-void	my_mlx_pixel_put(t_cub *mlx, int x, int y, int color);
-float	nor_angle(float angle);
-void	draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix);
-int		get_color(t_cub *mlx, int flag);
-void	draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h);
-void	render_wall(t_cub *mlx, int ray);
+void			start_the_game(t_cub *data);
+int				game_loop(void *param);
+int				unit_circle(float angle, char c);
+int				inter_check(float angle, float *inter, float *step,
+					int is_horizon);
+int				wall_hit(float x, float y, t_cub *cub);
+float			get_h_inter(t_cub *cub, float angl);
+float			get_v_inter(t_cub *cub, float angl);
+void			cast_rays(t_cub *cub);
+void			my_mlx_pixel_put(t_cub *cub, int x, int y, int color);
+float			nor_angle(float angle);
+void			draw_floor_ceiling(t_cub *cub, int ray, int t_pix, int b_pix);
+int				get_color(t_cub *cub, int flag);
+void			draw_wall(t_cub *cub, int t_pix, int b_pix, double wall_h);
+void			render_wall(t_cub *cub, int ray);
 
 /*-------------------TEXTURE-------------------*/
-t_txtdata	*get_txt(t_cub *mlx, int flag);
-void		init_txtures(t_cub *cube);
-t_txtdata	*get_txt(t_cub *mlx, int flag);
-double		texture_x(t_cub *mlx, t_txtdata *texture, int flag);
-void		draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix);
+t_txtdata		*get_txt(t_cub *cub, int flag);
+void			init_txtures(t_cub *cube);
+t_txtdata		*get_txt(t_cub *cub, int flag);
+double			texture_x(t_cub *cub, t_txtdata *texture, int flag);
+void			draw_floor_ceiling(t_cub *cub, int ray, int t_pix, int b_pix);
 
 /*-------------------MOVEMENT-------------------*/
-void	hook(t_cub *mlx, double move_x, double move_y);
-void	move_player(t_cub *mlx, double move_x, double move_y);
-void	rotate_player(t_cub *mlx, int flag);
-int		mlx_key(t_mlx_key_data keydata, void *ml);
-int		key_reles(t_mlx_key_data keydata, t_cub *mlx);
+void			hook(t_cub *cub, double move_x, double move_y);
+void			move_player(t_cub *cub, double move_x, double move_y);
+void			rotate_player(t_cub *cub, int flag);
+int				mlx_key(t_mlx_key_data keydata, void *ml);
+int				key_reles(t_mlx_key_data keydata, t_cub *cub);
 
 /*-------------------UTILS-------------------*/
 
 // ******************** APP UTILS ******************** //
 // 		*	exit.c
-void	exit_failure(t_cub *cub, char *err_msg);
-int		exit_success(t_cub *cub);
+void			exit_failure(t_cub *cub, char *err_msg);
+int				exit_success(t_cub *cub);
 // 		*	init.c
-void	init(t_cub *cub, char *input_file);
+void			init(t_cub *cub, char *input_file);
 // 		*	utils.c
-void	use_atoi(t_cub *cub, char *str_nbr, int *counter);
-void	calculate_angle(t_cub *cub, char direction, int x, int y);
-int		create_rgb(int *color_arr);
+void			use_atoi(t_cub *cub, char *str_nbr, int *counter);
+void			calculate_angle(t_cub *cub, char direction, int x, int y);
+int				create_rgb(int *color_arr);
 
 // *************************** DELETE ME *************************** //
-void	print_textures(t_cub *cub);
-void	print_file(t_cub *cub);
-void	print_map(t_cub *cub);
-void	print_player(t_cub *cub);
-t_map	*init_argument(void);
-void	init_player_data(t_cub cub);
+void			print_textures(t_cub *cub);
+void			print_file(t_cub *cub);
+void			print_map(t_cub *cub);
+void			print_player(t_cub *cub);
+t_map			*init_argument(void);
+void			init_player_data(t_cub cub);
 // ***************************************************************** //
 
 #endif

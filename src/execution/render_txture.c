@@ -6,59 +6,59 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:30:16 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/31 11:15:03 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:11:30 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_txtdata	*get_txt(t_cub *mlx, int flag)
+t_txtdata	*get_txt(t_cub *cub, int flag)
 {
-	mlx->ray->ray_angle = nor_angle(mlx->ray->ray_angle);
+	cub->ray->ray_angle = nor_angle(cub->ray->ray_angle);
 	if (flag == 0)
 	{
-		if (mlx->ray->ray_angle > M_PI / 2 && mlx->ray->ray_angle < 3 * (M_PI
+		if (cub->ray->ray_angle > M_PI / 2 && cub->ray->ray_angle < 3 * (M_PI
 				/ 2))
-			return (mlx->txtrs->we);
+			return (cub->txtrs->we);
 		else
-			return (mlx->txtrs->ea);
+			return (cub->txtrs->ea);
 	}
 	else
 	{
-		if (mlx->ray->ray_angle > 0 && mlx->ray->ray_angle < M_PI)
-			return (mlx->txtrs->so);
+		if (cub->ray->ray_angle > 0 && cub->ray->ray_angle < M_PI)
+			return (cub->txtrs->so);
 		else
-			return (mlx->txtrs->no);
+			return (cub->txtrs->no);
 	}
 }
 
-double	texture_x(t_cub *mlx, t_txtdata *texture, int flag)
+double	texture_x(t_cub *cub, t_txtdata *texture, int flag)
 {
 	double	x_o;
 
 	(void)texture;
 	if (flag == 1)
-		x_o = ((float)((int)mlx->ray->hor_x % TILE_SIZE) / TILE_SIZE)
+		x_o = ((float)((int)cub->ray->hor_x % TILE_SIZE) / TILE_SIZE)
 			* texture->width;
 	else
-		x_o = ((float)((int)mlx->ray->ver_y % TILE_SIZE) / TILE_SIZE)
+		x_o = ((float)((int)cub->ray->ver_y % TILE_SIZE) / TILE_SIZE)
 			* texture->width;
 	return (x_o);
 }
 
-void	draw_floor_ceiling(t_cub *mlx, int ray, int t_pix, int b_pix)
+void	draw_floor_ceiling(t_cub *cub, int ray, int t_pix, int b_pix)
 {
 	int	i;
 	int	color;
 
 	i = b_pix;
-	color = mlx->txtrs->f_color;
+	color = cub->txtrs->f_color;
 	while (i < S_HEIGHT)
-		my_mlx_pixel_put(mlx, ray, i++, color);
+		my_mlx_pixel_put(cub, ray, i++, color);
 	i = 0;
-	color = mlx->txtrs->c_color;
+	color = cub->txtrs->c_color;
 	while (i < t_pix)
-		my_mlx_pixel_put(mlx, ray, i++, color);
+		my_mlx_pixel_put(cub, ray, i++, color);
 }
 
 int	unit_circle(float angle, char c)

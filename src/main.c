@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dehamad <dehamad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:23:54 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/30 21:01:05 by dehamad          ###   ########.fr       */
+/*   Updated: 2024/08/31 12:10:18 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int	main(int ac, char **av)
 	init(&cub, av[1]);
 	cub.mlx_ptr = mlx_init();
 	parsing(&cub, av[1]);
-	execution(&cub);
+	start_the_game(&cub);
 	return (0);
 }

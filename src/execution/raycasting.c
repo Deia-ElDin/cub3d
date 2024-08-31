@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:17:35 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/31 11:23:53 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:07:51 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	inter_check(float angle, float *inter, float *step, int is_horizon)
 	return (1);
 }
 
-int	wall_hit(float x, float y, t_cub *mlx)
+int	wall_hit(float x, float y, t_cub *cub)
 {
 	int	x_m;
 	int	y_m;
@@ -44,15 +44,15 @@ int	wall_hit(float x, float y, t_cub *mlx)
 		return (0);
 	x_m = floor(x / TILE_SIZE);
 	y_m = floor(y / TILE_SIZE);
-	if ((y_m >= mlx->map->map_height || x_m >= mlx->map->map_width))
+	if ((y_m >= cub->map->map_height || x_m >= cub->map->map_width))
 		return (0);
-	if (mlx->map->map_arr[y_m] && x_m <= (int)ft_strlen(mlx->map->map_arr[y_m]))
-		if (mlx->map->map_arr[y_m][x_m] == '1')
+	if (cub->map->map_arr[y_m] && x_m <= (int)ft_strlen(cub->map->map_arr[y_m]))
+		if (cub->map->map_arr[y_m][x_m] == '1')
 			return (0);
 	return (1);
 }
 
-float	get_h_inter(t_cub *mlx, float angl)
+float	get_h_inter(t_cub *cub, float angl)
 {
 	float	h_x;
 	float	h_y;
@@ -62,24 +62,24 @@ float	get_h_inter(t_cub *mlx, float angl)
 
 	y_step = TILE_SIZE;
 	x_step = TILE_SIZE / tan(angl);
-	h_y = floor(mlx->player->plyr_y / TILE_SIZE) * TILE_SIZE;
+	h_y = floor(cub->player->plyr_y / TILE_SIZE) * TILE_SIZE;
 	pixel = inter_check(angl, &h_y, &y_step, 1);
-	h_x = mlx->player->plyr_x + (h_y - mlx->player->plyr_y) / tan(angl);
+	h_x = cub->player->plyr_x + (h_y - cub->player->plyr_y) / tan(angl);
 	if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y')
 			&& x_step < 0))
 		x_step *= -1;
-	while (wall_hit(h_x, h_y - pixel, mlx))
+	while (wall_hit(h_x, h_y - pixel, cub))
 	{
 		h_x += x_step;
 		h_y += y_step;
 	}
-	mlx->ray->hor_x = h_x;
-	mlx->ray->hor_y = h_y;
-	return (sqrt(pow(h_x - mlx->player->plyr_x, 2) + pow(h_y
-				- mlx->player->plyr_y, 2)));
+	cub->ray->hor_x = h_x;
+	cub->ray->hor_y = h_y;
+	return (sqrt(pow(h_x - cub->player->plyr_x, 2) + pow(h_y
+				- cub->player->plyr_y, 2)));
 }
 
-float	get_v_inter(t_cub *mlx, float angl)
+float	get_v_inter(t_cub *cub, float angl)
 {
 	float	v_x;
 	float	v_y;
@@ -89,45 +89,45 @@ float	get_v_inter(t_cub *mlx, float angl)
 
 	x_step = TILE_SIZE;
 	y_step = TILE_SIZE * tan(angl);
-	v_x = floor(mlx->player->plyr_x / TILE_SIZE) * TILE_SIZE;
+	v_x = floor(cub->player->plyr_x / TILE_SIZE) * TILE_SIZE;
 	pixel = inter_check(angl, &v_x, &x_step, 0);
-	v_y = mlx->player->plyr_y + (v_x - mlx->player->plyr_x) * tan(angl);
+	v_y = cub->player->plyr_y + (v_x - cub->player->plyr_x) * tan(angl);
 	if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x')
 			&& y_step > 0))
 		y_step *= -1;
-	while (wall_hit(v_x - pixel, v_y, mlx))
+	while (wall_hit(v_x - pixel, v_y, cub))
 	{
 		v_x += x_step;
 		v_y += y_step;
 	}
-	mlx->ray->ver_x = v_x;
-	mlx->ray->ver_y = v_y;
-	return (sqrt(pow(v_x - mlx->player->plyr_x, 2) + pow(v_y
-				- mlx->player->plyr_y, 2)));
+	cub->ray->ver_x = v_x;
+	cub->ray->ver_y = v_y;
+	return (sqrt(pow(v_x - cub->player->plyr_x, 2) + pow(v_y
+				- cub->player->plyr_y, 2)));
 }
 
-void	cast_rays(t_cub *mlx)
+void	cast_rays(t_cub *cub)
 {
 	double	h_inter;
 	double	v_inter;
 	int		ray;
 
 	ray = 0;
-	mlx->ray->ray_angle = mlx->player->plyr_angle - (mlx->player->fov_rd / 2);
+	cub->ray->ray_angle = cub->player->plyr_angle - (cub->player->fov_rd / 2);
 	while (ray < S_WIDTH)
 	{
-		mlx->ray->wall_flag = 0;
-		h_inter = get_h_inter(mlx, nor_angle(mlx->ray->ray_angle));
-		v_inter = get_v_inter(mlx, nor_angle(mlx->ray->ray_angle));
+		cub->ray->wall_flag = 0;
+		h_inter = get_h_inter(cub, nor_angle(cub->ray->ray_angle));
+		v_inter = get_v_inter(cub, nor_angle(cub->ray->ray_angle));
 		if (v_inter <= h_inter)
-			mlx->ray->distance = v_inter;
+			cub->ray->distance = v_inter;
 		else
 		{
-			mlx->ray->distance = h_inter;
-			mlx->ray->wall_flag = 1;
+			cub->ray->distance = h_inter;
+			cub->ray->wall_flag = 1;
 		}
-		render_wall(mlx, ray);
+		render_wall(cub, ray);
 		ray++;
-		mlx->ray->ray_angle += (mlx->player->fov_rd / S_WIDTH);
+		cub->ray->ray_angle += (cub->player->fov_rd / S_WIDTH);
 	}
 }

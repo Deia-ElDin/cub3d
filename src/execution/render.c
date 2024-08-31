@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 18:32:14 by aalshafy          #+#    #+#             */
-/*   Updated: 2024/08/30 18:36:44 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:09:17 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_pixel_put(t_mlx_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	my_mlx_pixel_put(t_cub *mlx, int x, int y, int color)
+void	my_mlx_pixel_put(t_cub *cub, int x, int y, int color)
 {
 	if (x < 0)
 		return ;
@@ -30,7 +30,7 @@ void	my_mlx_pixel_put(t_cub *mlx, int x, int y, int color)
 		return ;
 	else if (y >= S_HEIGHT)
 		return ;
-	my_pixel_put(mlx->img, x, y, color);
+	my_pixel_put(cub->img, x, y, color);
 }
 
 float	nor_angle(float angle)
@@ -42,7 +42,7 @@ float	nor_angle(float angle)
 	return (angle);
 }
 
-void	draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h)
+void	draw_wall(t_cub *cub, int t_pix, int b_pix, double wall_h)
 {
 	int			color;
 	t_txtdata	*txt;
@@ -50,9 +50,9 @@ void	draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h)
 	double		y_o;
 	double		fact;
 
-	txt = get_txt(mlx, mlx->ray->wall_flag);
+	txt = get_txt(cub, cub->ray->wall_flag);
 	fact = (double)txt->height / wall_h;
-	x_o = texture_x(mlx, txt, mlx->ray->wall_flag);
+	x_o = texture_x(cub, txt, cub->ray->wall_flag);
 	y_o = (t_pix - (S_HEIGHT / 2) + (wall_h / 2)) * fact;
 	if (y_o < 0)
 		y_o = 0;
@@ -60,28 +60,28 @@ void	draw_wall(t_cub *mlx, int t_pix, int b_pix, double wall_h)
 	{
 		color = *(unsigned int *)(txt->addr + ((int)y_o * txt->line_len
 					+ (int)x_o * (txt->bpp / 8)));
-		my_mlx_pixel_put(mlx, mlx->ray->indx, t_pix++, color);
+		my_mlx_pixel_put(cub, cub->ray->indx, t_pix++, color);
 		y_o += fact;
 	}
 }
 
-void	render_wall(t_cub *mlx, int ray)
+void	render_wall(t_cub *cub, int ray)
 {
 	double	wall_h;
 	double	b_pix;
 	double	t_pix;
 
-	mlx->ray->distance *= cos(nor_angle(mlx->ray->ray_angle
-				- mlx->player->plyr_angle));
-	wall_h = (TILE_SIZE / mlx->ray->distance) * ((S_WIDTH / 2)
-			/ tan(mlx->player->fov_rd / 2));
+	cub->ray->distance *= cos(nor_angle(cub->ray->ray_angle
+				- cub->player->plyr_angle));
+	wall_h = (TILE_SIZE / cub->ray->distance) * ((S_WIDTH / 2)
+			/ tan(cub->player->fov_rd / 2));
 	b_pix = (S_HEIGHT / 2) + (wall_h / 2);
 	t_pix = (S_HEIGHT / 2) - (wall_h / 2);
 	if (b_pix > S_HEIGHT)
 		b_pix = S_HEIGHT;
 	if (t_pix < 0)
 		t_pix = 0;
-	mlx->ray->indx = ray;
-	draw_wall(mlx, t_pix, b_pix, wall_h);
-	draw_floor_ceiling(mlx, ray, t_pix, b_pix);
+	cub->ray->indx = ray;
+	draw_wall(cub, t_pix, b_pix, wall_h);
+	draw_floor_ceiling(cub, ray, t_pix, b_pix);
 }

@@ -13,15 +13,6 @@
 
 #include "cub3d.h"
 
-void	start_the_game(t_cub *cub);
-int		game_loop(void *param);
-
-int	execution(t_cub *cub)
-{
-	start_the_game(cub);
-	return (0);
-}
-
 void	start_the_game(t_cub *cub)
 {
 	cub->ray = (t_ray *)ft_calloc(1, sizeof(t_ray));
@@ -53,31 +44,31 @@ int	game_loop(void *param)
 	return (0);
 }
 
-void	hook(t_cub *mlx, double move_x, double move_y)
+void	hook(t_cub *cub, double move_x, double move_y)
 {
-	if (mlx->player->rot_flag == 1)
-		rotate_player(mlx, 1);
-	if (mlx->player->rot_flag == -1)
-		rotate_player(mlx, 0);
-	if (mlx->player->r_l == 1)
+	if (cub->player->rot_flag == 1)
+		rotate_player(cub, 1);
+	if (cub->player->rot_flag == -1)
+		rotate_player(cub, 0);
+	if (cub->player->r_l == 1)
 	{
-		move_x = -sin(mlx->player->plyr_angle) * PLAYER_SPEED;
-		move_y = cos(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_x = -sin(cub->player->plyr_angle) * PLAYER_SPEED;
+		move_y = cos(cub->player->plyr_angle) * PLAYER_SPEED;
 	}
-	if (mlx->player->r_l == -1)
+	if (cub->player->r_l == -1)
 	{
-		move_x = sin(mlx->player->plyr_angle) * PLAYER_SPEED;
-		move_y = -cos(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_x = sin(cub->player->plyr_angle) * PLAYER_SPEED;
+		move_y = -cos(cub->player->plyr_angle) * PLAYER_SPEED;
 	}
-	if (mlx->player->u_d == 1)
+	if (cub->player->u_d == 1)
 	{
-		move_x = cos(mlx->player->plyr_angle) * PLAYER_SPEED;
-		move_y = sin(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_x = cos(cub->player->plyr_angle) * PLAYER_SPEED;
+		move_y = sin(cub->player->plyr_angle) * PLAYER_SPEED;
 	}
-	if (mlx->player->u_d == -1)
+	if (cub->player->u_d == -1)
 	{
-		move_x = -cos(mlx->player->plyr_angle) * PLAYER_SPEED;
-		move_y = -sin(mlx->player->plyr_angle) * PLAYER_SPEED;
+		move_x = -cos(cub->player->plyr_angle) * PLAYER_SPEED;
+		move_y = -sin(cub->player->plyr_angle) * PLAYER_SPEED;
 	}
-	move_player(mlx, move_x, move_y);
+	move_player(cub, move_x, move_y);
 }

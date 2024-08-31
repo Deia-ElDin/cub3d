@@ -6,14 +6,14 @@
 #    By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 01:42:22 by dehamad           #+#    #+#              #
-#    Updated: 2024/08/31 11:50:42 by aalshafy         ###   ########.fr        #
+#    Updated: 2024/08/31 11:59:14 by aalshafy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS = -Wall -Wextra -Werror -Iincludes -fsanitize=address -g3
 HEADER = includes/cub3d.h
 
 LIBFT_DIR = includes/libft

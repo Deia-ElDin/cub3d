@@ -6,7 +6,7 @@
 /*   By: aalshafy <aalshafy@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:38:30 by dehamad           #+#    #+#             */
-/*   Updated: 2024/08/31 11:52:37 by aalshafy         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:57:57 by aalshafy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	exit_clean(t_cub *cub)
 	}
 	ft_free(&cub->map, 'p');
 	ft_free(&cub->player, 'p');
-	if (cub->img->img)
-		mlx_destroy_image(cub->mlx_ptr, cub->img->img);
+	// if (cub->img->img)
+	// 	mlx_destroy_image(cub->mlx_ptr, cub->img->img);
 	ft_free(&cub->img, 'p');
 	ft_free(&cub->ray, 'p');
-	if (cub->win_ptr)
-		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
-	ft_free(&cub->mlx_ptr, 'p');
+	// if (cub->win_ptr)
+	// 	mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
+	// ft_free(&cub->mlx_ptr, 'p');
 }
 
 void	exit_failure(t_cub *cub, char *err_msg)
